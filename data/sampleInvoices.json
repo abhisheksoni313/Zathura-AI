@@ -1,0 +1,522 @@
+[
+  {
+    "id": "INV-IT-0001",
+    "invoiceNumber": "NC-2026-0701",
+    "poNumber": "ARB-PO-2026-01001",
+    "departmentId": "IT",
+    "category": "IT Hardware & Software",
+    "item": "Developer laptop refresh - 25 units",
+    "quantity": 25,
+    "unitPrice": 850,
+    "taxRate": 0.18,
+    "invoiceTotal": 25075.0,
+    "approvedBudget": 28000,
+    "costCenterRemaining": 260000,
+    "requiredByDate": "2026-07-22",
+    "invoiceDate": "2026-07-01",
+    "deliveryDate": "2026-07-14",
+    "vendorId": "V01",
+    "selectedQuoteVendorId": "V01",
+    "requestorLevel": "Manager",
+    "requestedBy": "Ananya Sharma",
+    "businessJustification": "Quarterly refresh of end-of-life developer devices for secure engineering builds and production support.",
+    "regulatorySignoff": false,
+    "goodsReceiptConfirmed": true,
+    "poQuantity": 25,
+    "poUnitPrice": 850,
+    "poVendorId": "V01",
+    "documentationComplete": true,
+    "duplicateKey": "inv-it-0001",
+    "urgency": "Standard",
+    "quotations": [
+      {
+        "vendorId": "V01",
+        "unitPrice": 850,
+        "total": 25075,
+        "deliveryDays": 10
+      },
+      {
+        "vendorId": "V02",
+        "unitPrice": 900,
+        "total": 26550,
+        "deliveryDays": 14
+      },
+      {
+        "vendorId": "V03",
+        "unitPrice": 780,
+        "total": 23010,
+        "deliveryDays": 21
+      }
+    ],
+    "pdfUrl": "/invoices/INV-IT-0001.pdf",
+    "aribaSource": "SAP Ariba"
+  },
+  {
+    "id": "INV-COM-0002",
+    "invoiceNumber": "BW-2026-0702",
+    "poNumber": "ARB-PO-2026-01002",
+    "departmentId": "COM",
+    "category": "Marketing & Commercial Services",
+    "item": "Regional product launch campaign - APAC",
+    "quantity": 1,
+    "unitPrice": 9500,
+    "taxRate": 0.18,
+    "invoiceTotal": 11210.0,
+    "approvedBudget": 13000,
+    "costCenterRemaining": 180000,
+    "requiredByDate": "2026-07-20",
+    "invoiceDate": "2026-07-01",
+    "deliveryDate": "2026-07-14",
+    "vendorId": "V16",
+    "selectedQuoteVendorId": "V16",
+    "requestorLevel": "Manager",
+    "requestedBy": "Kabir Malhotra",
+    "businessJustification": "Launch campaign execution support for digital creatives, local assets, partner coordination, and regional reporting.",
+    "regulatorySignoff": false,
+    "goodsReceiptConfirmed": true,
+    "poQuantity": 1,
+    "poUnitPrice": 9500,
+    "poVendorId": "V16",
+    "documentationComplete": true,
+    "duplicateKey": "inv-com-0002",
+    "urgency": "Standard",
+    "quotations": [
+      {
+        "vendorId": "V16",
+        "unitPrice": 9500,
+        "total": 11210,
+        "deliveryDays": 14
+      },
+      {
+        "vendorId": "V17",
+        "unitPrice": 10200,
+        "total": 12036,
+        "deliveryDays": 18
+      },
+      {
+        "vendorId": "V18",
+        "unitPrice": 8700,
+        "total": 10266,
+        "deliveryDays": 10
+      }
+    ],
+    "pdfUrl": "/invoices/INV-COM-0002.pdf",
+    "aribaSource": "SAP Ariba"
+  },
+  {
+    "id": "INV-LEG-0003",
+    "invoiceNumber": "WL-2026-0703",
+    "poNumber": "ARB-PO-2026-01003",
+    "departmentId": "LEG",
+    "category": "Legal & Compliance Services",
+    "item": "Outside counsel - IP licensing review",
+    "quantity": 1,
+    "unitPrice": 16500,
+    "taxRate": 0.18,
+    "invoiceTotal": 19470.0,
+    "approvedBudget": 22000,
+    "costCenterRemaining": 120000,
+    "requiredByDate": "2026-07-18",
+    "invoiceDate": "2026-07-01",
+    "deliveryDate": "2026-07-12",
+    "vendorId": "V14",
+    "selectedQuoteVendorId": "V14",
+    "requestorLevel": "Manager",
+    "requestedBy": "Ishita Roy",
+    "businessJustification": "Specialist outside counsel required to review cross-licensing terms before partner negotiation closure.",
+    "regulatorySignoff": false,
+    "goodsReceiptConfirmed": true,
+    "poQuantity": 1,
+    "poUnitPrice": 16500,
+    "poVendorId": "V14",
+    "documentationComplete": true,
+    "duplicateKey": "inv-leg-0003",
+    "urgency": "Standard",
+    "quotations": [
+      {
+        "vendorId": "V14",
+        "unitPrice": 16500,
+        "total": 19470,
+        "deliveryDays": 7
+      },
+      {
+        "vendorId": "V13",
+        "unitPrice": 18000,
+        "total": 21240,
+        "deliveryDays": 5
+      },
+      {
+        "vendorId": "V15",
+        "unitPrice": 14200,
+        "total": 16756,
+        "deliveryDays": 10
+      }
+    ],
+    "pdfUrl": "/invoices/INV-LEG-0003.pdf",
+    "aribaSource": "SAP Ariba"
+  },
+  {
+    "id": "INV-DD-0004",
+    "invoiceNumber": "MS-2026-0704",
+    "poNumber": "ARB-PO-2026-01004",
+    "departmentId": "DD",
+    "category": "Active Pharmaceutical Ingredients & Raw Materials",
+    "item": "GMP-grade API precursor batch - 50 kg",
+    "quantity": 50,
+    "unitPrice": 4200,
+    "taxRate": 0.18,
+    "invoiceTotal": 247800.0,
+    "approvedBudget": 260000,
+    "costCenterRemaining": 600000,
+    "requiredByDate": "2026-08-10",
+    "invoiceDate": "2026-07-01",
+    "deliveryDate": "2026-07-31",
+    "vendorId": "V07",
+    "selectedQuoteVendorId": "V07",
+    "requestorLevel": "Director",
+    "requestedBy": "Dr. Nikhil Rao",
+    "businessJustification": "Raw material is required for Phase II synthesis run and supplier has prior GMP batch acceptance history.",
+    "regulatorySignoff": true,
+    "goodsReceiptConfirmed": true,
+    "poQuantity": 50,
+    "poUnitPrice": 4200,
+    "poVendorId": "V07",
+    "documentationComplete": true,
+    "duplicateKey": "inv-dd-0004",
+    "urgency": "Standard",
+    "quotations": [
+      {
+        "vendorId": "V07",
+        "unitPrice": 4200,
+        "total": 247800,
+        "deliveryDays": 30
+      },
+      {
+        "vendorId": "V08",
+        "unitPrice": 4550,
+        "total": 268450,
+        "deliveryDays": 35
+      },
+      {
+        "vendorId": "V09",
+        "unitPrice": 3900,
+        "total": 230100,
+        "deliveryDays": 45
+      }
+    ],
+    "pdfUrl": "/invoices/INV-DD-0004.pdf",
+    "aribaSource": "SAP Ariba"
+  },
+  {
+    "id": "INV-RD-0005",
+    "invoiceNumber": "PL-2026-0705",
+    "poNumber": "ARB-PO-2026-01005",
+    "departmentId": "RD",
+    "category": "Lab Equipment & Reagents",
+    "item": "HPLC analytical reagent kits - 40 units",
+    "quantity": 40,
+    "unitPrice": 2100,
+    "taxRate": 0.18,
+    "invoiceTotal": 99120.0,
+    "approvedBudget": 110000,
+    "costCenterRemaining": 450000,
+    "requiredByDate": "2026-07-22",
+    "invoiceDate": "2026-07-01",
+    "deliveryDate": "2026-07-13",
+    "vendorId": "V10",
+    "selectedQuoteVendorId": "V10",
+    "requestorLevel": "Director",
+    "requestedBy": "Dr. Priya Iyer",
+    "businessJustification": "Reagent stock replenishment is required for ongoing assay validation and method transfer workstreams.",
+    "regulatorySignoff": false,
+    "goodsReceiptConfirmed": true,
+    "poQuantity": 40,
+    "poUnitPrice": 2100,
+    "poVendorId": "V10",
+    "documentationComplete": true,
+    "duplicateKey": "inv-rd-0005",
+    "urgency": "Standard",
+    "quotations": [
+      {
+        "vendorId": "V10",
+        "unitPrice": 2100,
+        "total": 99120,
+        "deliveryDays": 12
+      },
+      {
+        "vendorId": "V11",
+        "unitPrice": 2300,
+        "total": 108560,
+        "deliveryDays": 15
+      },
+      {
+        "vendorId": "V12",
+        "unitPrice": 1950,
+        "total": 92040,
+        "deliveryDays": 20
+      }
+    ],
+    "pdfUrl": "/invoices/INV-RD-0005.pdf",
+    "aribaSource": "SAP Ariba"
+  },
+  {
+    "id": "INV-OPS-0006",
+    "invoiceNumber": "MF-2026-0706",
+    "poNumber": "ARB-PO-2026-01006",
+    "departmentId": "OPS",
+    "category": "Facilities & Office Supplies",
+    "item": "Ergonomic chair procurement - new workspace",
+    "quantity": 10,
+    "unitPrice": 1400,
+    "taxRate": 0.18,
+    "invoiceTotal": 16520.0,
+    "approvedBudget": 20000,
+    "costCenterRemaining": 150000,
+    "requiredByDate": "2026-07-18",
+    "invoiceDate": "2026-07-01",
+    "deliveryDate": "2026-07-09",
+    "vendorId": "V19",
+    "selectedQuoteVendorId": "V19",
+    "requestorLevel": "Manager",
+    "requestedBy": "Nisha Bhat",
+    "businessJustification": "Furniture required for the new workspace seating plan and employee ergonomic readiness before floor opening.",
+    "regulatorySignoff": false,
+    "goodsReceiptConfirmed": true,
+    "poQuantity": 10,
+    "poUnitPrice": 1400,
+    "poVendorId": "V19",
+    "documentationComplete": true,
+    "duplicateKey": "inv-ops-0006",
+    "urgency": "Standard",
+    "quotations": [
+      {
+        "vendorId": "V19",
+        "unitPrice": 1400,
+        "total": 16520,
+        "deliveryDays": 7
+      },
+      {
+        "vendorId": "V20",
+        "unitPrice": 1550,
+        "total": 18290,
+        "deliveryDays": 9
+      },
+      {
+        "vendorId": "V21",
+        "unitPrice": 1250,
+        "total": 14750,
+        "deliveryDays": 15
+      }
+    ],
+    "pdfUrl": "/invoices/INV-OPS-0006.pdf",
+    "aribaSource": "SAP Ariba"
+  },
+  {
+    "id": "INV-FIN-0007",
+    "invoiceNumber": "OC-2026-0707",
+    "poNumber": "ARB-PO-2026-01007",
+    "departmentId": "FIN",
+    "category": "Cloud & SaaS Subscriptions",
+    "item": "Finance analytics SaaS licenses - 12 seats",
+    "quantity": 12,
+    "unitPrice": 1200,
+    "taxRate": 0.18,
+    "invoiceTotal": 16992.0,
+    "approvedBudget": 25000,
+    "costCenterRemaining": 90000,
+    "requiredByDate": "2026-07-15",
+    "invoiceDate": "2026-07-01",
+    "deliveryDate": "2026-07-03",
+    "vendorId": "V04",
+    "selectedQuoteVendorId": "V04",
+    "requestorLevel": "Manager",
+    "requestedBy": "Meera Kapoor",
+    "businessJustification": "Subscription required for finance analytics, monthly close dashboards, and compliance reporting automation.",
+    "regulatorySignoff": false,
+    "goodsReceiptConfirmed": true,
+    "poQuantity": 12,
+    "poUnitPrice": 1200,
+    "poVendorId": "V04",
+    "documentationComplete": true,
+    "duplicateKey": "inv-fin-0007",
+    "urgency": "Standard",
+    "quotations": [
+      {
+        "vendorId": "V04",
+        "unitPrice": 1200,
+        "total": 16992,
+        "deliveryDays": 2
+      },
+      {
+        "vendorId": "V05",
+        "unitPrice": 1350,
+        "total": 19116,
+        "deliveryDays": 3
+      },
+      {
+        "vendorId": "V06",
+        "unitPrice": 1100,
+        "total": 15576,
+        "deliveryDays": 1
+      }
+    ],
+    "pdfUrl": "/invoices/INV-FIN-0007.pdf",
+    "aribaSource": "SAP Ariba"
+  },
+  {
+    "id": "INV-MFG-0008",
+    "invoiceNumber": "CT-2026-0708",
+    "poNumber": "ARB-PO-2026-01008",
+    "departmentId": "MFG",
+    "category": "Active Pharmaceutical Ingredients & Raw Materials",
+    "item": "Controlled API raw material batch - 20 kg",
+    "quantity": 20,
+    "unitPrice": 3900,
+    "taxRate": 0.18,
+    "invoiceTotal": 92040.0,
+    "approvedBudget": 100000,
+    "costCenterRemaining": 300000,
+    "requiredByDate": "2026-07-28",
+    "invoiceDate": "2026-07-01",
+    "deliveryDate": "2026-08-15",
+    "vendorId": "V09",
+    "selectedQuoteVendorId": "V09",
+    "requestorLevel": "Director",
+    "requestedBy": "Vivek Kulkarni",
+    "businessJustification": "Controlled raw material required for QA batch testing and stability program.",
+    "regulatorySignoff": false,
+    "goodsReceiptConfirmed": true,
+    "poQuantity": 20,
+    "poUnitPrice": 3900,
+    "poVendorId": "V09",
+    "documentationComplete": true,
+    "duplicateKey": "inv-mfg-0008",
+    "urgency": "Standard",
+    "quotations": [
+      {
+        "vendorId": "V09",
+        "unitPrice": 3900,
+        "total": 92040,
+        "deliveryDays": 45
+      },
+      {
+        "vendorId": "V07",
+        "unitPrice": 4200,
+        "total": 99120,
+        "deliveryDays": 30
+      },
+      {
+        "vendorId": "V08",
+        "unitPrice": 4550,
+        "total": 107380,
+        "deliveryDays": 35
+      }
+    ],
+    "pdfUrl": "/invoices/INV-MFG-0008.pdf",
+    "aribaSource": "SAP Ariba"
+  },
+  {
+    "id": "INV-RD-0009",
+    "invoiceNumber": "SP-2026-0709",
+    "poNumber": "ARB-PO-2026-01009",
+    "departmentId": "RD",
+    "category": "Lab Equipment & Reagents",
+    "item": "HPLC analytical reagent kits - urgent replenishment",
+    "quantity": 40,
+    "unitPrice": 1950,
+    "taxRate": 0.18,
+    "invoiceTotal": 92040.0,
+    "approvedBudget": 95000,
+    "costCenterRemaining": 450000,
+    "requiredByDate": "2026-07-15",
+    "invoiceDate": "2026-07-01",
+    "deliveryDate": "2026-07-21",
+    "vendorId": "V12",
+    "selectedQuoteVendorId": "V12",
+    "requestorLevel": "Director",
+    "requestedBy": "Dr. Priya Iyer",
+    "businessJustification": "Urgent replenishment is required to avoid interruption in assay validation schedules.",
+    "regulatorySignoff": false,
+    "goodsReceiptConfirmed": true,
+    "poQuantity": 40,
+    "poUnitPrice": 1950,
+    "poVendorId": "V12",
+    "documentationComplete": true,
+    "duplicateKey": "inv-rd-0009",
+    "urgency": "Standard",
+    "quotations": [
+      {
+        "vendorId": "V12",
+        "unitPrice": 1950,
+        "total": 92040,
+        "deliveryDays": 20
+      },
+      {
+        "vendorId": "V10",
+        "unitPrice": 2100,
+        "total": 99120,
+        "deliveryDays": 12
+      },
+      {
+        "vendorId": "V11",
+        "unitPrice": 2300,
+        "total": 108560,
+        "deliveryDays": 15
+      }
+    ],
+    "pdfUrl": "/invoices/INV-RD-0009.pdf",
+    "aribaSource": "SAP Ariba"
+  },
+  {
+    "id": "INV-OPS-0010",
+    "invoiceNumber": "CO-2026-0710",
+    "poNumber": "ARB-PO-2026-01010",
+    "departmentId": "OPS",
+    "category": "Facilities & Office Supplies",
+    "item": "Office relocation fit-out advance",
+    "quantity": 1,
+    "unitPrice": 1250,
+    "taxRate": 0.18,
+    "invoiceTotal": 1475.0,
+    "approvedBudget": 1800,
+    "costCenterRemaining": 5000,
+    "requiredByDate": "2026-07-26",
+    "invoiceDate": "2026-07-01",
+    "deliveryDate": "2026-07-29",
+    "vendorId": "V21",
+    "selectedQuoteVendorId": "V21",
+    "requestorLevel": "Manager",
+    "requestedBy": "Nisha Bhat",
+    "businessJustification": "Advance invoice for relocation fit-out, maintenance preparation, and site readiness work before move-in.",
+    "regulatorySignoff": false,
+    "goodsReceiptConfirmed": true,
+    "poQuantity": 1,
+    "poUnitPrice": 1250,
+    "poVendorId": "V21",
+    "documentationComplete": true,
+    "duplicateKey": "inv-ops-0010",
+    "urgency": "Standard",
+    "quotations": [
+      {
+        "vendorId": "V21",
+        "unitPrice": 1250,
+        "total": 1475,
+        "deliveryDays": 15
+      },
+      {
+        "vendorId": "V19",
+        "unitPrice": 1400,
+        "total": 1652,
+        "deliveryDays": 7
+      },
+      {
+        "vendorId": "V20",
+        "unitPrice": 1550,
+        "total": 1829,
+        "deliveryDays": 9
+      }
+    ],
+    "pdfUrl": "/invoices/INV-OPS-0010.pdf",
+    "aribaSource": "SAP Ariba"
+  }
+]

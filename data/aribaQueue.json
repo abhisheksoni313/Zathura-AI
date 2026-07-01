@@ -1,0 +1,106 @@
+[
+  {
+    "id": "INV-IT-0011",
+    "invoiceNumber": "VD-2026-0711",
+    "poNumber": "ARB-PO-2026-01011",
+    "departmentId": "IT",
+    "category": "Cloud & SaaS Subscriptions",
+    "item": "Cloud security monitoring add-on - 6 months",
+    "quantity": 6,
+    "unitPrice": 1350,
+    "taxRate": 0.18,
+    "invoiceTotal": 9558.0,
+    "approvedBudget": 10000,
+    "costCenterRemaining": 200000,
+    "requiredByDate": "2026-07-30",
+    "invoiceDate": "2026-07-01",
+    "deliveryDate": "2026-07-05",
+    "vendorId": "V05",
+    "selectedQuoteVendorId": "V05",
+    "requestorLevel": "Manager",
+    "requestedBy": "Arjun Menon",
+    "businessJustification": "Security monitoring add-on required for cloud workloads during the migration control period.",
+    "regulatorySignoff": false,
+    "goodsReceiptConfirmed": true,
+    "poQuantity": 6,
+    "poUnitPrice": 1350,
+    "poVendorId": "V05",
+    "documentationComplete": true,
+    "duplicateKey": "inv-it-0011",
+    "urgency": "Standard",
+    "quotations": [
+      {
+        "vendorId": "V05",
+        "unitPrice": 1350,
+        "total": 9558,
+        "deliveryDays": 3
+      },
+      {
+        "vendorId": "V04",
+        "unitPrice": 1200,
+        "total": 8496,
+        "deliveryDays": 2
+      },
+      {
+        "vendorId": "V06",
+        "unitPrice": 1100,
+        "total": 7788,
+        "deliveryDays": 1
+      }
+    ],
+    "pdfUrl": "/invoices/INV-IT-0011.pdf",
+    "aribaSource": "SAP Ariba"
+  },
+  {
+    "id": "INV-OPS-0012",
+    "invoiceNumber": "HL-2026-0712",
+    "poNumber": "ARB-PO-2026-01012",
+    "departmentId": "OPS",
+    "category": "Logistics & Packaging",
+    "item": "Temperature-controlled logistics lane - pilot",
+    "quantity": 2,
+    "unitPrice": 3400,
+    "taxRate": 0.18,
+    "invoiceTotal": 8024.0,
+    "approvedBudget": 8500,
+    "costCenterRemaining": 50000,
+    "requiredByDate": "2026-07-20",
+    "invoiceDate": "2026-07-01",
+    "deliveryDate": "2026-07-08",
+    "vendorId": "V23",
+    "selectedQuoteVendorId": "V23",
+    "requestorLevel": "Manager",
+    "requestedBy": "Rahul Nair",
+    "businessJustification": "Pilot logistics support required for temperature-controlled dispatch lane validation.",
+    "regulatorySignoff": false,
+    "goodsReceiptConfirmed": true,
+    "poQuantity": 2,
+    "poUnitPrice": 3400,
+    "poVendorId": "V23",
+    "documentationComplete": true,
+    "duplicateKey": "inv-ops-0012",
+    "urgency": "Standard",
+    "quotations": [
+      {
+        "vendorId": "V23",
+        "unitPrice": 3400,
+        "total": 8024,
+        "deliveryDays": 6
+      },
+      {
+        "vendorId": "V22",
+        "unitPrice": 3200,
+        "total": 7552,
+        "deliveryDays": 5
+      },
+      {
+        "vendorId": "V24",
+        "unitPrice": 2950,
+        "total": 6962,
+        "deliveryDays": 4
+      }
+    ],
+    "pdfUrl": "/invoices/INV-OPS-0012.pdf",
+    "aribaSource": "SAP Ariba"
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {"id":"IT","name":"IT Department","costCenter":"CC-IT-101","monthlyBudget":260000,"owner":"Aarav Menon","categories":["IT Hardware & Software","Cloud & SaaS Subscriptions"]},
+  {"id":"COM","name":"Commercial Department","costCenter":"CC-COM-202","monthlyBudget":180000,"owner":"Meera Kapoor","categories":["Marketing & Commercial Services","Logistics & Packaging"]},
+  {"id":"LEG","name":"Legal Department","costCenter":"CC-LEG-303","monthlyBudget":120000,"owner":"Ritika Sen","categories":["Legal & Compliance Services"]},
+  {"id":"DD","name":"Drug Discovery","costCenter":"CC-DD-404","monthlyBudget":600000,"owner":"Dr. Nikhil Rao","categories":["Active Pharmaceutical Ingredients & Raw Materials","Lab Equipment & Reagents"]},
+  {"id":"RD","name":"R&D Department","costCenter":"CC-RD-505","monthlyBudget":450000,"owner":"Dr. Priya Iyer","categories":["Lab Equipment & Reagents","IT Hardware & Software"]},
+  {"id":"FIN","name":"Finance & Accounts","costCenter":"CC-FIN-606","monthlyBudget":90000,"owner":"Karan Shah","categories":["Legal & Compliance Services","Cloud & SaaS Subscriptions"]},
+  {"id":"OPS","name":"Operations & Facilities","costCenter":"CC-OPS-707","monthlyBudget":150000,"owner":"Nisha Bhat","categories":["Facilities & Office Supplies","Logistics & Packaging"]},
+  {"id":"MFG","name":"Manufacturing & QA","costCenter":"CC-MFG-808","monthlyBudget":300000,"owner":"Vivek Kulkarni","categories":["Active Pharmaceutical Ingredients & Raw Materials","Facilities & Office Supplies"]}
+]

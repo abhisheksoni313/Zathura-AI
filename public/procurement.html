@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zathura.AI — Procurement Analyst</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <style>
+    :root{--primary:#3f5cff;--primary-dark:#2b46f0;--text:#0f172a;--muted:#64748b;--line:#e5e7eb;--soft:#f8fafc;--bg:#f6f8fc;--card:#fff;--success:#16a34a;--warning:#b45309;--danger:#dc2626;--success-bg:#ecfdf3;--warning-bg:#fffbeb;--danger-bg:#fef2f2;--info-bg:#eef3ff;--radius:18px;--shadow:0 16px 44px rgba(15,23,42,.08)}
+    *{box-sizing:border-box;margin:0;padding:0}body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}h1,h2,h3,h4{font-family:'Sora',sans-serif;letter-spacing:-.02em}a{text-decoration:none;color:inherit}.mono{font-family:'JetBrains Mono',monospace}.app{display:grid;grid-template-columns:278px 1fr;min-height:100vh}.side{background:#0f1830;color:#e2e8f7;padding:22px 16px;position:sticky;top:0;height:100vh}.brand{display:flex;gap:10px;align-items:center;padding:0 8px 20px;border-bottom:1px solid rgba(255,255,255,.09)}.brand img{height:34px;width:auto}.brand b{display:block;color:white;font-family:'Sora'}.brand span{font-size:11px;color:#94a3c4;text-transform:uppercase;letter-spacing:.07em}.nav{padding-top:18px;display:grid;gap:6px}.nav a,.nav button{display:flex;align-items:center;gap:10px;border:0;background:transparent;color:#c4d0ec;padding:11px 12px;border-radius:12px;font:inherit;font-size:14px;cursor:pointer;text-align:left}.nav a:hover,.nav button:hover,.nav .active{background:rgba(255,255,255,.07);color:white}.nav .active{background:linear-gradient(135deg,var(--primary),var(--primary-dark));box-shadow:0 10px 24px rgba(63,92,255,.3)}.side-note{font-size:11.5px;color:#7383aa;margin-top:24px;padding:0 10px}.main{padding:32px 38px 70px}.top{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:22px}.eyebrow{display:inline-flex;gap:8px;align-items:center;border:1px solid rgba(63,92,255,.22);background:rgba(63,92,255,.07);color:var(--primary-dark);border-radius:999px;padding:6px 12px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}.top h1{font-size:30px}.top p{color:var(--muted);max-width:820px;margin-top:5px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid transparent;border-radius:12px;min-height:42px;padding:0 16px;font-weight:700;font-size:13.5px;cursor:pointer;transition:.16s;background:#fff}.btn:hover{transform:translateY(-1px)}.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:white;box-shadow:0 12px 28px rgba(63,92,255,.24)}.btn-secondary{border-color:var(--line);color:var(--text)}.btn-danger{border-color:#fecaca;color:var(--danger);background:white}.btn-success{background:var(--success);color:white}.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}.grid{display:grid;gap:16px}.kpis{grid-template-columns:repeat(5,1fr);margin-bottom:20px}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 1px 2px rgba(15,23,42,.04)}.pad{padding:22px}.kpi{padding:18px}.kpi span{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em}.kpi b{display:block;font-family:'Sora';font-size:28px;margin-top:8px}.kpi small{color:var(--muted)}.split{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;align-items:start}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:12px 14px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}td{padding:13px 14px;border-bottom:1px solid var(--line);font-size:13.5px;vertical-align:middle}tr:last-child td{border-bottom:0}tbody tr{cursor:pointer}tbody tr:hover{background:var(--soft)}tbody tr.selected{background:#eef3ff}.badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 10px;font-size:11.5px;font-weight:800;white-space:nowrap}.approved{background:var(--success-bg);color:var(--success);border:1px solid #bbf7d0}.rejected{background:var(--danger-bg);color:var(--danger);border:1px solid #fecaca}.manual_review{background:var(--warning-bg);color:var(--warning);border:1px solid #fde68a}.unvalidated{background:#f1f5f9;color:#475569;border:1px solid #e2e8f0}.section-h{font-family:'Sora';font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px}.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.meta{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:12px}.meta small{display:block;text-transform:uppercase;letter-spacing:.05em;color:#94a3b8;font-size:10px;font-weight:900;margin-bottom:3px}.meta b{font-size:13px}.decision{border-radius:16px;padding:18px;margin-bottom:16px}.decision h3{font-size:17px;margin-bottom:8px}.decision p{font-size:13.5px;color:#334155}.plain-list{margin:10px 0 0 18px;color:#334155;font-size:13.5px}.plain-list li{margin-bottom:4px}.checks{display:grid;gap:8px;max-height:510px;overflow:auto;padding-right:4px}.check{display:grid;grid-template-columns:24px 1fr;gap:10px;border:1px solid var(--line);border-radius:13px;padding:12px;background:white}.dot{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11px}.pass .dot{background:var(--success-bg);color:var(--success)}.warning .dot{background:var(--warning-bg);color:var(--warning)}.fail .dot{background:var(--danger-bg);color:var(--danger)}.check-title{display:flex;gap:8px;flex-wrap:wrap;font-size:13px;font-weight:800}.check-note{font-size:12.5px;color:var(--muted);margin-top:3px}.tag{font-size:10px;border:1px solid var(--line);border-radius:7px;padding:1px 6px;color:var(--muted);font-weight:800}.crit{border-color:#fecaca;color:var(--danger);background:var(--danger-bg)}.quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.quote{border:1px solid var(--line);border-radius:14px;padding:13px;background:white}.quote b{display:block;font-size:13px}.quote strong{font-family:'Sora';font-size:18px}.quote small{display:block;color:var(--muted)}.hidden{display:none!important}.toast{position:fixed;right:24px;top:24px;background:#0f172a;color:white;padding:13px 16px;border-radius:12px;font-weight:800;font-size:13px;box-shadow:var(--shadow);z-index:99}.banner{background:linear-gradient(135deg,#0f1830,#1e2f60);color:white;border-radius:20px;padding:18px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:14px}.banner p{color:#cbd5e1;font-size:13.5px}.banner b{font-family:'Sora'}.status-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap;color:#64748b;font-size:12.5px}.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.ariba{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}.ariba-head{background:#f3f4f6;border-bottom:1px solid #d1d5db;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}.ariba-logo{font-family:Arial,sans-serif;font-weight:900;color:#0a6ed1;letter-spacing:-.04em;font-size:22px}.ariba-title{font-weight:800;color:#1f2937}.ariba-tabs{display:flex;background:#fff;border-bottom:1px solid var(--line);overflow:auto}.ariba-tabs span{padding:12px 18px;font-weight:800;font-size:12px;color:#64748b;border-right:1px solid var(--line)}.ariba-tabs .on{color:#0a6ed1;border-bottom:3px solid #0a6ed1}.ariba-body{padding:20px}.form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:5px;color:#334155}.field input,.field select,.field textarea{width:100%;border:1.5px solid #cbd5e1;border-radius:6px;padding:9px 10px;font:inherit;font-size:13.5px;background:#fff}.field textarea{min-height:76px;resize:vertical}.ariba-section{border:1px solid var(--line);border-radius:12px;margin-top:18px;overflow:hidden}.ariba-section h3{background:#f8fafc;border-bottom:1px solid var(--line);padding:10px 14px;font-size:13px}.ariba-section .inside{padding:14px}.line-table input{border:1px solid #cbd5e1;border-radius:4px;padding:7px;width:100%;font:inherit;font-size:13px}.muted{color:var(--muted)}
+    @media(max-width:1180px){.app{grid-template-columns:1fr}.side{position:relative;height:auto}.nav{grid-template-columns:repeat(2,1fr)}.split,.kpis{grid-template-columns:1fr 1fr}.quotes{grid-template-columns:1fr}.main{padding:24px}.form-grid{grid-template-columns:1fr 1fr}}@media(max-width:760px){.split,.kpis,.meta-grid,.form-grid{grid-template-columns:1fr}.nav{grid-template-columns:1fr}.banner{align-items:flex-start;flex-direction:column}.toolbar{width:100%}.toolbar .btn{width:100%}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="side">
+      <div class="brand"><img src="assets/favicon.png" alt=""><div><b>Zathura.AI</b><span>Procurement Analyst</span></div></div>
+      <nav class="nav">
+        <a href="index.html"><i class="fa-solid fa-arrow-left"></i> Back to Website</a>
+        <button class="active" data-tab="workspace"><i class="fa-solid fa-file-invoice-dollar"></i> Invoice Workspace</button>
+        <button data-tab="sop"><i class="fa-solid fa-list-check"></i> SOP Rules</button>
+        <button data-tab="create"><i class="fa-solid fa-circle-plus"></i> Create Invoice</button>
+        <button id="resetBtn"><i class="fa-solid fa-rotate-left"></i> Reset Demo</button>
+      </nav>
+      <div class="side-note">SAP Ariba scan simulation runs every 10 minutes and adds newly detected invoices to the pending list.</div>
+    </aside>
+    <main class="main">
+      <div class="banner" id="sourceBanner">
+        <div><b>Backend-connected Procurement Analyst</b><p>10 sample invoices are pulled from SAP Ariba, validated through SOP rules, enriched by Zathura.AI advisory reasoning, and routed to approve, reject, or human review.</p><div class="status-line" id="aribaStatusLine"></div></div>
+        <div class="toolbar"><button class="btn btn-secondary" id="scanAribaBtn"><i class="fa-solid fa-rotate"></i> Scan SAP Ariba Now</button><button class="btn btn-primary" id="runAllBtn"><i class="fa-solid fa-robot"></i> Validate All</button></div>
+      </div>
+      <section id="workspaceTab">
+        <div class="top">
+          <div><div class="eyebrow"><i class="fa-solid fa-bolt"></i> SOP Engine + Zathura.AI Advisory</div><h1>Invoice pending list</h1><p>Select an invoice, view the actual PDF, and run validation. Approved invoices have clean SOP results; rejected invoices fail a critical gate; human review invoices have non-critical exceptions that need judgement.</p></div>
+        </div>
+        <div class="grid kpis" id="kpis"></div>
+        <div class="split">
+          <div class="card table-wrap"><table><thead><tr><th>Invoice</th><th>Department</th><th>Vendor</th><th>Amount</th><th>Status</th><th>Score</th></tr></thead><tbody id="invoiceRows"></tbody></table></div>
+          <div id="detailPanel" class="card pad"></div>
+        </div>
+      </section>
+      <section id="sopTab" class="hidden">
+        <div class="top"><div><div class="eyebrow"><i class="fa-solid fa-shield-halved"></i> Validation SOP</div><h1>25-point deterministic checklist</h1><p>These SOP rules are the hard controls. Zathura.AI can explain and suggest next steps, but cannot override a failed critical control.</p></div></div>
+        <div class="card pad"><div id="sopList" class="checks" style="max-height:none"></div></div>
+      </section>
+      <section id="createTab" class="hidden">
+        <div class="top"><div><div class="eyebrow"><i class="fa-solid fa-cloud-arrow-up"></i> SAP Ariba Style Entry</div><h1>Create invoice</h1><p>This screen mirrors the common SAP Ariba supplier invoice flow: header details, supplier/PO reference, line item, tax, and supporting justification.</p></div></div>
+        <form id="invoiceForm" class="ariba">
+          <div class="ariba-head"><div><div class="ariba-logo">SAP Ariba</div><div class="ariba-title">Create Invoice: Standard Invoice</div></div><span class="badge unvalidated"><i class="fa-solid fa-pen"></i> Composing</span></div>
+          <div class="ariba-tabs"><span class="on">1 Header</span><span>2 Line Items</span><span>3 Tax</span><span>4 Attachments</span><span>5 Review</span></div>
+          <div class="ariba-body">
+            <div class="ariba-section"><h3>Header Information</h3><div class="inside form-grid">
+              <div class="field"><label>Invoice Number *</label><input id="invoiceNumber" placeholder="NEW-2026-0001"></div>
+              <div class="field"><label>PO Number *</label><input id="poNumber" placeholder="ARB-PO-2026-01100"></div>
+              <div class="field"><label>Invoice Date *</label><input id="invoiceDate" type="date" value="2026-07-01"></div>
+              <div class="field"><label>Department / Cost Center *</label><select id="departmentId"></select></div>
+              <div class="field"><label>Requester Authority *</label><select id="requestorLevel"><option>Team Lead</option><option selected>Manager</option><option>Director</option><option>VP / Head of Department</option></select></div>
+              <div class="field"><label>Requested By *</label><input id="requestedBy" value="Demo User"></div>
+            </div></div>
+            <div class="ariba-section"><h3>Supplier and PO Reference</h3><div class="inside form-grid">
+              <div class="field"><label>Supplier *</label><select id="vendorId"></select></div>
+              <div class="field"><label>Category</label><input id="category" readonly></div>
+              <div class="field"><label>Required By</label><input id="requiredByDate" type="date" value="2026-07-31"></div>
+              <div class="field"><label>Delivery / Service Date</label><input id="deliveryDate" type="date" value="2026-07-20"></div>
+              <div class="field"><label>Approved Budget</label><input id="approvedBudget" type="number" value="50000"></div>
+              <div class="field"><label>Cost Center Balance</label><input id="costCenterRemaining" type="number" value="100000"></div>
+            </div></div>
+            <div class="ariba-section"><h3>Line Item</h3><div class="inside">
+              <table class="line-table"><thead><tr><th>Description</th><th>Qty</th><th>Unit Price</th><th>Tax</th><th>Goods Receipt</th><th>Docs Complete</th></tr></thead><tbody><tr>
+                <td><input id="item" value="New procurement invoice"></td>
+                <td><input id="quantity" type="number" value="1" min="1"></td>
+                <td><input id="unitPrice" type="number" value="850"></td>
+                <td><input id="taxRate" type="number" value="0.18" step="0.01"></td>
+                <td><select id="goodsReceiptConfirmed"><option value="true" selected>Confirmed</option><option value="false">Not Confirmed</option></select></td>
+                <td><select id="documentationComplete"><option value="true" selected>Yes</option><option value="false">No</option></select></td>
+              </tr></tbody></table>
+            </div></div>
+            <div class="ariba-section"><h3>Compliance and Justification</h3><div class="inside form-grid">
+              <div class="field"><label>QA / Regulatory Sign-off</label><select id="regulatorySignoff"><option value="false" selected>No / Not Applicable</option><option value="true">Yes</option></select></div>
+              <div class="field" style="grid-column:span 2"><label>Business Justification</label><textarea id="businessJustification">Business justification entered through SAP Ariba-style invoice creation.</textarea></div>
+            </div></div>
+            <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:18px"><button class="btn btn-secondary" type="reset">Discard</button><button class="btn btn-primary" type="submit"><i class="fa-solid fa-paper-plane"></i> Submit to Zathura.AI Validation</button></div>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+  <div id="toast" class="toast hidden"></div>
+<script>
+const $=(id)=>document.getElementById(id);
+const state={invoices:[],config:null,sop:null,departments:[],vendors:[],selectedId:null,aribaScan:null};
+const money=(n)=>'$'+Math.round(Number(n||0)).toLocaleString('en-US');
+const labelFor=(s)=>({approved:'Approved',rejected:'Rejected',manual_review:'Human Review',unvalidated:'Pending'}[s]||s);
+const iconFor=(s)=>({approved:'fa-circle-check',rejected:'fa-circle-xmark',manual_review:'fa-user-shield',unvalidated:'fa-clock'}[s]||'fa-circle');
+const badge=(s)=>`<span class="badge ${s}"><i class="fa-solid ${iconFor(s)}"></i>${labelFor(s)}</span>`;
+const showToast=(msg)=>{const t=$('toast');t.textContent=msg;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),3200)};
+const fmtTime=(iso)=>iso?new Date(iso).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}):'not yet';
+
+async function api(path, options={}){
+  const res = await fetch(path, { headers:{'Content-Type':'application/json'}, ...options });
+  if(!res.ok){ let m=res.statusText; try{m=(await res.json()).error||m}catch{} throw new Error(m); }
+  return res.json();
+}
+async function boot(){
+  state.config = await api('/api/config');
+  state.sop = await api('/api/sop');
+  state.departments = await api('/api/departments');
+  state.vendors = await api('/api/vendors');
+  await refreshInvoices(false);
+  state.selectedId = state.invoices[0]?.id;
+  hydrateFormOptions();
+  renderAll();
+  const params = new URLSearchParams(location.search);
+  if(params.get('source')) showToast('Opened Procurement Analyst backend dashboard.');
+  setInterval(async()=>{ await scanAriba(false); }, 10*60*1000);
+}
+function hydrateFormOptions(){
+  $('departmentId').innerHTML = state.departments.map(d=>`<option value="${d.id}">${d.name}</option>`).join('');
+  $('vendorId').innerHTML = state.vendors.map(v=>`<option value="${v.id}" data-category="${v.category}" data-price="${v.unitPrice}">${v.name} · ${v.category}</option>`).join('');
+  $('vendorId').addEventListener('change', e=>{ const opt=e.target.selectedOptions[0]; $('category').value=opt.dataset.category; $('unitPrice').value=opt.dataset.price; });
+  $('vendorId').dispatchEvent(new Event('change'));
+}
+async function refreshInvoices(rerender=true){
+  state.invoices=await api('/api/invoices');
+  state.aribaScan=(await api('/api/ariba/status'));
+  if(!state.selectedId && state.invoices[0]) state.selectedId=state.invoices[0].id;
+  if(rerender) renderAll();
+}
+function renderAll(){ renderAribaStatus(); renderKpis(); renderInvoices(); renderDetail(); renderSop(); }
+function renderAribaStatus(){
+  const s=state.aribaScan||{};
+  $('aribaStatusLine').innerHTML=`<i class="fa-solid fa-satellite-dish"></i> Auto-scan every ${s.autoScanEveryMinutes||10} min · Last scan: <b>${fmtTime(s.lastScanAt)}</b> · Next scan: <b>${fmtTime(s.nextScanAt)}</b> · Ariba queue: <b>${s.pendingInAribaQueue ?? 0}</b>`;
+}
+function renderKpis(){
+  const rows=state.invoices; const c=(x)=>rows.filter(i=>i.status===x).length;
+  const scored=rows.filter(x=>x.deterministicScore!==null);
+  const avg=scored.length?Math.round(scored.reduce((s,x)=>s+x.deterministicScore,0)/scored.length):'—';
+  $('kpis').innerHTML=`
+    <div class="card kpi"><span><i class="fa-solid fa-file-invoice"></i>Total Invoices</span><b>${rows.length}</b><small>10 sample + Ariba scans</small></div>
+    <div class="card kpi"><span><i class="fa-solid fa-clock"></i>Pending</span><b>${c('unvalidated')}</b><small>Awaiting validation</small></div>
+    <div class="card kpi"><span><i class="fa-solid fa-circle-check"></i>Approved</span><b>${c('approved')}</b><small>Clean enough for auto-approval</small></div>
+    <div class="card kpi"><span><i class="fa-solid fa-circle-xmark"></i>Rejected</span><b>${c('rejected')}</b><small>Critical SOP failure</small></div>
+    <div class="card kpi"><span><i class="fa-solid fa-user-shield"></i>Human Review</span><b>${c('manual_review')}</b><small>Avg score ${avg}</small></div>`;
+}
+function renderInvoices(){
+  $('invoiceRows').innerHTML=state.invoices.map(inv=>`<tr data-id="${inv.id}" class="${inv.id===state.selectedId?'selected':''}">
+    <td><b class="mono">${inv.invoiceNumber}</b><br><small class="mono">${inv.id}</small></td><td>${inv.departmentName}</td><td>${inv.vendorName}</td><td><b>${money(inv.invoiceTotal)}</b></td><td>${badge(inv.status)}</td><td>${inv.deterministicScore ?? '—'}</td></tr>`).join('');
+  document.querySelectorAll('#invoiceRows tr').forEach(tr=>tr.addEventListener('click',()=>{state.selectedId=tr.dataset.id;renderInvoices();renderDetail();}));
+}
+async function renderDetail(){
+  if(!state.selectedId){ $('detailPanel').innerHTML='<div class="section-h">No invoice selected</div>'; return; }
+  const invoice=await api('/api/invoices/'+state.selectedId);
+  const v=invoice.vendor||{}, d=invoice.department||{};
+  const final=invoice.validation?.final, det=invoice.validation?.deterministic, advisory=invoice.validation?.advisory;
+  const decisionBlock=final?`<div class="decision ${final.decision}"><h3>${badge(final.decision)} <span style="margin-left:8px">${final.blendedConfidence}% confidence</span></h3><p><b>Simple explanation:</b> ${final.simpleExplanation}</p><ul class="plain-list">${(final.simpleReasons||[]).map(r=>`<li>${r}</li>`).join('')}</ul></div>`:`<div class="decision unvalidated"><h3>${badge('unvalidated')}</h3><p>This invoice is pending. Click validate to check vendor, PO, budget, three-way match, documents, and regulatory gates.</p></div>`;
+  const checks=det?det.results.map(c=>`<div class="check ${c.status}"><div class="dot"><i class="fa-solid ${c.status==='pass'?'fa-check':c.status==='warning'?'fa-triangle-exclamation':'fa-xmark'}"></i></div><div><div class="check-title"><span>${String(c.id).padStart(2,'0')} · ${c.name}</span><span class="tag">${c.group}</span>${c.critical?'<span class="tag crit">critical</span>':''}</div><div class="check-note">${c.note}</div></div></div>`).join(''):'<p class="muted">Validation not run yet.</p>';
+  const quotes=invoice.quotationDetails.map(q=>`<div class="quote"><b>${q.vendor?.name||q.vendorId}</b><strong>${money(q.total)}</strong><small>Unit ${money(q.unitPrice)} · ${q.deliveryDays} days</small></div>`).join('');
+  $('detailPanel').innerHTML=`
+    <div class="section-h"><i class="fa-solid fa-file-invoice-dollar" style="color:var(--primary)"></i>${invoice.item}</div>${decisionBlock}
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px">
+      <button class="btn btn-primary" id="validateBtn"><i class="fa-solid fa-robot"></i>Run SOP + Zathura.AI Validation</button>
+      ${invoice.pdfUrl?`<a class="btn btn-secondary" href="${invoice.pdfUrl}" target="_blank"><i class="fa-solid fa-file-pdf"></i>View Invoice PDF</a>`:''}
+      ${invoice.status==='manual_review'?'<button class="btn btn-success" id="approveBtn"><i class="fa-solid fa-check"></i>Manual Approve</button><button class="btn btn-danger" id="rejectBtn"><i class="fa-solid fa-xmark"></i>Manual Reject</button>':''}
+    </div>
+    <div class="meta-grid" style="margin-bottom:16px">
+      <div class="meta"><small>Department</small><b>${d.name||invoice.departmentId}</b></div><div class="meta"><small>Vendor</small><b>${v.name||invoice.vendorId}</b></div>
+      <div class="meta"><small>Invoice Total</small><b>${money(invoice.invoiceTotal)}</b></div><div class="meta"><small>Budget</small><b>${money(invoice.approvedBudget)}</b></div>
+      <div class="meta"><small>PO Number</small><b class="mono">${invoice.poNumber}</b></div><div class="meta"><small>Source</small><b>${invoice.aribaSource||'SAP Ariba'}</b></div>
+    </div>
+    <div class="section-h"><i class="fa-solid fa-store" style="color:var(--primary)"></i>Quotations from approved vendors</div><div class="quotes" style="margin-bottom:18px">${quotes}</div>
+    ${advisory?`<div class="card pad" style="box-shadow:none;background:var(--soft);margin-bottom:16px"><div class="section-h"><i class="fa-solid fa-comments" style="color:var(--primary)"></i>Zathura.AI advisory</div><p style="font-size:13.5px;color:var(--muted)">${advisory.summary}</p><ul class="plain-list">${(advisory.suggestions||[]).map(s=>`<li>${s}</li>`).join('')}</ul></div>`:''}
+    <div class="section-h"><i class="fa-solid fa-list-check" style="color:var(--primary)"></i>25 SOP validation checks</div><div class="checks">${checks}</div>`;
+  $('validateBtn').addEventListener('click', validateSelected);
+  $('approveBtn')?.addEventListener('click',()=>manualDecision('approved'));
+  $('rejectBtn')?.addEventListener('click',()=>manualDecision('rejected'));
+}
+function renderSop(){
+  $('sopList').innerHTML=state.sop.checks.map(c=>`<div class="check pass"><div class="dot"><i class="fa-solid fa-check"></i></div><div><div class="check-title"><span>${String(c.id).padStart(2,'0')} · ${c.name}</span><span class="tag">${c.group}</span>${c.critical?'<span class="tag crit">critical</span>':''}<span class="tag">weight ${c.weight}</span></div><div class="check-note">${c.description}</div></div></div>`).join('');
+}
+async function validateSelected(){
+  const btn=$('validateBtn'); btn.disabled=true; btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i>Validating...';
+  const updated=await api('/api/invoices/'+state.selectedId+'/validate',{method:'POST',body:'{}'});
+  await refreshInvoices(); showToast(`Decision: ${labelFor(updated.status)}`);
+}
+async function manualDecision(decision){
+  await api('/api/invoices/'+state.selectedId+'/manual-review',{method:'POST',body:JSON.stringify({decision,reviewer:'Procurement Team',comment:'Manual decision from demo UI'})});
+  await refreshInvoices(); showToast(`Manual ${labelFor(decision)} completed`);
+}
+$('runAllBtn').addEventListener('click', async()=>{
+  $('runAllBtn').disabled=true; $('runAllBtn').innerHTML='<i class="fa-solid fa-spinner fa-spin"></i>Validating all...';
+  const result=await api('/api/invoices/validate-all',{method:'POST',body:'{}'});
+  $('runAllBtn').disabled=false; $('runAllBtn').innerHTML='<i class="fa-solid fa-robot"></i> Validate All';
+  await refreshInvoices(); showToast(`Validated ${result.counts.total} invoices: ${result.counts.approved} approved, ${result.counts.rejected} rejected, ${result.counts.manual_review} human review`);
+});
+async function scanAriba(show=true){
+  const result=await api('/api/ariba/scan',{method:'POST',body:'{}'});
+  await refreshInvoices();
+  if(show) showToast(result.addedCount?`SAP Ariba scan added ${result.addedCount} invoice to pending list`:'SAP Ariba scan complete. No new invoices found.');
+}
+$('scanAribaBtn').addEventListener('click',()=>scanAriba(true));
+$('resetBtn').addEventListener('click',async()=>{await api('/api/reset',{method:'POST',body:'{}'});state.selectedId=null;await refreshInvoices();showToast('Demo reset to 10 sample invoices')});
+document.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.classList.remove('active'));btn.classList.add('active');['workspace','sop','create'].forEach(t=>$(t+'Tab').classList.toggle('hidden',t!==btn.dataset.tab));}));
+$('invoiceForm').addEventListener('submit',async(e)=>{
+  e.preventDefault();
+  const ids=['invoiceNumber','poNumber','invoiceDate','departmentId','vendorId','category','item','quantity','unitPrice','taxRate','approvedBudget','costCenterRemaining','requiredByDate','deliveryDate','requestorLevel','requestedBy','businessJustification','regulatorySignoff','documentationComplete','goodsReceiptConfirmed'];
+  const payload=ids.reduce((a,id)=>{a[id]=$(id).value;return a;},{});
+  payload.regulatorySignoff=payload.regulatorySignoff==='true'; payload.documentationComplete=payload.documentationComplete==='true'; payload.goodsReceiptConfirmed=payload.goodsReceiptConfirmed==='true';
+  const qty=Number(payload.quantity), unit=Number(payload.unitPrice), tax=Number(payload.taxRate||0.18), invoiceTotal=Math.round(qty*unit*(1+tax)*100)/100;
+  payload.invoiceTotal=invoiceTotal; payload.poQuantity=qty; payload.poUnitPrice=unit; payload.poVendorId=payload.vendorId;
+  payload.quotations=[{vendorId:payload.vendorId,unitPrice:unit,total:invoiceTotal,deliveryDays:10}];
+  const created=await api('/api/invoices',{method:'POST',body:JSON.stringify(payload)});
+  state.selectedId=created.id; await api('/api/invoices/'+created.id+'/validate',{method:'POST',body:'{}'}); await refreshInvoices();
+  document.querySelector('[data-tab="workspace"]').click(); showToast('Invoice created from SAP Ariba-style form and validated');
+});
+boot().catch(err=>{console.error(err);document.body.innerHTML='<pre style="padding:24px;color:#b91c1c">Failed to load backend API. Run: npm start\n\n'+err.message+'</pre>'});
+</script>
+</body>
+</html>

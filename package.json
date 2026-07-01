@@ -1,0 +1,14 @@
+{
+  "name": "zathura-ai-procurement-backend-no-install",
+  "version": "1.0.2",
+  "description": "Zathura.AI Procurement Analyst MVP with SAP Ariba-style invoices and no npm install required.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

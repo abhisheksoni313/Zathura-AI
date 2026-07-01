@@ -1,0 +1,228 @@
+{
+  "name": "Zathura.AI Procurement Validation SOP",
+  "version": "1.0",
+  "deterministicWeight": 0.8,
+  "llmWeight": 0.2,
+  "decisionPolicy": {
+    "autoApprove": "No critical fail, deterministic score >= 92, and warning count <= 2.",
+    "autoReject": "Any critical gate fails, or deterministic score < 60.",
+    "humanIntervention": "No critical fail, but deterministic score below auto-approval threshold or warnings need human judgement.",
+    "advisoryGuardrail": "Zathura.AI can summarize, suggest remediation, and classify severity, but cannot override critical SOP gates. Final decision is anchored to deterministic SOP results."
+  },
+  "authorityLimits": {
+    "Team Lead": 10000,
+    "Manager": 50000,
+    "Director": 250000,
+    "VP / Head of Department": 1000000
+  },
+  "regulatedCategory": "Active Pharmaceutical Ingredients & Raw Materials",
+  "insuranceRequiredCategories": [
+    "Lab Equipment & Reagents",
+    "Active Pharmaceutical Ingredients & Raw Materials",
+    "Logistics & Packaging",
+    "Facilities & Office Supplies",
+    "IT Hardware & Software"
+  ],
+  "checks": [
+    {
+      "id": 1,
+      "group": "Vendor Compliance",
+      "name": "Vendor on Approved Master List",
+      "critical": true,
+      "weight": 4,
+      "description": "Supplier must exist in the organization's approved vendor master for the invoice category."
+    },
+    {
+      "id": 2,
+      "group": "Vendor Compliance",
+      "name": "Vendor Compliance Status Active",
+      "critical": false,
+      "weight": 3,
+      "description": "Vendor compliance status should be Active; review/probation requires procurement attention."
+    },
+    {
+      "id": 3,
+      "group": "Vendor Compliance",
+      "name": "Vendor Certification Validity",
+      "critical": false,
+      "weight": 3,
+      "description": "Certifications must be valid through the delivery or service completion date."
+    },
+    {
+      "id": 4,
+      "group": "Vendor Compliance",
+      "name": "Vendor Tax Registration Valid",
+      "critical": true,
+      "weight": 4,
+      "description": "GST/PAN/tax registration must be current and verified."
+    },
+    {
+      "id": 5,
+      "group": "Vendor Compliance",
+      "name": "Vendor Banking Details Verified",
+      "critical": false,
+      "weight": 2,
+      "description": "Vendor bank account must be verified before payment release."
+    },
+    {
+      "id": 6,
+      "group": "Vendor Compliance",
+      "name": "Denied-Party / Sanctions Screening",
+      "critical": true,
+      "weight": 5,
+      "description": "No sanctions, embargo, or denied-party screening match is allowed."
+    },
+    {
+      "id": 7,
+      "group": "Vendor Compliance",
+      "name": "Insurance & Liability Coverage",
+      "critical": false,
+      "weight": 2,
+      "description": "Current insurance must be on file for risk-bearing categories."
+    },
+    {
+      "id": 8,
+      "group": "Financial Governance",
+      "name": "Invoice Within Approved Budget",
+      "critical": true,
+      "weight": 5,
+      "description": "Invoice total must not exceed the approved department budget beyond tolerance."
+    },
+    {
+      "id": 9,
+      "group": "Financial Governance",
+      "name": "Price Variance vs Market Benchmark",
+      "critical": false,
+      "weight": 3,
+      "description": "Unit price variance should stay within +/-15% of benchmark or historical quotation."
+    },
+    {
+      "id": 10,
+      "group": "Financial Governance",
+      "name": "Minimum Competitive Quotations Obtained",
+      "critical": false,
+      "weight": 3,
+      "description": "At least three compliant quotations are expected above the micro-purchase threshold."
+    },
+    {
+      "id": 11,
+      "group": "Financial Governance",
+      "name": "Lowest-Cost Vendor Selected / Justified",
+      "critical": false,
+      "weight": 3,
+      "description": "If the lowest quote is not selected, justification must be documented."
+    },
+    {
+      "id": 12,
+      "group": "Financial Governance",
+      "name": "Cost Center Has Sufficient Budget Balance",
+      "critical": true,
+      "weight": 5,
+      "description": "The department cost center must have sufficient balance."
+    },
+    {
+      "id": 13,
+      "group": "Financial Governance",
+      "name": "Payment Terms Within Company Policy",
+      "critical": false,
+      "weight": 2,
+      "description": "Payment terms should be within Net 30 to Net 90 unless approved."
+    },
+    {
+      "id": 14,
+      "group": "Process & Authority",
+      "name": "Delegation of Authority Matches Invoice Value",
+      "critical": false,
+      "weight": 3,
+      "description": "Requester authority level must be sufficient for the total invoice value."
+    },
+    {
+      "id": 15,
+      "group": "Process & Authority",
+      "name": "No Duplicate Invoice or Request",
+      "critical": false,
+      "weight": 3,
+      "description": "No duplicate invoice number or similar department request in the last 30 days."
+    },
+    {
+      "id": 16,
+      "group": "Process & Authority",
+      "name": "Master Agreement / Contract on File",
+      "critical": false,
+      "weight": 2,
+      "description": "An active agreement should exist for recurring vendor-category spend."
+    },
+    {
+      "id": 17,
+      "group": "Process & Authority",
+      "name": "Delivery Timeline Meets Required-By Date",
+      "critical": false,
+      "weight": 2,
+      "description": "Vendor delivery or service date should meet the business required-by date."
+    },
+    {
+      "id": 18,
+      "group": "Process & Authority",
+      "name": "Category Matches Department Procurement Scope",
+      "critical": false,
+      "weight": 2,
+      "description": "The requested category should belong to the department's approved procurement scope."
+    },
+    {
+      "id": 19,
+      "group": "Process & Authority",
+      "name": "No Conflict of Interest Flagged",
+      "critical": true,
+      "weight": 5,
+      "description": "No COI relationship may exist between vendor and organization stakeholders."
+    },
+    {
+      "id": 20,
+      "group": "Regulatory",
+      "name": "Regulatory / QA Sign-Off for Controlled Categories",
+      "critical": true,
+      "weight": 5,
+      "description": "Controlled raw materials, API, and regulated lab inputs need QA/regulatory sign-off."
+    },
+    {
+      "id": 21,
+      "group": "Regulatory",
+      "name": "Cross-Border Currency & Incoterms Validity",
+      "critical": false,
+      "weight": 2,
+      "description": "International invoices need currency, tax, and Incoterms validation."
+    },
+    {
+      "id": 22,
+      "group": "Regulatory",
+      "name": "ESG / Sustainability Threshold",
+      "critical": false,
+      "weight": 2,
+      "description": "Vendor ESG score should meet the minimum threshold of 60."
+    },
+    {
+      "id": 23,
+      "group": "Data Integrity",
+      "name": "Vendor Historical Performance",
+      "critical": false,
+      "weight": 3,
+      "description": "Vendor on-time delivery and quality performance should meet thresholds."
+    },
+    {
+      "id": 24,
+      "group": "Data Integrity",
+      "name": "Three-Way Match Data Consistency",
+      "critical": false,
+      "weight": 4,
+      "description": "PO, GRN/service confirmation, and invoice should match quantity, price, tax, and vendor."
+    },
+    {
+      "id": 25,
+      "group": "Data Integrity",
+      "name": "Required Documentation Complete",
+      "critical": false,
+      "weight": 3,
+      "description": "Invoice, quotation, business justification, and supporting documents must be complete."
+    }
+  ]
+}

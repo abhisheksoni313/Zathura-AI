@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zathura.AI — Procurement Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<style>
+  :root{
+    --primary:#4d7df3; --primary-dark:#2f63e8; --primary-deep:#1e3a8a;
+    --text:#0f172a; --muted:#64748b; --faint:#94a3b8; --line:#e5e7eb;
+    --bg:#f6f8fc; --card:#ffffff; --soft:#f8fafc;
+    --success:#16a34a; --success-bg:#ecfdf3; --success-line:#bbf7d0;
+    --warning:#b45309; --warning-bg:#fffbeb; --warning-line:#fde68a;
+    --danger:#dc2626; --danger-bg:#fef2f2; --danger-line:#fecaca;
+    --info-bg:#eef3ff;
+    --radius:16px; --radius-sm:10px; --radius-lg:22px;
+    --shadow:0 1px 2px rgba(15,23,42,.05), 0 1px 1px rgba(15,23,42,.03);
+    --shadow-lg:0 18px 44px rgba(15,23,42,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'DM Sans',ui-sans-serif,system-ui,sans-serif;
+    color:var(--text); background:var(--bg); line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Sora',sans-serif; letter-spacing:-0.01em;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  input,select,textarea{font-family:inherit; font-size:14px;}
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
+
+  /* ===== layout ===== */
+  #app{display:flex; min-height:100vh;}
+  .sidebar{
+    width:252px; flex:0 0 252px; background:#0f1830; color:#e2e8f7;
+    display:flex; flex-direction:column; position:sticky; top:0; height:100vh;
+  }
+  .sidebar-brand{padding:22px 20px 16px; display:flex; align-items:center; gap:10px; border-bottom:1px solid rgba(255,255,255,.08);}
+  .sidebar-brand .mark{
+    width:34px;height:34px;border-radius:10px;
+    background:linear-gradient(135deg,var(--primary),#8a6df9);
+    display:flex;align-items:center;justify-content:center; font-family:'Sora'; font-weight:800; color:#fff; font-size:15px; flex:0 0 auto;
+  }
+  .sidebar-brand .name{font-family:'Sora'; font-weight:800; font-size:16px; color:#fff;}
+  .sidebar-brand .sub{font-size:10.5px; color:#94a3c4; letter-spacing:.04em; text-transform:uppercase; font-weight:600;}
+  .sidebar-back{padding:10px 20px; font-size:12px; color:#8da0c9; border-bottom:1px solid rgba(255,255,255,.08);}
+  .sidebar-back:hover{color:#fff;}
+  .nav-group{padding:14px 12px;}
+  .nav-label{font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:#5f7299; font-weight:700; padding:10px 10px 6px;}
+  .nav-item{
+    display:flex; align-items:center; gap:11px; padding:10px 12px; border-radius:10px;
+    color:#c4d0ec; font-size:14px; font-weight:500; cursor:pointer; transition:background .15s,color .15s; margin-bottom:2px;
+  }
+  .nav-item i{width:16px; text-align:center; color:#7c8db8; font-size:14px;}
+  .nav-item:hover{background:rgba(255,255,255,.06); color:#fff;}
+  .nav-item.active{background:linear-gradient(135deg,var(--primary),var(--primary-dark)); color:#fff; box-shadow:0 6px 16px rgba(77,125,243,.35);}
+  .nav-item.active i{color:#fff;}
+  .nav-badge{margin-left:auto; background:rgba(255,255,255,.14); padding:1px 8px; border-radius:999px; font-size:11px; font-weight:700;}
+  .nav-item.active .nav-badge{background:rgba(255,255,255,.25);}
+  .nav-badge.danger{background:var(--danger); color:#fff;}
+  .sidebar-foot{margin-top:auto; padding:14px 20px; border-top:1px solid rgba(255,255,255,.08); font-size:11.5px; color:#5f7299;}
+  .sidebar-foot button{background:none; border:none; color:#7c8db8; font-size:11.5px; padding:0; text-decoration:underline; text-underline-offset:2px;}
+  .sidebar-foot button:hover{color:#fff;}
+
+  .main{flex:1; min-width:0; padding:32px 38px 60px;}
+  .page-head{display:flex; align-items:flex-start; justify-content:space-between; gap:20px; margin-bottom:26px; flex-wrap:wrap;}
+  .page-head h1{font-size:25px; font-weight:800;}
+  .page-head p{color:var(--muted); font-size:14px; margin-top:4px; max-width:620px;}
+  .eyebrow{display:inline-flex; align-items:center; gap:7px; padding:5px 11px; border:1px solid rgba(77,125,243,.22); border-radius:999px; color:var(--primary-dark); background:rgba(77,125,243,.07); font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; margin-bottom:10px;}
+
+  /* ===== buttons ===== */
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; height:42px; padding:0 18px; border-radius:10px; border:1.5px solid transparent; font-size:13.5px; font-weight:600; transition:.15s;}
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-dark)); color:#fff; box-shadow:0 8px 20px rgba(77,125,243,.30);}
+  .btn-secondary{background:#fff; border-color:var(--line); color:var(--text);}
+  .btn-secondary:hover{border-color:var(--primary); color:var(--primary);}
+  .btn-ghost{background:transparent; border-color:transparent; color:var(--muted); height:36px; padding:0 10px;}
+  .btn-ghost:hover{color:var(--text); background:var(--soft);}
+  .btn-success{background:var(--success); color:#fff;}
+  .btn-danger{background:#fff; border-color:var(--danger-line); color:var(--danger);}
+  .btn-danger:hover{background:var(--danger-bg);}
+  .btn:disabled{opacity:.45; cursor:not-allowed; transform:none;}
+  .btn-sm{height:34px; padding:0 13px; font-size:12.5px; border-radius:9px;}
+
+  /* ===== cards/grid ===== */
+  .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow);}
+  .pad{padding:22px;}
+  .grid{display:grid; gap:16px;}
+  .kpi-row{grid-template-columns:repeat(4,1fr);}
+  .kpi{padding:20px 20px 18px;}
+  .kpi .label{font-size:12px; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:.04em; display:flex; align-items:center; gap:7px;}
+  .kpi .value{font-family:'Sora'; font-size:30px; font-weight:800; margin-top:8px;}
+  .kpi .delta{font-size:12px; margin-top:6px; color:var(--muted);}
+  .kpi .icon-badge{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;}
+
+  @media (max-width:1180px){.kpi-row{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:760px){#app{flex-direction:column;} .sidebar{position:relative; width:100%; height:auto;} .main{padding:22px;} .kpi-row{grid-template-columns:1fr;}}
+
+  /* ===== badges ===== */
+  .badge{display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:999px; font-size:11.5px; font-weight:700; white-space:nowrap;}
+  .badge.b-success{background:var(--success-bg); color:var(--success); border:1px solid var(--success-line);}
+  .badge.b-warning{background:var(--warning-bg); color:var(--warning); border:1px solid var(--warning-line);}
+  .badge.b-danger{background:var(--danger-bg); color:var(--danger); border:1px solid var(--danger-line);}
+  .badge.b-info{background:var(--info-bg); color:var(--primary-dark); border:1px solid rgba(77,125,243,.22);}
+  .badge.b-neutral{background:var(--soft); color:var(--muted); border:1px solid var(--line);}
+  .badge.b-dot::before{content:""; width:6px; height:6px; border-radius:50%; background:currentColor;}
+
+  /* ===== tables ===== */
+  table{width:100%; border-collapse:collapse;}
+  .table-card{overflow-x:auto;}
+  th{text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:700; padding:12px 16px; border-bottom:1px solid var(--line); white-space:nowrap;}
+  td{padding:14px 16px; border-bottom:1px solid var(--line); font-size:13.5px; vertical-align:middle;}
+  tr:last-child td{border-bottom:none;}
+  tbody tr{transition:background .12s;}
+  tbody tr.clickable{cursor:pointer;}
+  tbody tr.clickable:hover{background:var(--soft);}
+  .cell-strong{font-weight:700;}
+  .cell-muted{color:var(--muted); font-size:12.5px;}
+
+  /* ===== forms ===== */
+  .field{margin-bottom:16px;}
+  .field label{display:block; font-size:12.5px; font-weight:700; color:var(--text); margin-bottom:6px;}
+  .field .hint{font-size:11.5px; color:var(--faint); margin-top:5px;}
+  .field input[type=text],.field input[type=number],.field input[type=date],.field select,.field textarea{
+    width:100%; height:42px; padding:0 13px; border:1.5px solid var(--line); border-radius:10px; background:#fff; color:var(--text); transition:border-color .15s;
+  }
+  .field textarea{height:auto; padding:11px 13px; resize:vertical; min-height:80px;}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none; border-color:var(--primary);}
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media (max-width:680px){.field-row{grid-template-columns:1fr;}}
+  .checkbox-row{display:flex; align-items:flex-start; gap:10px; background:var(--soft); border:1px solid var(--line); border-radius:10px; padding:13px;}
+  .checkbox-row input{margin-top:3px;}
+  .checkbox-row .ct{font-size:13px; font-weight:600;}
+  .checkbox-row .cd{font-size:12px; color:var(--muted); margin-top:2px;}
+
+  /* ===== steps ===== */
+  .steps{display:flex; gap:8px; margin-bottom:26px; flex-wrap:wrap;}
+  .step{display:flex; align-items:center; gap:9px; padding:9px 16px 9px 10px; border-radius:999px; background:#fff; border:1px solid var(--line); font-size:12.5px; font-weight:700; color:var(--faint);}
+  .step .num{width:22px;height:22px;border-radius:50%; background:var(--soft); color:var(--faint); display:flex; align-items:center; justify-content:center; font-size:11px;}
+  .step.active{border-color:var(--primary); color:var(--primary-dark); background:var(--info-bg);}
+  .step.active .num{background:var(--primary); color:#fff;}
+  .step.done{color:var(--success);}
+  .step.done .num{background:var(--success); color:#fff;}
+
+  /* ===== quotation comparison ===== */
+  .quote-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:18px 0;}
+  @media (max-width:900px){.quote-grid{grid-template-columns:1fr;}}
+  .quote-card{border:2px solid var(--line); border-radius:var(--radius); padding:18px; cursor:pointer; transition:.15s; position:relative; background:#fff;}
+  .quote-card:hover{border-color:#c7d6fb;}
+  .quote-card.selected{border-color:var(--primary); box-shadow:0 0 0 4px rgba(77,125,243,.12);}
+  .quote-card.lowest::after{content:"Lowest price"; position:absolute; top:-11px; left:16px; background:var(--success); color:#fff; font-size:10.5px; font-weight:700; padding:3px 9px; border-radius:999px;}
+  .quote-vname{font-family:'Sora'; font-weight:700; font-size:15px; margin-bottom:3px;}
+  .quote-price{font-family:'Sora'; font-size:24px; font-weight:800; margin:10px 0 2px;}
+  .quote-meta{font-size:12px; color:var(--muted); display:flex; flex-direction:column; gap:4px; margin-top:10px;}
+  .quote-meta span i{width:14px; color:var(--faint); margin-right:5px;}
+  .quote-radio{position:absolute; top:16px; right:16px; width:19px; height:19px; border-radius:50%; border:2px solid var(--line); background:#fff;}
+  .quote-card.selected .quote-radio{border-color:var(--primary); background:var(--primary); box-shadow:inset 0 0 0 3px #fff;}
+
+  /* ===== AI console ===== */
+  .console{
+    background:#0c1226; border-radius:var(--radius-lg); padding:22px 22px 8px; margin:20px 0;
+    border:1px solid #1c2647; box-shadow:var(--shadow-lg);
+  }
+  .console-head{display:flex; align-items:center; gap:10px; padding-bottom:16px; margin-bottom:10px; border-bottom:1px solid #1c2647;}
+  .console-dot{width:9px;height:9px;border-radius:50%; background:var(--primary); box-shadow:0 0 0 3px rgba(77,125,243,.25);}
+  .console-title{font-family:'JetBrains Mono'; color:#dce4f7; font-size:12.5px; font-weight:600;}
+  .console-sub{font-family:'JetBrains Mono'; color:#5d6c93; font-size:11px; margin-left:auto;}
+  .check-row{display:flex; align-items:flex-start; gap:11px; padding:8px 6px; border-radius:8px; opacity:0; transform:translateY(4px); animation:rowIn .35s ease forwards; animation-delay:calc(var(--i) * 70ms);}
+  @keyframes rowIn{to{opacity:1; transform:translateY(0);}}
+  .check-icon{width:19px;height:19px;border-radius:50%; flex:0 0 auto; display:flex; align-items:center; justify-content:center; font-size:10px; margin-top:1px;}
+  .check-icon.pass{background:rgba(22,163,74,.18); color:#4ade80;}
+  .check-icon.warning{background:rgba(217,119,6,.18); color:#fbbf24;}
+  .check-icon.fail{background:rgba(220,38,38,.2); color:#f87171;}
+  .check-body{flex:1; min-width:0;}
+  .check-top{display:flex; align-items:center; gap:9px; flex-wrap:wrap;}
+  .check-name{font-family:'JetBrains Mono'; font-size:12.5px; color:#e7ecf9; font-weight:500;}
+  .check-tag{font-family:'JetBrains Mono'; font-size:9.5px; color:#5d6c93; text-transform:uppercase; letter-spacing:.04em; border:1px solid #232f57; padding:1px 6px; border-radius:5px;}
+  .check-crit{font-family:'JetBrains Mono'; font-size:9.5px; color:#fca5a5; border:1px solid #4a2330; background:rgba(220,38,38,.12); padding:1px 6px; border-radius:5px;}
+  .check-note{font-family:'JetBrains Mono'; font-size:11.5px; color:#7e8bb0; margin-top:2px; line-height:1.5;}
+  .console-progress{height:3px; background:#1c2647; border-radius:99px; overflow:hidden; margin:14px 0 18px;}
+  .console-progress-bar{height:100%; background:linear-gradient(90deg,var(--primary),#8a6df9); width:0%; transition:width 2s cubic-bezier(.2,.7,.3,1);}
+
+  .verdict{margin:10px 0 18px; border-radius:var(--radius); padding:20px; opacity:0; transform:translateY(8px); transition:opacity .4s, transform .4s;}
+  .verdict.show{opacity:1; transform:translateY(0);}
+  .verdict.approved{background:var(--success-bg); border:1px solid var(--success-line);}
+  .verdict.rejected{background:var(--danger-bg); border:1px solid var(--danger-line);}
+  .verdict.manual_review{background:var(--warning-bg); border:1px solid var(--warning-line);}
+  .verdict-top{display:flex; align-items:center; gap:12px;}
+  .verdict-icon{width:42px;height:42px;border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:18px; flex:0 0 auto;}
+  .verdict.approved .verdict-icon{background:var(--success); color:#fff;}
+  .verdict.rejected .verdict-icon{background:var(--danger); color:#fff;}
+  .verdict.manual_review .verdict-icon{background:var(--warning); color:#fff;}
+  .verdict-title{font-family:'Sora'; font-weight:800; font-size:17px;}
+  .verdict.approved .verdict-title{color:#15803d;}
+  .verdict.rejected .verdict-title{color:#b91c1c;}
+  .verdict.manual_review .verdict-title{color:#92400e;}
+  .verdict-conf{font-size:12px; color:var(--muted); margin-top:1px;}
+  .verdict-text{font-size:13.5px; color:#334155; margin-top:12px; line-height:1.6;}
+  .verdict-stats{display:flex; gap:18px; margin-top:14px; flex-wrap:wrap;}
+  .verdict-stat{font-size:12px; color:var(--muted);}
+  .verdict-stat b{color:var(--text); font-family:'JetBrains Mono';}
+
+  /* ===== detail page ===== */
+  .detail-grid{display:grid; grid-template-columns:1.6fr 1fr; gap:20px; align-items:start;}
+  @media (max-width:980px){.detail-grid{grid-template-columns:1fr;}}
+  .info-list{display:grid; grid-template-columns:1fr 1fr; gap:14px 20px;}
+  .info-item .il{font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:var(--faint); font-weight:700; margin-bottom:3px;}
+  .info-item .iv{font-size:13.5px; font-weight:600;}
+  .section-h{font-family:'Sora'; font-size:14px; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px;}
+  .timeline{display:flex; flex-direction:column; gap:0;}
+  .tl-item{display:flex; gap:12px; padding-bottom:18px; position:relative;}
+  .tl-item:not(:last-child)::before{content:""; position:absolute; left:8px; top:20px; bottom:0; width:1.5px; background:var(--line);}
+  .tl-dot{width:17px;height:17px;border-radius:50%; background:var(--info-bg); border:2px solid var(--primary); flex:0 0 auto; margin-top:2px;}
+  .tl-body .tt{font-size:13px; font-weight:700;}
+  .tl-body .tm{font-size:11.5px; color:var(--muted); margin-top:2px;}
+  .tl-body .ts{font-size:10.5px; color:var(--faint); font-family:'JetBrains Mono'; margin-top:4px;}
+
+  .checklist-static .check-row{animation:none; opacity:1; transform:none;}
+  .checklist-static{background:#0c1226; border-radius:var(--radius); padding:14px 16px;}
+
+  .empty-state{text-align:center; padding:60px 20px; color:var(--muted);}
+  .empty-state i{font-size:34px; color:var(--faint); margin-bottom:14px;}
+  .empty-state h3{font-family:'Sora'; font-size:16px; color:var(--text); margin-bottom:6px;}
+
+  .filter-bar{display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;}
+  .filter-chip{padding:7px 14px; border-radius:999px; border:1px solid var(--line); background:#fff; font-size:12.5px; font-weight:600; color:var(--muted); cursor:pointer; transition:.15s;}
+  .filter-chip:hover{border-color:var(--primary); color:var(--primary);}
+  .filter-chip.active{background:var(--text); color:#fff; border-color:var(--text);}
+
+  .progress-bar{height:8px; background:var(--soft); border-radius:99px; overflow:hidden; border:1px solid var(--line);}
+  .progress-bar-fill{height:100%; border-radius:99px;}
+
+  .toast-wrap{position:fixed; top:20px; right:20px; z-index:999; display:flex; flex-direction:column; gap:10px;}
+  .toast{background:var(--text); color:#fff; padding:13px 18px; border-radius:10px; font-size:13px; font-weight:600; box-shadow:var(--shadow-lg); display:flex; align-items:center; gap:10px; animation:toastIn .25s ease;}
+  @keyframes toastIn{from{opacity:0; transform:translateX(20px);} to{opacity:1; transform:translateX(0);}}
+  .toast i{color:#4ade80;}
+
+  .reviewer-box{background:var(--soft); border:1px solid var(--line); border-radius:var(--radius); padding:16px;}
+  .vendor-cat-head{display:flex; align-items:center; justify-content:space-between; margin:26px 0 12px;}
+  .vendor-cat-head:first-child{margin-top:0;}
+  .scroll-x{overflow-x:auto;}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+/* =========================================================================
+   ZATHURA.AI — PROCUREMENT INTELLIGENCE
+   Single-file simulated backend: department procurement requests, vendor
+   quotations, SAP Ariba sync representation, and an AI validation agent
+   that runs a 25-point checklist to auto-approve, auto-reject, or route
+   requests to the human procurement team for manual review.
+
+   Data persists via window.storage as SHARED data — every person who opens
+   this app sees the same organization-wide workspace (vendors, requests,
+   budgets), simulating a real shared company backend.
+   ========================================================================= */
+
+/* ---------------------------- reference data ---------------------------- */
+
+const DEPARTMENTS = [
+  {id:'IT',  name:'IT Department',          icon:'fa-server',        categories:['IT Hardware & Software','Cloud & SaaS Subscriptions']},
+  {id:'COM', name:'Commercial Department',  icon:'fa-handshake',     categories:['Marketing & Commercial Services','Logistics & Packaging']},
+  {id:'LEG', name:'Legal Department',       icon:'fa-scale-balanced',categories:['Legal & Compliance Services']},
+  {id:'DD',  name:'Drug Discovery',         icon:'fa-flask',         categories:['Active Pharmaceutical Ingredients & Raw Materials','Lab Equipment & Reagents']},
+  {id:'RD',  name:'R&D Department',         icon:'fa-microscope',    categories:['Lab Equipment & Reagents','IT Hardware & Software']},
+  {id:'FIN', name:'Finance & Accounts',     icon:'fa-coins',         categories:['Legal & Compliance Services','Cloud & SaaS Subscriptions']},
+  {id:'OPS', name:'Operations & Facilities',icon:'fa-building',      categories:['Facilities & Office Supplies','Logistics & Packaging']},
+  {id:'MFG', name:'Manufacturing & QA',     icon:'fa-industry',      categories:['Active Pharmaceutical Ingredients & Raw Materials','Facilities & Office Supplies']},
+];
+
+const ALL_CATEGORIES = [...new Set(DEPARTMENTS.flatMap(d=>d.categories))];
+const REGULATED_CATEGORY = 'Active Pharmaceutical Ingredients & Raw Materials';
+const INSURANCE_REQUIRED_CATEGORIES = ['Lab Equipment & Reagents','Active Pharmaceutical Ingredients & Raw Materials','Logistics & Packaging','Facilities & Office Supplies','IT Hardware & Software'];
+
+const AUTHORITY_LIMITS = {'Team Lead':10000,'Manager':50000,'Director':250000,'VP / Head of Department':1000000};
+
+const VENDOR_SEED = [
+  // IT Hardware & Software
+  {id:'V01',name:'NexaCore Technologies',category:'IT Hardware & Software',complianceStatus:'Active',certExpiry:'2027-03-01',gstValid:true,bankVerified:true,sanctionsClear:true,insuranceValid:true,contractOnFile:true,esgScore:74,onTimeDelivery:92,qualityReject:1.2,paymentTermsDays:45,avgDeliveryDays:10,unitPrice:850,region:'Domestic',coiFlag:false},
+  {id:'V02',name:'Veridian Systems',category:'IT Hardware & Software',complianceStatus:'Active',certExpiry:'2026-08-15',gstValid:true,bankVerified:true,sanctionsClear:true,insuranceValid:true,contractOnFile:true,esgScore:68,onTimeDelivery:88,qualityReject:2.0,paymentTermsDays:30,avgDeliveryDays:14,unitPrice:900,region:'Domestic',coiFlag:false},
+  {id:'V03',name:'Pacific Circuit Supplies',category:'IT Hardware & Software',complianceStatus:'Compliance Review',certExpiry:'2026-07-18',gstValid:true,bankVerified:false,sanctionsClear:true,insuranceValid:false,contractOnFile:false,esgScore:51,onTimeDelivery:79,qualityReject:4.5,paymentTermsDays:60,avgDeliveryDays:21,unitPrice:780,region:'International',coiFlag:false},
+  // Cloud & SaaS Subscriptions
+  {id:'V04',name:'Orbital Cloud Inc.',category:'Cloud & SaaS Subscriptions',complianceStatus:'Active',certExpiry:'2027-01-01',gstValid:true,bankVerified:true,sanctionsClear:true,insuranceValid:true,contractOnFile:true,esgScore:80,onTimeDelivery:95,qualityReject:0.5,paymentTermsDays:30,avgDeliveryDays:2,unitPrice:1200,region:'Domestic',coiFlag:false},
+  {id:'V05',name:'Helios DataWorks',category:'Cloud & SaaS Subscriptions',complianceStatus:'Active',certExpiry:'2026-12-01',gstValid:true,bankVerified:true,sanctionsClear:true,insuranceValid:true,contractOnFile:true,esgScore:71,onTimeDelivery:90,qualityReject:1.0,paymentTermsDays:45,avgDeliveryDays:3,unitPrice:1350,region:'Domestic',coiFlag:false},
+  {id:'V06',name:'Quantra SaaS Solutions',category:'Cloud & SaaS Subscriptions',complianceStatus:'Probation',certExpiry:'2026-06-20',gstValid:false,bankVerified:true,sanctionsClear:true,insuranceValid:true,contractOnFile:false,esgScore:58,onTimeDelivery:81,qualityReject:3.2,paymentTermsDays:90,avgDeliveryDays:1,unitPrice:1100,region:'International',coiFlag:false},
+  // Active Pharmaceutical Ingredients & Raw Materials
+  {id:'V07',name:'MedSynth Pharma Ingredients',category:'Active Pharmaceutical Ingredients & Raw Materials',complianceStatus:'Active',certExpiry:'2027-05-01',gstValid:true,bankVerified:true,sanctionsClear:true,insuranceValid:true,contractOnFile:true,esgScore:77,onTimeDelivery:91,qualityReject:1.5,paymentTermsDays:45,avgDeliveryDays:30,unitPrice:4200,region:'International',coiFlag:false},
+  {id:'V08',name:'BioElement Raw Materials',category:'Active Pharmaceutical Ingredients & Raw Materials',complianceStatus:'Active',certExpiry:'2026-09-30',gstValid:true,bankVerified:true,sanctionsClear:true,insuranceValid:true,contractOnFile:true,esgScore:65,onTimeDelivery:86,qualityReject:2.8,paymentTermsDays:60,avgDeliveryDays:35,unitPrice:4550,region:'International',coiFlag:false},
+  {id:'V09',name:'Continental API Traders',category:'Active Pharmaceutical Ingredients & Raw Materials',complianceStatus:'Under Review',certExpiry:'2026-08-01',gstValid:true,bankVerified:false,sanctionsClear:true,insuranceValid:false,contractOnFile:false,esgScore:48,onTimeDelivery:74,qualityReject:6.1,paymentTermsDays:75,avgDeliveryDays:45,unitPrice:3900,region:'International',coiFlag:false},
+  // Lab Equipment & Reagents
+  {id:'V10',name:'Precision Labware Corp',category:'Lab Equipment & Reagents',complianceStatus:'Active',certExpiry:'2027-02-15',gstValid:true,bankVerified:true,sanctionsClear:true,insuranceValid:true,contractOnFile:true,esgScore:73,onTimeDelivery:93,qualityReject:1.1,paymentTermsDays:30,avgDeliveryDays:12,unitPrice:2100,region:'Domestic',coiFlag:false},
+  {id:'V11',name:'ChemAnalytics Instruments',category:'Lab Equipment & Reagents',complianceStatus:'Active',certExpiry:'2026-11-10',gstValid:true,bankVerified:true,sanctionsClear:true,insuranceValid:true,contractOnFile:true,esgScore:69,onTimeDelivery:89,qualityReject:1.9,paymentTermsDays:45,avgDeliveryDays:15,unitPrice:2300,region:'Domestic',coiFlag:false},
+  {id:'V12',name:'Spectra Scientific Supplies',category:'Lab Equipment & Reagents',complianceStatus:'Compliance Review',certExpiry:'2026-07-09',gstValid:true,bankVerified:true,sanctionsClear:true,insuranceValid:true,contractOnFile:false,esgScore:55,onTimeDelivery:82,qualityReject:3.5,paymentTermsDays:60,avgDeliveryDays:20,unitPrice:1950,region:'Domestic',coiFlag:false},
+  // Legal & Compliance Services
+  {id:'V13',name:'Sterling & Hatch LLP',category:'Legal & Compliance Services',complianceStatus:'Active',certExpiry:'2028-01-01',gstValid:true,bankVerified:true,sanctionsClear:true,insuranceValid:true,contractOnFile:true,esgScore:70,onTimeDelivery:95,qualityReject:0,paymentTermsDays:30,avgDeliveryDays:5,unitPrice:18000,region:'Domestic',coiFlag:false},
+  {id:'V14',name:'Whitfield Legal Advisors',category:'Legal & Compliance Services',complianceStatus:'Active',certExpiry:'2027-01-01',gstValid:true,bankVerified:true,sanctionsClear:true,insuranceValid:true,contractOnFile:true,esgScore:66,onTimeDelivery:90,qualityReject:0,paymentTermsDays:45,avgDeliveryDays:7,unitPrice:16500,region:'Domestic',coiFlag:false},
+  {id:'V15',name:'Crestmark Counsel Group',category:'Legal & Compliance Services',complianceStatus:'Probation',certExpiry:'2026-07-22',gstValid:true,bankVerified:true,sanctionsClear:true,insuranceValid:false,contractOnFile:false,esgScore:49,onTimeDelivery:78,qualityReject:0,paymentTermsDays:90,avgDeliveryDays:10,unitPrice:14200,region:'Domestic',coiFlag:true},
+  // Marketing & Commercial Services
+  {id:'V16',name:'Brightwave Marketing Group',category:'Marketing & Commercial Services',complianceStatus:'Active',certExpiry:'2027-04-01',gstValid:true,bankVerified:true,sanctionsClear:true,insuranceValid:true,contractOnFile:true,esgScore:72,onTimeDelivery:91,qualityReject:1.0,paymentTermsDays:30,avgDeliveryDays:14,unitPrice:9500,region:'Domestic',coiFlag:false},
+  {id:'V17',name:'Forge Commercial Partners',category:'Marketing & Commercial Services',complianceStatus:'Active',certExpiry:'2026-10-15',gstValid:true,bankVerified:true,sanctionsClear:true,insuranceValid:true,contractOnFile:true,esgScore:67,onTimeDelivery:87,qualityReject:1.8,paymentTermsDays:45,avgDeliveryDays:18,unitPrice:10200,region:'Domestic',coiFlag:false},
+  {id:'V18',name:'PixelEdge Creative Studio',category:'Marketing & Commercial Services',complianceStatus:'Compliance Review',certExpiry:'2026-07-14',gstValid:false,bankVerified:true,sanctionsClear:true,insuranceValid:true,contractOnFile:false,esgScore:53,onTimeDelivery:80,qualityReject:2.5,paymentTermsDays:60,avgDeliveryDays:10,unitPrice:8700,region:'Domestic',coiFlag:false},
+  // Facilities & Office Supplies
+  {id:'V19',name:'Meridian Facilities Solutions',category:'Facilities & Office Supplies',complianceStatus:'Active',certExpiry:'2027-06-01',gstValid:true,bankVerified:true,sanctionsClear:true,insuranceValid:true,contractOnFile:true,esgScore:75,onTimeDelivery:94,qualityReject:0.8,paymentTermsDays:30,avgDeliveryDays:7,unitPrice:1400,region:'Domestic',coiFlag:false},
+  {id:'V20',name:'Anchor Workplace Supplies',category:'Facilities & Office Supplies',complianceStatus:'Active',certExpiry:'2026-09-01',gstValid:true,bankVerified:true,sanctionsClear:true,insuranceValid:true,contractOnFile:true,esgScore:64,onTimeDelivery:88,qualityReject:1.5,paymentTermsDays:45,avgDeliveryDays:9,unitPrice:1550,region:'Domestic',coiFlag:false},
+  {id:'V21',name:'Coastal Office & Maintenance',category:'Facilities & Office Supplies',complianceStatus:'Under Review',certExpiry:'2026-07-11',gstValid:true,bankVerified:false,sanctionsClear:true,insuranceValid:false,contractOnFile:false,esgScore:50,onTimeDelivery:76,qualityReject:3.0,paymentTermsDays:60,avgDeliveryDays:15,unitPrice:1250,region:'Domestic',coiFlag:false},
+  // Logistics & Packaging
+  {id:'V22',name:'TransGlobal Freight & Logistics',category:'Logistics & Packaging',complianceStatus:'Active',certExpiry:'2027-03-20',gstValid:true,bankVerified:true,sanctionsClear:true,insuranceValid:true,contractOnFile:true,esgScore:71,onTimeDelivery:90,qualityReject:1.3,paymentTermsDays:45,avgDeliveryDays:5,unitPrice:3200,region:'International',coiFlag:false},
+  {id:'V23',name:'Harborline Packaging Co.',category:'Logistics & Packaging',complianceStatus:'Active',certExpiry:'2026-12-15',gstValid:true,bankVerified:true,sanctionsClear:true,insuranceValid:true,contractOnFile:true,esgScore:66,onTimeDelivery:86,qualityReject:2.1,paymentTermsDays:30,avgDeliveryDays:6,unitPrice:3400,region:'Domestic',coiFlag:false},
+  {id:'V24',name:'SwiftRoute Cargo Services',category:'Logistics & Packaging',complianceStatus:'Probation',certExpiry:'2026-07-28',gstValid:true,bankVerified:true,sanctionsClear:true,insuranceValid:false,contractOnFile:false,esgScore:52,onTimeDelivery:79,qualityReject:3.8,paymentTermsDays:75,avgDeliveryDays:4,unitPrice:2950,region:'International',coiFlag:false},
+];
+
+const DEPT_BUDGET_SEED = {IT:260000,COM:180000,LEG:120000,DD:600000,RD:450000,FIN:90000,OPS:150000,MFG:300000};
+
+/* ------------------------------ 25-point checklist ----------------------- */
+
+function fmtMoney(n){ return '$' + Math.round(n).toLocaleString('en-US'); }
+function fmtDate(d){ const dt = (d instanceof Date)? d : new Date(d); return dt.toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}); }
+function daysBetween(a,b){ return Math.round((b-a)/86400000); }
+
+const CHECK_DEFS = [
+{id:1,group:'Vendor Compliance',critical:true,name:'Vendor on Approved Master List',
+  eval:ctx=>({status:'pass',note:`${ctx.vendor.name} (${ctx.vendor.id}) is listed on the organization's pre-approved vendor master for ${ctx.vendor.category}.`})},
+{id:2,group:'Vendor Compliance',critical:false,name:'Vendor Compliance Status Active',
+  eval:ctx=> ctx.vendor.complianceStatus==='Active' ? {status:'pass',note:'Vendor compliance status is Active.'} : {status:'warning',note:`Vendor compliance status is "${ctx.vendor.complianceStatus}" — flagged for risk review before award.`}},
+{id:3,group:'Vendor Compliance',critical:false,name:'Vendor Certification Validity',
+  eval:ctx=>{ const exp=new Date(ctx.vendor.certExpiry); const req=new Date(ctx.pr.requiredByDate);
+    if(exp<req) return {status:'fail',note:`Certification expires ${fmtDate(exp)}, before the required-by date of ${fmtDate(req)}.`};
+    if(daysBetween(ctx.today,exp)<60) return {status:'warning',note:`Certification expires ${fmtDate(exp)} — within 60 days, renewal should be confirmed.`};
+    return {status:'pass',note:`Certification valid through ${fmtDate(exp)}.`}; }},
+{id:4,group:'Vendor Compliance',critical:true,name:'Vendor Tax Registration (GST/PAN) Valid',
+  eval:ctx=> ctx.vendor.gstValid ? {status:'pass',note:'GST/PAN registration verified and current.'} : {status:'fail',note:'GST/PAN registration could not be verified — vendor flagged for tax compliance review.'}},
+{id:5,group:'Vendor Compliance',critical:false,name:'Vendor Banking Details Verified',
+  eval:ctx=> ctx.vendor.bankVerified ? {status:'pass',note:'Banking details verified, no recent changes flagged.'} : {status:'warning',note:'Banking details not yet verified — confirm before payment release to mitigate fraud risk.'}},
+{id:6,group:'Vendor Compliance',critical:true,name:'Denied-Party / Sanctions Screening',
+  eval:ctx=> ctx.vendor.sanctionsClear ? {status:'pass',note:'No match on sanctions or denied-party lists.'} : {status:'fail',note:'Vendor returned a potential match on denied-party / sanctions screening.'}},
+{id:7,group:'Vendor Compliance',critical:false,name:'Insurance & Liability Coverage',
+  eval:ctx=>{ if(!INSURANCE_REQUIRED_CATEGORIES.includes(ctx.pr.category)) return {status:'pass',note:'Not applicable for this procurement category.'};
+    return ctx.vendor.insuranceValid ? {status:'pass',note:'Current liability/insurance coverage on file.'} : {status:'warning',note:'No current proof of insurance on file for this risk category.'}; }},
+{id:8,group:'Financial Governance',critical:true,name:'Quotation Within Approved Budget',
+  eval:ctx=>{ const over=((ctx.total-ctx.pr.budget)/ctx.pr.budget)*100;
+    if(ctx.total<=ctx.pr.budget) return {status:'pass',note:`Quoted total ${fmtMoney(ctx.total)} is within the approved budget of ${fmtMoney(ctx.pr.budget)}.`};
+    if(over<=15) return {status:'warning',note:`Quoted total ${fmtMoney(ctx.total)} exceeds budget by ${over.toFixed(1)}% — within tolerance, recommend review.`};
+    return {status:'fail',note:`Quoted total ${fmtMoney(ctx.total)} exceeds approved budget of ${fmtMoney(ctx.pr.budget)} by ${over.toFixed(1)}%.`}; }},
+{id:9,group:'Financial Governance',critical:false,name:'Price Variance vs. Market Benchmark',
+  eval:ctx=>{ const bench=ctx.vendor.unitPrice*ctx.pr.quantity; const variance=((ctx.total-bench)/bench)*100;
+    if(Math.abs(variance)<=15) return {status:'pass',note:`Quoted price is ${variance>=0?'+':''}${variance.toFixed(1)}% vs. last benchmark price — within normal range.`};
+    return {status:'warning',note:`Quoted price is ${variance>=0?'+':''}${variance.toFixed(1)}% vs. last benchmark price — outside the ±15% normal range.`}; }},
+{id:10,group:'Financial Governance',critical:false,name:'Minimum Competitive Quotations Obtained',
+  eval:ctx=> (ctx.quotations.length>=3 || ctx.pr.budget<1000) ? {status:'pass',note:`${ctx.quotations.length} competing quotations obtained from pre-approved vendors.`} : {status:'fail',note:'Fewer than 3 competitive quotations obtained for a non-micro purchase.'}},
+{id:11,group:'Financial Governance',critical:false,name:'Lowest-Cost Vendor Selected / Justified',
+  eval:ctx=>{ const lowest=ctx.quotations.reduce((a,b)=>a.total<b.total?a:b);
+    if(ctx.vendor.id===lowest.vendor.id) return {status:'pass',note:'Recommended vendor is the lowest-cost compliant quotation.'};
+    if(ctx.pr.justification && ctx.pr.justification.trim().length>=20) return {status:'pass',note:'Non-lowest-cost vendor selected with a documented business justification on file.'};
+    return {status:'warning',note:`Non-lowest-cost vendor selected (${fmtMoney(ctx.total-lowest.total)} above ${lowest.vendor.name}) without a documented justification.`}; }},
+{id:12,group:'Financial Governance',critical:true,name:'Cost Center Has Sufficient Budget Balance',
+  eval:ctx=> ctx.total<=ctx.deptBudget.remaining ? {status:'pass',note:`Department cost center has ${fmtMoney(ctx.deptBudget.remaining)} remaining — sufficient to cover ${fmtMoney(ctx.total)}.`} : {status:'fail',note:`Department cost center has only ${fmtMoney(ctx.deptBudget.remaining)} remaining — insufficient to cover ${fmtMoney(ctx.total)}.`}},
+{id:13,group:'Financial Governance',critical:false,name:'Payment Terms Within Company Policy',
+  eval:ctx=> (ctx.vendor.paymentTermsDays>=30 && ctx.vendor.paymentTermsDays<=90) ? {status:'pass',note:`Net ${ctx.vendor.paymentTermsDays} payment terms fall within the Net 30–90 policy band.`} : {status:'warning',note:`Net ${ctx.vendor.paymentTermsDays} payment terms fall outside the Net 30–90 policy band.`}},
+{id:14,group:'Process & Authority',critical:false,name:'Delegation of Authority Matches PO Value',
+  eval:ctx=>{ const limit=AUTHORITY_LIMITS[ctx.pr.requestorLevel];
+    if(ctx.total<=limit) return {status:'pass',note:`${fmtMoney(ctx.total)} is within ${ctx.pr.requestorLevel}'s delegated authority of ${fmtMoney(limit)}.`};
+    return {status:'fail',note:`${fmtMoney(ctx.total)} exceeds ${ctx.pr.requestorLevel}'s delegated authority of ${fmtMoney(limit)} — requires escalated sign-off.`}; }},
+{id:15,group:'Process & Authority',critical:false,name:'No Duplicate Request (30-day window)',
+  eval:ctx=> ctx.duplicateFound ? {status:'warning',note:'A similar request from the same department was raised within the last 30 days — check for duplication.'} : {status:'pass',note:'No duplicate or overlapping request found in the last 30 days.'}},
+{id:16,group:'Process & Authority',critical:false,name:'Master Agreement / Contract on File',
+  eval:ctx=> ctx.vendor.contractOnFile ? {status:'pass',note:'An active Master Service / Supply Agreement is on file for this vendor and category.'} : {status:'warning',note:'No active Master Service / Supply Agreement on file for this vendor and category.'}},
+{id:17,group:'Process & Authority',critical:false,name:'Delivery Timeline Meets Required-By Date',
+  eval:ctx=>{ if(ctx.deliveryDate<=ctx.reqDate) return {status:'pass',note:`Quoted delivery date ${fmtDate(ctx.deliveryDate)} meets the required-by date of ${fmtDate(ctx.reqDate)}.`};
+    const lateDays=daysBetween(ctx.reqDate,ctx.deliveryDate);
+    if(ctx.pr.urgency==='Critical') return {status:'fail',note:`Quoted delivery is ${lateDays} day(s) after the required-by date on a Critical-urgency request.`};
+    return {status:'warning',note:`Quoted delivery is ${lateDays} day(s) after the required-by date of ${fmtDate(ctx.reqDate)}.`}; }},
+{id:18,group:'Process & Authority',critical:false,name:'Category Matches Department Procurement Scope',
+  eval:ctx=>{ const dept=DEPARTMENTS.find(d=>d.id===ctx.pr.deptId);
+    return dept.categories.includes(ctx.pr.category) ? {status:'pass',note:`${ctx.pr.category} is within ${dept.name}'s approved procurement scope.`} : {status:'warning',note:`${ctx.pr.category} is outside ${dept.name}'s standard scope — flagged as a cross-department exception.`}; }},
+{id:19,group:'Process & Authority',critical:true,name:'No Conflict of Interest Flagged',
+  eval:ctx=> ctx.vendor.coiFlag ? {status:'fail',note:'Vendor has a flagged conflict-of-interest relationship with the organization.'} : {status:'pass',note:'No conflict-of-interest relationship flagged for this vendor.'}},
+{id:20,group:'Regulatory',critical:true,name:'Regulatory / QA Sign-off (Controlled Categories)',
+  eval:ctx=>{ if(ctx.pr.category!==REGULATED_CATEGORY) return {status:'pass',note:'Not applicable — non-regulated procurement category.'};
+    return ctx.pr.regulatorySignoff ? {status:'pass',note:'QA/Regulatory sign-off confirmed for controlled raw material / API procurement.'} : {status:'fail',note:'QA/Regulatory sign-off is required for controlled raw material / API procurement and has not been confirmed.'}; }},
+{id:21,group:'Regulatory',critical:false,name:'Cross-Border Currency & Incoterms Validity',
+  eval:ctx=>{ if(ctx.vendor.region!=='International') return {status:'pass',note:'Not applicable — domestic vendor.'};
+    return ctx.vendor.complianceStatus==='Active' ? {status:'pass',note:'Cross-border currency and Incoterms terms verified for this vendor.'} : {status:'warning',note:'Cross-border currency/Incoterms terms unverified while vendor compliance review is pending.'}; }},
+{id:22,group:'Regulatory',critical:false,name:'ESG / Sustainability Score Threshold',
+  eval:ctx=> ctx.vendor.esgScore>=60 ? {status:'pass',note:`ESG score ${ctx.vendor.esgScore}/100 meets the minimum threshold of 60.`} : {status:'warning',note:`ESG score ${ctx.vendor.esgScore}/100 is below the minimum threshold of 60.`}},
+{id:23,group:'Data Integrity',critical:false,name:'Vendor Historical Performance',
+  eval:ctx=>{ const ok = ctx.vendor.onTimeDelivery>=85 && ctx.vendor.qualityReject<=5;
+    return ok ? {status:'pass',note:`On-time delivery ${ctx.vendor.onTimeDelivery}% and quality reject rate ${ctx.vendor.qualityReject}% both meet thresholds.`} : {status:'warning',note:`On-time delivery ${ctx.vendor.onTimeDelivery}% / quality reject rate ${ctx.vendor.qualityReject}% — one or more below performance thresholds.`}; }},
+{id:24,group:'Data Integrity',critical:false,name:'Three-Way Match Data Consistency',
+  eval:ctx=>({status:'pass',note:'Requisition, quotation, and vendor master data fields are consistent.'})},
+{id:25,group:'Data Integrity',critical:false,name:'Required Documentation Complete',
+  eval:ctx=>{ if(ctx.pr.budget<1000) return {status:'pass',note:'Not required below the micro-purchase documentation threshold.'};
+    return (ctx.pr.justification && ctx.pr.justification.trim().length>=20) ? {status:'pass',note:'Business justification and item specification on file.'} : {status:'fail',note:'Business justification is missing or too brief for a purchase of this size.'}; }},
+];
+
+/* ------------------------------ storage layer ----------------------------- */
+
+const DB = {
+  async get(key){ try{ const r = await window.storage.get(key,true); return r? JSON.parse(r.value): null; }catch(e){ return null; } },
+  async set(key,val){ try{ await window.storage.set(key, JSON.stringify(val), true); }catch(e){ console.error('storage set failed',key,e); } },
+};
+
+let STATE = {
+  view:'dashboard', meta:null, vendors:[], budgets:{}, prs:[], selectedPrId:null,
+  wizard:null, // {step, form, quotations, selectedVendorId, pr}
+  filters:{requestsStatus:'all', requestsDept:'all'},
+};
+
+async function loadDB(){
+  let meta = await DB.get('meta');
+  if(!meta || !meta.seeded){
+    const budgets = {}; for(const d of DEPARTMENTS) budgets[d.id] = {total:DEPT_BUDGET_SEED[d.id], remaining:DEPT_BUDGET_SEED[d.id]};
+    meta = {seeded:true, nextSeq:1};
+    // populate STATE first so the seeding routine (which reuses the normal
+    // create-request pipeline) has vendors/budgets/meta to work against
+    STATE.meta = meta; STATE.vendors = VENDOR_SEED; STATE.budgets = budgets; STATE.prs = [];
+    await DB.set('vendors', VENDOR_SEED);
+    await DB.set('budgets', budgets);
+    await DB.set('pr-index', []);
+    await DB.set('meta', meta);
+    await seedSampleRequests();
+  }
+  STATE.meta = await DB.get('meta');
+  STATE.vendors = await DB.get('vendors') || VENDOR_SEED;
+  STATE.budgets = await DB.get('budgets') || {};
+  const index = await DB.get('pr-index') || [];
+  const prs = [];
+  for(const id of index){ const pr = await DB.get('pr:'+id); if(pr) prs.push(pr); }
+  prs.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt));
+  STATE.prs = prs;
+}
+
+function nextPrId(deptId){ const seq = STATE.meta.nextSeq++; return {id:`PR-${deptId}-${String(seq).padStart(4,'0')}`, seq}; }
+function nextPoNumber(seq){ return `ARB-PO-2026-${String(seq).padStart(5,'0')}`; }
+
+/* ------------------------------ core engine -------------------------------- */
+
+function pickVendorsForCategory(category){ return STATE.vendors.filter(v=>v.category===category); }
+
+function generateQuotations(pr){
+  const vendors = pickVendorsForCategory(pr.category);
+  return vendors.map(v=>{
+    // small deterministic-ish variance per vendor so prices aren't perfectly flat
+    const seedNum = (v.id.charCodeAt(1)+v.id.charCodeAt(2)+pr.quantity) % 13;
+    const variance = (seedNum-6)/100; // -6%..+6%
+    const unit = v.unitPrice * (1+variance);
+    const total = Math.round(unit * pr.quantity);
+    const deliveryDate = new Date(Date.now() + v.avgDeliveryDays*86400000);
+    return {vendor:v, unit:Math.round(unit), total, deliveryDays:v.avgDeliveryDays, deliveryDate};
+  }).sort((a,b)=>a.total-b.total);
+}
+
+function findDuplicate(pr){
+  const cutoff = Date.now() - 30*86400000;
+  return STATE.prs.some(p=> p.deptId===pr.deptId && p.category===pr.category && p.item.trim().toLowerCase()===pr.item.trim().toLowerCase() && new Date(p.createdAt).getTime()>=cutoff);
+}
+
+function runValidation(pr, quotation, deptBudget){
+  const ctx = {
+    pr, vendor:quotation.vendor, quotations: pr._allQuotes, total: quotation.total,
+    deptBudget, today:new Date(), reqDate:new Date(pr.requiredByDate), deliveryDate:quotation.deliveryDate,
+    duplicateFound: findDuplicate(pr),
+  };
+  const results = CHECK_DEFS.map(def=>{ const r = def.eval(ctx); return {id:def.id, group:def.group, name:def.name, critical:def.critical, status:r.status, note:r.note}; });
+  const criticalFails = results.filter(r=>r.critical && r.status==='fail');
+  const otherIssues = results.filter(r=> r.status==='warning' || (r.status==='fail' && !r.critical));
+  let decision, confidence;
+  if(criticalFails.length>0){ decision='rejected'; confidence = Math.max(55, 92 - criticalFails.length*14 - otherIssues.length*2); }
+  else if(otherIssues.length===0){ decision='approved'; confidence = 97; }
+  else { decision='manual_review'; confidence = Math.max(58, 90 - otherIssues.length*5); }
+  return {results, decision, confidence, criticalFails, otherIssues};
+}
+
+function buildReasoning(validation, pr, vendor){
+  const {decision, criticalFails, otherIssues} = validation;
+  if(decision==='approved'){
+    return `All 25 validation checks passed. ${vendor.name} is a pre-approved, fully compliant vendor and the quotation is within budget, policy, and delegated authority. Zathura.AI has auto-approved this requisition and synced it to SAP Ariba as an issued purchase order.`;
+  }
+  if(decision==='rejected'){
+    const names = criticalFails.map(c=>c.name).join('; ');
+    return `${criticalFails.length} critical compliance gate${criticalFails.length>1?'s':''} failed: ${names}. Critical gates cannot be waived by the agent, so Zathura.AI has auto-rejected this requisition and returned it to ${DEPARTMENTS.find(d=>d.id===pr.deptId).name} with the findings above. ${otherIssues.length? `An additional ${otherIssues.length} non-critical issue${otherIssues.length>1?'s were':' was'} also flagged.`:''}`;
+  }
+  const names = otherIssues.map(c=>c.name).join('; ');
+  return `No critical compliance gates failed, but ${otherIssues.length} check${otherIssues.length>1?'s':''} returned a warning or non-critical fail: ${names}. These fall outside the agent's auto-approval confidence threshold, so Zathura.AI has routed this requisition to the Procurement team's manual review queue with the full checklist and reasoning attached.`;
+}
+
+async function seedSampleRequests(){
+  const samples = [
+    {deptId:'IT', category:'IT Hardware & Software', item:'Developer laptops — 25 units', quantity:25, budget:23000, urgency:'Standard', requestorLevel:'Manager', justification:'Quarterly refresh of end-of-life developer hardware across the engineering team.', daysFromNow:14, pickVendorIdx:1},
+    {deptId:'DD', category:'Active Pharmaceutical Ingredients & Raw Materials', item:'GMP-grade API precursor batch — 50kg', quantity:50, budget:215000, urgency:'Priority', requestorLevel:'Director', justification:'Raw material required for Phase II synthesis run scheduled next month.', daysFromNow:35, regulatorySignoff:true, pickVendorIdx:0},
+    {deptId:'LEG', category:'Legal & Compliance Services', item:'Outside counsel — IP licensing review', quantity:1, budget:14500, urgency:'Standard', requestorLevel:'Manager', justification:'External counsel needed to review cross-licensing terms for new partner agreement.', daysFromNow:10, pickVendorIdx:2},
+    {deptId:'RD', category:'Lab Equipment & Reagents', item:'HPLC analytical reagent kits — 40 units', quantity:40, budget:80000, urgency:'Standard', requestorLevel:'Manager', justification:'Reagent stock replenishment for ongoing assay validation work.', daysFromNow:18, pickVendorIdx:0},
+    {deptId:'COM', category:'Marketing & Commercial Services', item:'Regional product launch campaign', quantity:1, budget:9000, urgency:'Priority', requestorLevel:'Team Lead', justification:'Launch campaign support for APAC region Q3 release.', daysFromNow:12, pickVendorIdx:2},
+    {deptId:'OPS', category:'Facilities & Office Supplies', item:'Office relocation — furniture & fit-out', quantity:1, budget:1300, urgency:'Standard', requestorLevel:'Manager', justification:'', daysFromNow:20, pickVendorIdx:2},
+  ];
+  for(const s of samples){ await createAndPersistPR(s, {silent:true}); }
+}
+
+async function createAndPersistPR(form, opts={}){
+  const dept = DEPARTMENTS.find(d=>d.id===form.deptId);
+  const reqDate = new Date(Date.now() + form.daysFromNow*86400000);
+  const pr = {
+    deptId:form.deptId, category:form.category, item:form.item, quantity:form.quantity, budget:form.budget,
+    requiredByDate: reqDate.toISOString(), urgency:form.urgency, requestorLevel:form.requestorLevel,
+    requestedBy: form.requestedBy || `${dept.name} Lead`, justification:form.justification||'', regulatorySignoff: !!form.regulatorySignoff,
+    crossDept: !!form.crossDept, createdAt: new Date().toISOString(),
+  };
+  const {id, seq} = nextPrId(form.deptId);
+  pr.id = id;
+  const quotes = generateQuotations(pr);
+  pr._allQuotes = quotes;
+  const chosen = typeof form.pickVendorIdx==='number' ? quotes[Math.min(form.pickVendorIdx,quotes.length-1)] : quotes[0];
+  const budgets = STATE.budgets;
+  const deptBudget = budgets[form.deptId];
+  const validation = runValidation(pr, chosen, deptBudget);
+  const poNumber = nextPoNumber(seq);
+  const reasoning = buildReasoning(validation, pr, chosen.vendor);
+
+  const finalPr = {
+    ...pr,
+    poNumber,
+    quotations: quotes.map(q=>({vendorId:q.vendor.id, vendorName:q.vendor.name, unit:q.unit, total:q.total, deliveryDays:q.deliveryDays, deliveryDate:q.deliveryDate.toISOString()})),
+    recommendedVendorId: chosen.vendor.id,
+    recommendedTotal: chosen.total,
+    checklist: validation.results,
+    aiDecision: validation.decision,
+    aiConfidence: validation.confidence,
+    reasoning,
+    status: validation.decision, // 'approved' | 'rejected' | 'manual_review'
+    manualResolution: null,
+    auditTrail: [
+      {time:new Date().toISOString(), actor:`${pr.requestedBy} (${dept.name})`, action:'Procurement request raised', note:`${pr.item} — qty ${pr.quantity}, budget ${fmtMoney(pr.budget)}.`},
+      {time:new Date().toISOString(), actor:'Zathura.AI', action:'Vendor quotations generated', note:`${quotes.length} quotations retrieved from the pre-approved vendor master for "${pr.category}".`},
+      {time:new Date().toISOString(), actor:'Zathura.AI', action:'Synced to SAP Ariba', note:`Purchase requisition recorded in Ariba as ${poNumber}.`},
+      {time:new Date().toISOString(), actor:'Zathura.AI', action:`25-point validation complete — ${labelForDecision(validation.decision)}`, note:reasoning},
+    ],
+  };
+  if(validation.decision==='approved'){ deptBudget.remaining = Math.max(0, deptBudget.remaining - chosen.total); }
+
+  await DB.set('pr:'+id, finalPr);
+  const index = await DB.get('pr-index') || [];
+  index.push(id);
+  await DB.set('pr-index', index);
+  await DB.set('budgets', budgets);
+  await DB.set('meta', STATE.meta);
+  if(!opts.silent){ STATE.prs.unshift(finalPr); }
+  return finalPr;
+}
+
+function labelForDecision(d){ return d==='approved'?'Auto-Approved': d==='rejected'?'Auto-Rejected':'Sent for Manual Review'; }
+
+/* --------------------------------- UI shell -------------------------------- */
+
+function esc(s){ return String(s).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function statusBadge(status){
+  const map = {approved:['b-success','fa-circle-check','Approved'], rejected:['b-danger','fa-circle-xmark','Rejected'], manual_review:['b-warning','fa-circle-exclamation','Manual Review']};
+  const [cls,icon,label] = map[status] || ['b-neutral','fa-circle','—'];
+  return `<span class="badge ${cls}"><i class="fa-solid ${icon}"></i>${label}</span>`;
+}
+function manualBadge(res){
+  if(!res) return '';
+  const map = {approved:['b-success','fa-user-check','Approved by reviewer'], rejected:['b-danger','fa-user-xmark','Rejected by reviewer']};
+  const [cls,icon,label] = map[res] || [];
+  return `<span class="badge ${cls}"><i class="fa-solid ${icon}"></i>${label}</span>`;
+}
+
+function toast(msg, icon='fa-check'){
+  const wrap = document.getElementById('toastWrap');
+  const el = document.createElement('div'); el.className='toast';
+  el.innerHTML = `<i class="fa-solid ${icon}"></i><span>${esc(msg)}</span>`;
+  wrap.appendChild(el);
+  setTimeout(()=>{ el.style.transition='opacity .3s'; el.style.opacity='0'; setTimeout(()=>el.remove(),300); }, 3200);
+}
+
+function navItems(){
+  const pendingCount = STATE.prs.filter(p=>p.status==='manual_review' && !p.manualResolution).length;
+  return [
+    {v:'dashboard', icon:'fa-gauge-high', label:'Dashboard'},
+    {v:'new', icon:'fa-circle-plus', label:'New Procurement Request'},
+    {v:'requests', icon:'fa-layer-group', label:'All Requests · Ariba Sync'},
+    {v:'review', icon:'fa-user-shield', label:'Manual Review Queue', badge:pendingCount},
+    {v:'vendors', icon:'fa-store', label:'Vendor Master'},
+  ];
+}
+
+function renderShell(){
+  const items = navItems();
+  return `
+  <div class="sidebar">
+    <div class="sidebar-brand">
+      <div class="mark">Z</div>
+      <div><div class="name">Zathura.AI</div><div class="sub">Procurement Agent</div></div>
+    </div>
+    <a class="sidebar-back" href="index.html"><i class="fa-solid fa-arrow-left" style="margin-right:6px;"></i>Back to Zathura.ai</a>
+    <div class="nav-group">
+      <div class="nav-label">Workspace</div>
+      ${items.map(it=>`
+        <div class="nav-item ${STATE.view===it.v?'active':''}" data-nav="${it.v}">
+          <i class="fa-solid ${it.icon}"></i><span>${it.label}</span>
+          ${it.badge?`<span class="nav-badge ${it.badge>0?'danger':''}">${it.badge}</span>`:''}
+        </div>`).join('')}
+    </div>
+    <div class="sidebar-foot">
+      Shared workspace — visible to everyone using this app.<br>
+      <button id="resetDemo">Reset demo data</button>
+    </div>
+  </div>
+  <div class="main" id="main"></div>
+  `;
+}
+
+async function render(){
+  const app = document.getElementById('app');
+  app.innerHTML = renderShell();
+  const main = document.getElementById('main');
+  if(STATE.view==='dashboard') main.innerHTML = viewDashboard();
+  else if(STATE.view==='new') main.innerHTML = viewNewRequest();
+  else if(STATE.view==='requests') main.innerHTML = viewRequests();
+  else if(STATE.view==='review') main.innerHTML = viewReview();
+  else if(STATE.view==='vendors') main.innerHTML = viewVendors();
+  else if(STATE.view==='detail') main.innerHTML = viewDetail(STATE.selectedPrId);
+  bindGlobalEvents();
+  bindViewEvents();
+}
+
+function bindGlobalEvents(){
+  document.querySelectorAll('[data-nav]').forEach(el=>{
+    el.addEventListener('click', ()=>{ STATE.view = el.dataset.nav; STATE.wizard=null; render(); });
+  });
+  const reset = document.getElementById('resetDemo');
+  if(reset) reset.addEventListener('click', async ()=>{
+    if(!confirm('This clears the shared workspace (all requests, budgets) for everyone using this app and reseeds sample data. Continue?')) return;
+    await DB.set('meta', {seeded:false});
+    await loadDB(); STATE.view='dashboard'; render(); toast('Workspace reset and reseeded.');
+  });
+}
+
+/* --------------------------------- Dashboard -------------------------------- */
+
+function viewDashboard(){
+  const total = STATE.prs.length;
+  const approved = STATE.prs.filter(p=>p.status==='approved' || p.manualResolution==='approved').length;
+  const rejected = STATE.prs.filter(p=>p.status==='rejected' || p.manualResolution==='rejected').length;
+  const review = STATE.prs.filter(p=>p.status==='manual_review' && !p.manualResolution).length;
+  const autoRate = total? Math.round(((STATE.prs.filter(p=>p.aiDecision!=='manual_review').length)/total)*100) : 0;
+  const totalSpend = STATE.prs.filter(p=>p.status==='approved'||p.manualResolution==='approved').reduce((s,p)=>s+p.recommendedTotal,0);
+
+  const budgetRows = DEPARTMENTS.map(d=>{
+    const b = STATE.budgets[d.id] || {total:1,remaining:1};
+    const usedPct = Math.min(100, Math.round(((b.total-b.remaining)/b.total)*100));
+    const color = usedPct>85? 'var(--danger)' : usedPct>60? 'var(--warning)' : 'var(--primary)';
+    return `<div style="margin-bottom:14px;">
+      <div style="display:flex; justify-content:space-between; font-size:12.5px; margin-bottom:6px;">
+        <span style="font-weight:700;"><i class="fa-solid ${d.icon}" style="color:var(--muted); width:14px; margin-right:6px;"></i>${d.name}</span>
+        <span class="cell-muted">${fmtMoney(b.total-b.remaining)} / ${fmtMoney(b.total)}</span>
+      </div>
+      <div class="progress-bar"><div class="progress-bar-fill" style="width:${usedPct}%; background:${color};"></div></div>
+    </div>`;
+  }).join('');
+
+  const recent = STATE.prs.slice(0,7).map(p=>`
+    <div style="display:flex; align-items:center; gap:12px; padding:11px 0; border-bottom:1px solid var(--line);">
+      <div style="width:34px;height:34px;border-radius:9px;background:var(--soft);display:flex;align-items:center;justify-content:center; flex:0 0 auto;">
+        <i class="fa-solid ${DEPARTMENTS.find(d=>d.id===p.deptId).icon}" style="color:var(--muted); font-size:13px;"></i>
+      </div>
+      <div style="flex:1; min-width:0;">
+        <div style="font-size:13px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${esc(p.item)}</div>
+        <div class="cell-muted">${p.id} · ${DEPARTMENTS.find(d=>d.id===p.deptId).name} · ${fmtMoney(p.recommendedTotal)}</div>
+      </div>
+      ${statusBadge(p.manualResolution || p.status)}
+    </div>
+  `).join('') || `<div class="empty-state" style="padding:30px 0;"><i class="fa-solid fa-inbox"></i><h3>No requests yet</h3></div>`;
+
+  return `
+    <div class="page-head">
+      <div>
+        <div class="eyebrow"><i class="fa-solid fa-robot"></i> AI Procurement Agent</div>
+        <h1>Procurement command center</h1>
+        <p>Departments raise requests, Zathura.AI gathers quotations from pre-approved vendors, syncs the list to SAP Ariba, then runs a 25-point validation to approve, reject, or escalate to your procurement team.</p>
+      </div>
+      <button class="btn btn-primary" data-nav="new"><i class="fa-solid fa-circle-plus"></i>New Procurement Request</button>
+    </div>
+
+    <div class="grid kpi-row" style="margin-bottom:20px;">
+      <div class="card kpi"><div class="label"><span class="icon-badge" style="background:var(--info-bg); color:var(--primary-dark);"><i class="fa-solid fa-layer-group"></i></span>Total Requests</div><div class="value">${total}</div><div class="delta">${approved} approved · ${rejected} rejected · ${review} in review</div></div>
+      <div class="card kpi"><div class="label"><span class="icon-badge" style="background:var(--success-bg); color:var(--success);"><i class="fa-solid fa-bolt"></i></span>AI Auto-Decision Rate</div><div class="value">${autoRate}%</div><div class="delta">Resolved without human review</div></div>
+      <div class="card kpi"><div class="label"><span class="icon-badge" style="background:var(--warning-bg); color:var(--warning);"><i class="fa-solid fa-user-shield"></i></span>Pending Manual Review</div><div class="value">${review}</div><div class="delta">${review? 'Awaiting procurement team action' : 'Queue is clear'}</div></div>
+      <div class="card kpi"><div class="label"><span class="icon-badge" style="background:var(--info-bg); color:var(--primary-dark);"><i class="fa-solid fa-sack-dollar"></i></span>Spend Under Management</div><div class="value">${fmtMoney(totalSpend)}</div><div class="delta">Across approved purchase orders</div></div>
+    </div>
+
+    <div class="detail-grid">
+      <div class="card pad">
+        <div class="section-h"><i class="fa-solid fa-clock-rotate-left" style="color:var(--primary);"></i>Recent activity</div>
+        ${recent}
+      </div>
+      <div class="card pad">
+        <div class="section-h"><i class="fa-solid fa-wallet" style="color:var(--primary);"></i>Department budget utilization</div>
+        ${budgetRows}
+      </div>
+    </div>
+  `;
+}
+
+/* --------------------------------- New Request (wizard) -------------------------------- */
+
+function initWizard(){
+  STATE.wizard = {step:1, form:{deptId:'IT', category:DEPARTMENTS[0].categories[0], item:'', quantity:1, budget:'', requiredByDate:'', urgency:'Standard', requestedBy:'', requestorLevel:'Manager', justification:'', regulatorySignoff:false, crossDept:false}, quotes:null, selectedVendorId:null, finalPr:null};
+}
+
+function viewNewRequest(){
+  if(!STATE.wizard) initWizard();
+  const w = STATE.wizard;
+  const steps = ['Request Details','Vendor Quotations','Ariba Sync & AI Validation','Decision'];
+  const stepsHtml = steps.map((s,i)=>{
+    const n=i+1; const cls = n<w.step?'done':n===w.step?'active':'';
+    return `<div class="step ${cls}"><span class="num">${n<w.step?'<i class=\"fa-solid fa-check\" style=\"font-size:9px;\"></i>':n}</span>${s}</div>`;
+  }).join('');
+
+  let body = '';
+  if(w.step===1) body = stepRequestDetails(w);
+  else if(w.step===2) body = stepQuotations(w);
+  else if(w.step===3) body = stepAribaAndValidation(w);
+  else if(w.step===4) body = stepDecision(w);
+
+  return `
+    <div class="page-head"><div><div class="eyebrow"><i class="fa-solid fa-circle-plus"></i> New Request</div><h1>Raise a procurement request</h1><p>Fill in what your department needs — Zathura.AI handles vendor sourcing, Ariba sync, and compliance validation from here.</p></div></div>
+    <div class="steps">${stepsHtml}</div>
+    <div class="card pad" style="max-width:920px;">${body}</div>
+  `;
+}
+
+function stepRequestDetails(w){
+  const f = w.form;
+  const dept = DEPARTMENTS.find(d=>d.id===f.deptId);
+  const catOptions = (f.crossDept? ALL_CATEGORIES : dept.categories);
+  return `
+    <div class="field-row">
+      <div class="field"><label>Requesting department</label>
+        <select id="f-dept">${DEPARTMENTS.map(d=>`<option value="${d.id}" ${d.id===f.deptId?'selected':''}>${d.name}</option>`).join('')}</select>
+      </div>
+      <div class="field"><label>Procurement category</label>
+        <select id="f-category">${catOptions.map(c=>`<option ${c===f.category?'selected':''}>${c}</option>`).join('')}</select>
+        <div class="hint">${f.crossDept? 'Cross-department exception — all categories shown.' : "Showing categories in this department's approved scope."}</div>
+      </div>
+    </div>
+    <div class="checkbox-row" style="margin-bottom:16px;">
+      <input type="checkbox" id="f-crossdept" ${f.crossDept?'checked':''}>
+      <div><div class="ct">This is a cross-department / exception procurement</div><div class="cd">Allows selecting a category outside this department's normal scope. Zathura.AI will flag it for review.</div></div>
+    </div>
+    <div class="field"><label>Item / service description</label>
+      <input type="text" id="f-item" placeholder="e.g. Developer laptops, GMP-grade reagent batch, outside counsel review..." value="${esc(f.item)}">
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Quantity / scope units</label><input type="number" min="1" id="f-qty" value="${f.quantity}"></div>
+      <div class="field"><label>Approved budget (total, USD)</label><input type="number" min="1" id="f-budget" placeholder="e.g. 25000" value="${esc(f.budget)}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Required-by date</label><input type="date" id="f-date" value="${f.requiredByDate}"></div>
+      <div class="field"><label>Urgency</label>
+        <select id="f-urgency">${['Standard','Priority','Critical'].map(u=>`<option ${u===f.urgency?'selected':''}>${u}</option>`).join('')}</select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Requested by</label><input type="text" id="f-reqby" placeholder="Your name" value="${esc(f.requestedBy)}"></div>
+      <div class="field"><label>Your delegated authority level</label>
+        <select id="f-level">${Object.keys(AUTHORITY_LIMITS).map(l=>`<option ${l===f.requestorLevel?'selected':''}>${l} (up to ${fmtMoney(AUTHORITY_LIMITS[l])})</option>`).join('')}</select>
+      </div>
+    </div>
+    <div class="field"><label>Business justification</label>
+      <textarea id="f-justification" placeholder="Why is this needed? (required for purchases over $1,000)">${esc(f.justification)}</textarea>
+    </div>
+    <div id="f-regulatory-wrap"></div>
+    <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:6px;">
+      <button class="btn btn-primary" id="toStep2"><i class="fa-solid fa-arrow-right"></i>Get vendor quotations</button>
+    </div>
+  `;
+}
+
+function stepQuotations(w){
+  const quotes = w.quotes;
+  const lowestTotal = Math.min(...quotes.map(q=>q.total));
+  const cards = quotes.map(q=>{
+    const sel = w.selectedVendorId===q.vendor.id;
+    const isLowest = q.total===lowestTotal;
+    return `
+    <div class="quote-card ${sel?'selected':''} ${isLowest?'lowest':''}" data-vendor="${q.vendor.id}">
+      <div class="quote-radio"></div>
+      <div class="quote-vname">${esc(q.vendor.name)}</div>
+      <span class="badge ${q.vendor.complianceStatus==='Active'?'b-success':'b-warning'} b-dot">${q.vendor.complianceStatus}</span>
+      <span class="badge b-info" style="margin-left:4px;"><i class="fa-solid fa-shield-halved"></i>Pre-approved</span>
+      <div class="quote-price">${fmtMoney(q.total)}</div>
+      <div class="cell-muted">${fmtMoney(q.unit)} / unit · qty ${w.form.quantity}</div>
+      <div class="quote-meta">
+        <span><i class="fa-solid fa-truck"></i>Delivers in ${q.deliveryDays} days (${fmtDate(q.deliveryDate)})</span>
+        <span><i class="fa-solid fa-money-check-dollar"></i>Net ${q.vendor.paymentTermsDays} payment terms</span>
+        <span><i class="fa-solid fa-leaf"></i>ESG score ${q.vendor.esgScore}/100</span>
+        <span><i class="fa-solid fa-globe"></i>${q.vendor.region}</span>
+      </div>
+    </div>`;
+  }).join('');
+  return `
+    <p style="color:var(--muted); font-size:13.5px; margin-bottom:4px;">Zathura.AI retrieved <b>${quotes.length} quotations</b> from pre-approved vendors authorized for <b>${esc(w.form.category)}</b>. Select the vendor to recommend — the lowest-cost option is pre-selected.</p>
+    <div class="quote-grid">${cards}</div>
+    <div style="display:flex; justify-content:space-between; gap:10px; margin-top:18px;">
+      <button class="btn btn-secondary" id="backStep1"><i class="fa-solid fa-arrow-left"></i>Back</button>
+      <button class="btn btn-primary" id="toStep3"><i class="fa-solid fa-arrow-right"></i>Sync to SAP Ariba</button>
+    </div>
+  `;
+}
+
+function stepAribaAndValidation(w){
+  return `
+    <div class="card pad" style="background:var(--soft); border-style:dashed; margin-bottom:18px;">
+      <div class="section-h" style="margin-bottom:8px;"><i class="fa-solid fa-cloud-arrow-up" style="color:var(--primary);"></i>SAP Ariba sync</div>
+      <p style="font-size:13.5px; color:var(--muted);">The requisition and its ${w.quotes.length} vendor quotations have been written to SAP Ariba as purchase requisition <b class="mono">${w.poNumberPreview}</b>, status <span class="badge b-neutral">Pending Approval</span>. Zathura.AI now runs its 25-point validation agent against the recommended vendor before this can move to Approved.</p>
+    </div>
+    <div id="consoleWrap"></div>
+    <div style="display:flex; justify-content:space-between; gap:10px; margin-top:10px;" id="stepNav">
+      <button class="btn btn-secondary" id="backStep2"><i class="fa-solid fa-arrow-left"></i>Back</button>
+      <button class="btn btn-primary" id="runAgentBtn"><i class="fa-solid fa-robot"></i>Run Zathura.AI validation</button>
+    </div>
+  `;
+}
+
+function checkRowHtml(r, i){
+  const iconMap={pass:'fa-check',warning:'fa-triangle-exclamation',fail:'fa-xmark'};
+  return `<div class="check-row" style="--i:${i};">
+    <div class="check-icon ${r.status}"><i class="fa-solid ${iconMap[r.status]}"></i></div>
+    <div class="check-body">
+      <div class="check-top"><span class="check-name">${String(r.id).padStart(2,'0')} · ${esc(r.name)}</span><span class="check-tag">${esc(r.group)}</span>${r.critical?'<span class="check-crit">critical gate</span>':''}</div>
+      <div class="check-note">${esc(r.note)}</div>
+    </div>
+  </div>`;
+}
+
+function stepDecision(w){
+  const pr = w.finalPr;
+  const decision = pr.aiDecision;
+  const verdictMeta = {
+    approved:{icon:'fa-circle-check', title:'Auto-Approved & synced to SAP Ariba'},
+    rejected:{icon:'fa-circle-xmark', title:'Auto-Rejected — returned to department'},
+    manual_review:{icon:'fa-user-shield', title:'Sent to Procurement Team for manual review'},
+  }[decision];
+  return `
+    <div class="verdict show ${decision}">
+      <div class="verdict-top">
+        <div class="verdict-icon"><i class="fa-solid ${verdictMeta.icon}"></i></div>
+        <div><div class="verdict-title">${verdictMeta.title}</div><div class="verdict-conf">Zathura.AI confidence: ${pr.aiConfidence}%</div></div>
+      </div>
+      <div class="verdict-text">${esc(pr.reasoning)}</div>
+      <div class="verdict-stats">
+        <div class="verdict-stat">Requisition <b>${pr.id}</b></div>
+        <div class="verdict-stat">Ariba PO <b>${pr.poNumber}</b></div>
+        <div class="verdict-stat">Recommended vendor <b>${esc(STATE.vendors.find(v=>v.id===pr.recommendedVendorId).name)}</b></div>
+        <div class="verdict-stat">Amount <b>${fmtMoney(pr.recommendedTotal)}</b></div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:space-between; gap:10px;">
+      <button class="btn btn-secondary" id="newAnother"><i class="fa-solid fa-rotate-left"></i>Raise another request</button>
+      <button class="btn btn-primary" id="viewFullDetail"><i class="fa-solid fa-arrow-right"></i>View full request detail</button>
+    </div>
+  `;
+}
+
+function bindViewEvents(){
+  if(STATE.view==='new') bindNewRequestEvents();
+  if(STATE.view==='requests') bindRequestsEvents();
+  if(STATE.view==='review') bindReviewEvents();
+  if(STATE.view==='detail') bindDetailEvents();
+}
+
+function syncWizardFormFromDOM(){
+  const w = STATE.wizard;
+  const get = id=>document.getElementById(id);
+  if(get('f-dept')) w.form.deptId = get('f-dept').value;
+  if(get('f-category')) w.form.category = get('f-category').value;
+  if(get('f-crossdept')) w.form.crossDept = get('f-crossdept').checked;
+  if(get('f-item')) w.form.item = get('f-item').value;
+  if(get('f-qty')) w.form.quantity = Math.max(1, parseInt(get('f-qty').value||'1'));
+  if(get('f-budget')) w.form.budget = parseFloat(get('f-budget').value||'0');
+  if(get('f-date')) w.form.requiredByDate = get('f-date').value;
+  if(get('f-urgency')) w.form.urgency = get('f-urgency').value;
+  if(get('f-reqby')) w.form.requestedBy = get('f-reqby').value;
+  if(get('f-level')) w.form.requestorLevel = get('f-level').value.split(' (')[0];
+  if(get('f-justification')) w.form.justification = get('f-justification').value;
+  const reg = get('f-regulatory'); if(reg) w.form.regulatorySignoff = reg.checked;
+}
+
+function bindNewRequestEvents(){
+  const w = STATE.wizard;
+  const deptSel = document.getElementById('f-dept');
+  const catSel = document.getElementById('f-category');
+  const crossDept = document.getElementById('f-crossdept');
+  function refreshCategoryOptions(){
+    const dept = DEPARTMENTS.find(d=>d.id===deptSel.value);
+    const opts = (crossDept.checked? ALL_CATEGORIES : dept.categories);
+    catSel.innerHTML = opts.map(c=>`<option>${c}</option>`).join('');
+    refreshRegulatoryBox();
+  }
+  function refreshRegulatoryBox(){
+    const wrap = document.getElementById('f-regulatory-wrap');
+    if(catSel.value===REGULATED_CATEGORY){
+      wrap.innerHTML = `<div class="checkbox-row" style="margin-bottom:16px; border-color:var(--warning-line); background:var(--warning-bg);">
+        <input type="checkbox" id="f-regulatory">
+        <div><div class="ct">QA / Regulatory sign-off obtained</div><div class="cd">Required for controlled raw material / API procurement before Zathura.AI can clear this requisition.</div></div>
+      </div>`;
+    } else wrap.innerHTML='';
+  }
+  if(deptSel) deptSel.addEventListener('change', refreshCategoryOptions);
+  if(crossDept) crossDept.addEventListener('change', refreshCategoryOptions);
+  if(catSel) catSel.addEventListener('change', refreshRegulatoryBox);
+  if(catSel) refreshRegulatoryBox();
+
+  const toStep2 = document.getElementById('toStep2');
+  if(toStep2) toStep2.addEventListener('click', ()=>{
+    syncWizardFormFromDOM();
+    const f = w.form;
+    if(!f.item.trim()) return toast('Please describe the item or service needed.','fa-circle-exclamation');
+    if(!f.budget || f.budget<=0) return toast('Please enter an approved budget.','fa-circle-exclamation');
+    if(!f.requiredByDate) return toast('Please choose a required-by date.','fa-circle-exclamation');
+    if(!f.requestedBy.trim()) return toast('Please enter the requestor name.','fa-circle-exclamation');
+    const prDraft = {deptId:f.deptId, category:f.category, item:f.item, quantity:f.quantity, requiredByDate:new Date(f.requiredByDate).toISOString(), budget:f.budget, urgency:f.urgency};
+    const quotes = generateQuotations(prDraft);
+    if(quotes.length===0) return toast('No pre-approved vendors found for this category.','fa-circle-exclamation');
+    w.quotes = quotes;
+    w.selectedVendorId = quotes[0].vendor.id; // lowest cost pre-selected
+    w.step = 2;
+    render();
+  });
+
+  document.querySelectorAll('.quote-card').forEach(el=>{
+    el.addEventListener('click', ()=>{ w.selectedVendorId = el.dataset.vendor; render(); });
+  });
+  const backStep1 = document.getElementById('backStep1'); if(backStep1) backStep1.addEventListener('click', ()=>{ w.step=1; render(); });
+  const toStep3 = document.getElementById('toStep3'); if(toStep3) toStep3.addEventListener('click', ()=>{
+    w.step = 3; w.poNumberPreview = nextPoNumber(STATE.meta.nextSeq);
+    render();
+  });
+
+  const backStep2 = document.getElementById('backStep2'); if(backStep2) backStep2.addEventListener('click', ()=>{ w.step=2; render(); });
+  const runBtn = document.getElementById('runAgentBtn');
+  if(runBtn) runBtn.addEventListener('click', async ()=>{
+    runBtn.disabled = true; runBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>Running validation...';
+    document.getElementById('stepNav').querySelector('#backStep2').style.display='none';
+    const dept = DEPARTMENTS.find(d=>d.id===w.form.deptId);
+    const f = w.form;
+    const prDraft = {deptId:f.deptId, category:f.category, item:f.item, quantity:f.quantity, requiredByDate:new Date(f.requiredByDate).toISOString(), budget:f.budget, urgency:f.urgency, requestorLevel:f.requestorLevel, justification:f.justification, regulatorySignoff:f.regulatorySignoff, crossDept:f.crossDept};
+    prDraft._allQuotes = w.quotes;
+    const chosen = w.quotes.find(q=>q.vendor.id===w.selectedVendorId);
+    const deptBudget = STATE.budgets[f.deptId];
+    const validation = runValidation(prDraft, chosen, deptBudget);
+
+    const consoleHtml = `
+      <div class="console">
+        <div class="console-head"><div class="console-dot"></div><div class="console-title">zathura-agent · 25-point validation</div><div class="console-sub">${dept.name} → ${esc(chosen.vendor.name)}</div></div>
+        <div class="console-progress"><div class="console-progress-bar" id="progBar"></div></div>
+        ${validation.results.map((r,i)=>checkRowHtml(r,i)).join('')}
+      </div>`;
+    document.getElementById('consoleWrap').innerHTML = consoleHtml;
+    requestAnimationFrame(()=>{ document.getElementById('progBar').style.width='100%'; });
+
+    const totalDelay = CHECK_DEFS.length*70 + 700;
+    setTimeout(async ()=>{
+      const reasoning = buildReasoning(validation, prDraft, chosen.vendor);
+      const {id, seq} = nextPrId(f.deptId);
+      const poNumber = nextPoNumber(seq);
+      const finalPr = {
+        ...prDraft, id, poNumber,
+        requestedBy: f.requestedBy, createdAt: new Date().toISOString(),
+        quotations: w.quotes.map(q=>({vendorId:q.vendor.id, vendorName:q.vendor.name, unit:q.unit, total:q.total, deliveryDays:q.deliveryDays, deliveryDate:q.deliveryDate.toISOString()})),
+        recommendedVendorId: chosen.vendor.id, recommendedTotal: chosen.total,
+        checklist: validation.results, aiDecision: validation.decision, aiConfidence: validation.confidence,
+        reasoning, status: validation.decision, manualResolution:null,
+        auditTrail:[
+          {time:new Date().toISOString(), actor:`${f.requestedBy} (${dept.name})`, action:'Procurement request raised', note:`${f.item} — qty ${f.quantity}, budget ${fmtMoney(f.budget)}.`},
+          {time:new Date().toISOString(), actor:'Zathura.AI', action:'Vendor quotations generated', note:`${w.quotes.length} quotations retrieved from the pre-approved vendor master for "${f.category}".`},
+          {time:new Date().toISOString(), actor:'Zathura.AI', action:'Synced to SAP Ariba', note:`Purchase requisition recorded in Ariba as ${poNumber}, status Pending Approval.`},
+          {time:new Date().toISOString(), actor:'Zathura.AI', action:`25-point validation complete — ${labelForDecision(validation.decision)}`, note:reasoning},
+        ],
+      };
+      delete finalPr._allQuotes;
+      if(validation.decision==='approved'){ deptBudget.remaining = Math.max(0, deptBudget.remaining-chosen.total); }
+      await DB.set('pr:'+id, finalPr);
+      const index = await DB.get('pr-index') || []; index.push(id); await DB.set('pr-index', index);
+      await DB.set('budgets', STATE.budgets); await DB.set('meta', STATE.meta);
+      STATE.prs.unshift(finalPr);
+
+      w.finalPr = finalPr; w.step = 4;
+      render();
+      toast(decisionToast(validation.decision), decisionIcon(validation.decision));
+    }, totalDelay);
+  });
+
+  const newAnother = document.getElementById('newAnother'); if(newAnother) newAnother.addEventListener('click', ()=>{ initWizard(); render(); });
+  const viewFullDetail = document.getElementById('viewFullDetail'); if(viewFullDetail) viewFullDetail.addEventListener('click', ()=>{ STATE.selectedPrId = w.finalPr.id; STATE.view='detail'; STATE.wizard=null; render(); });
+}
+
+function decisionToast(d){ return d==='approved'?'Request auto-approved and synced to Ariba.': d==='rejected'?'Request auto-rejected by Zathura.AI.':'Sent to the manual review queue.'; }
+function decisionIcon(d){ return d==='approved'?'fa-circle-check': d==='rejected'?'fa-circle-xmark':'fa-user-shield'; }
+
+/* --------------------------------- Requests / Ariba list -------------------------------- */
+
+function viewRequests(){
+  const sf = STATE.filters;
+  const filtered = STATE.prs.filter(p=> (sf.requestsStatus==='all' || p.status===sf.requestsStatus) && (sf.requestsDept==='all' || p.deptId===sf.requestsDept));
+  const statusChips = ['all','approved','manual_review','rejected'].map(s=>`<div class="filter-chip ${sf.requestsStatus===s?'active':''}" data-status="${s}">${s==='all'?'All statuses':labelForDecision(s)}</div>`).join('');
+  const deptChips = ['all',...DEPARTMENTS.map(d=>d.id)].map(d=>`<div class="filter-chip ${sf.requestsDept===d?'active':''}" data-dept="${d}">${d==='all'?'All departments':DEPARTMENTS.find(x=>x.id===d).name}</div>`).join('');
+
+  const rows = filtered.map(p=>`
+    <tr class="clickable" data-id="${p.id}">
+      <td class="mono cell-strong">${p.poNumber}</td>
+      <td class="cell-muted mono">${p.id}</td>
+      <td>${DEPARTMENTS.find(d=>d.id===p.deptId).name}</td>
+      <td>${esc(p.item)}</td>
+      <td>${esc(STATE.vendors.find(v=>v.id===p.recommendedVendorId)?.name||'—')}</td>
+      <td class="cell-strong">${fmtMoney(p.recommendedTotal)}</td>
+      <td>${statusBadge(p.manualResolution || p.status)}</td>
+      <td class="cell-muted">${fmtDate(p.createdAt)}</td>
+    </tr>`).join('');
+
+  return `
+    <div class="page-head"><div><div class="eyebrow"><i class="fa-solid fa-layer-group"></i> SAP Ariba Sync</div><h1>All procurement requests</h1><p>Every requisition raised by a department, its recommended vendor, and Zathura.AI's decision — mirrored from SAP Ariba.</p></div>
+    <button class="btn btn-primary" data-nav="new"><i class="fa-solid fa-circle-plus"></i>New Request</button></div>
+    <div class="filter-bar">${statusChips}</div>
+    <div class="filter-bar">${deptChips}</div>
+    <div class="card table-card">
+      ${filtered.length? `<table><thead><tr><th>Ariba PO</th><th>Requisition</th><th>Department</th><th>Item</th><th>Recommended Vendor</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead><tbody>${rows}</tbody></table>`
+      : `<div class="empty-state"><i class="fa-solid fa-folder-open"></i><h3>No requests match these filters</h3></div>`}
+    </div>
+  `;
+}
+
+function bindRequestsEvents(){
+  document.querySelectorAll('[data-status]').forEach(el=>el.addEventListener('click', ()=>{ STATE.filters.requestsStatus = el.dataset.status; render(); }));
+  document.querySelectorAll('[data-dept]').forEach(el=>el.addEventListener('click', ()=>{ STATE.filters.requestsDept = el.dataset.dept; render(); }));
+  document.querySelectorAll('tr[data-id]').forEach(el=>el.addEventListener('click', ()=>{ STATE.selectedPrId = el.dataset.id; STATE.view='detail'; render(); }));
+}
+
+/* --------------------------------- Manual review queue -------------------------------- */
+
+function viewReview(){
+  const queue = STATE.prs.filter(p=>p.status==='manual_review' && !p.manualResolution);
+  const rows = queue.map(p=>{
+    const issues = p.checklist.filter(c=>c.status!=='pass');
+    return `
+    <div class="card pad" style="margin-bottom:14px;">
+      <div style="display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+        <div>
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:4px;">
+            <span class="mono cell-strong">${p.id}</span><span class="cell-muted mono">${p.poNumber}</span>${statusBadge(p.status)}
+          </div>
+          <div style="font-weight:700; font-size:14.5px;">${esc(p.item)}</div>
+          <div class="cell-muted">${DEPARTMENTS.find(d=>d.id===p.deptId).name} · ${esc(STATE.vendors.find(v=>v.id===p.recommendedVendorId).name)} · ${fmtMoney(p.recommendedTotal)} · confidence ${p.aiConfidence}%</div>
+        </div>
+        <div style="display:flex; gap:8px; align-self:flex-start;">
+          <button class="btn btn-sm btn-secondary" data-detail="${p.id}"><i class="fa-solid fa-eye"></i>Full detail</button>
+          <button class="btn btn-sm btn-success" data-approve="${p.id}"><i class="fa-solid fa-check"></i>Approve</button>
+          <button class="btn btn-sm btn-danger" data-reject="${p.id}"><i class="fa-solid fa-xmark"></i>Reject</button>
+        </div>
+      </div>
+      <div style="margin-top:12px; padding:12px 14px; background:var(--warning-bg); border:1px solid var(--warning-line); border-radius:10px; font-size:13px; color:#7c4a09;">
+        <i class="fa-solid fa-robot" style="margin-right:6px;"></i>${esc(p.reasoning)}
+      </div>
+      <div style="margin-top:10px; display:flex; flex-wrap:wrap; gap:8px;">
+        ${issues.map(c=>`<span class="badge ${c.status==='warning'?'b-warning':'b-danger'}"><i class="fa-solid ${c.status==='warning'?'fa-triangle-exclamation':'fa-xmark'}"></i>${esc(c.name)}</span>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+
+  return `
+    <div class="page-head"><div><div class="eyebrow"><i class="fa-solid fa-user-shield"></i> Human in the loop</div><h1>Manual review queue</h1><p>Requisitions where Zathura.AI found no critical compliance breach, but flagged issues outside its auto-approval confidence threshold. Your call.</p></div></div>
+    ${queue.length? rows : `<div class="card"><div class="empty-state"><i class="fa-solid fa-circle-check"></i><h3>Queue is clear</h3><p>Nothing is waiting on the procurement team right now.</p></div></div>`}
+  `;
+}
+
+function bindReviewEvents(){
+  document.querySelectorAll('[data-detail]').forEach(el=>el.addEventListener('click', ()=>{ STATE.selectedPrId = el.dataset.detail; STATE.view='detail'; render(); }));
+  document.querySelectorAll('[data-approve]').forEach(el=>el.addEventListener('click', ()=>resolveManual(el.dataset.approve,'approved')));
+  document.querySelectorAll('[data-reject]').forEach(el=>el.addEventListener('click', ()=>resolveManual(el.dataset.reject,'rejected')));
+}
+
+async function resolveManual(id, resolution, comment){
+  const pr = STATE.prs.find(p=>p.id===id) || await DB.get('pr:'+id);
+  pr.manualResolution = resolution;
+  pr.auditTrail.push({time:new Date().toISOString(), actor:'Procurement Team', action:`Manually ${resolution}`, note: comment || `Reviewer ${resolution} this requisition after evaluating Zathura.AI's flagged issues.`});
+  if(resolution==='approved'){ const b = STATE.budgets[pr.deptId]; b.remaining = Math.max(0, b.remaining - pr.recommendedTotal); await DB.set('budgets', STATE.budgets); }
+  await DB.set('pr:'+id, pr);
+  const idx = STATE.prs.findIndex(p=>p.id===id); if(idx>=0) STATE.prs[idx]=pr;
+  toast(`Requisition ${resolution} by procurement team.`, resolution==='approved'?'fa-circle-check':'fa-circle-xmark');
+  render();
+}
+
+/* --------------------------------- PR Detail -------------------------------- */
+
+function viewDetail(id){
+  const pr = STATE.prs.find(p=>p.id===id);
+  if(!pr) return `<div class="empty-state"><i class="fa-solid fa-triangle-exclamation"></i><h3>Request not found</h3></div>`;
+  const dept = DEPARTMENTS.find(d=>d.id===pr.deptId);
+  const vendor = STATE.vendors.find(v=>v.id===pr.recommendedVendorId);
+  const statusDisplay = pr.manualResolution || pr.status;
+
+  const quoteRows = pr.quotations.map(q=>`
+    <tr>
+      <td class="cell-strong">${esc(q.vendorName)} ${q.vendorId===pr.recommendedVendorId? '<span class="badge b-info" style="margin-left:6px;"><i class=\"fa-solid fa-star\"></i>Recommended</span>':''}</td>
+      <td>${fmtMoney(q.unit)}</td>
+      <td class="cell-strong">${fmtMoney(q.total)}</td>
+      <td>${q.deliveryDays} days</td>
+      <td class="cell-muted">${fmtDate(q.deliveryDate)}</td>
+    </tr>`).join('');
+
+  const groups = {};
+  pr.checklist.forEach(c=>{ (groups[c.group] = groups[c.group]||[]).push(c); });
+  const checklistHtml = Object.entries(groups).map(([g,items])=>`
+    <div style="margin-bottom:10px;">
+      <div style="font-family:'JetBrains Mono'; font-size:10.5px; color:#5d6c93; text-transform:uppercase; letter-spacing:.05em; margin:10px 0 4px;">${esc(g)}</div>
+      ${items.map(r=>checkRowHtml(r,0)).join('')}
+    </div>`).join('');
+
+  const timeline = pr.auditTrail.map(t=>`
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-body"><div class="tt">${esc(t.action)}</div><div class="tm">${esc(t.note)}</div><div class="ts">${esc(t.actor)} · ${fmtDate(t.time)}</div></div>
+    </div>`).join('');
+
+  const reviewActions = (pr.status==='manual_review' && !pr.manualResolution) ? `
+    <div class="reviewer-box" style="margin-top:16px;">
+      <div class="section-h" style="margin-bottom:10px;"><i class="fa-solid fa-user-shield" style="color:var(--primary);"></i>Procurement team action</div>
+      <textarea id="reviewComment" placeholder="Optional reviewer comment..." style="width:100%; min-height:70px; padding:11px 13px; border:1.5px solid var(--line); border-radius:10px; margin-bottom:10px;"></textarea>
+      <div style="display:flex; gap:10px;">
+        <button class="btn btn-success" id="detailApprove" style="flex:1;"><i class="fa-solid fa-check"></i>Approve</button>
+        <button class="btn btn-danger" id="detailReject" style="flex:1;"><i class="fa-solid fa-xmark"></i>Reject</button>
+      </div>
+    </div>` : '';
+
+  return `
+    <div class="page-head">
+      <div>
+        <button class="btn btn-ghost" id="backToRequests" style="padding-left:0; margin-bottom:8px;"><i class="fa-solid fa-arrow-left"></i>All requests</button>
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+          <h1 style="font-size:21px;">${esc(pr.item)}</h1>
+          ${statusBadge(statusDisplay)} ${manualBadge(pr.manualResolution)}
+        </div>
+        <p class="mono" style="margin-top:6px; color:var(--muted); font-size:12.5px;">${pr.id} · Ariba PO ${pr.poNumber}</p>
+      </div>
+    </div>
+
+    <div class="detail-grid">
+      <div>
+        <div class="card pad" style="margin-bottom:18px;">
+          <div class="section-h"><i class="fa-solid fa-circle-info" style="color:var(--primary);"></i>Request details</div>
+          <div class="info-list">
+            <div class="info-item"><div class="il">Department</div><div class="iv">${dept.name}</div></div>
+            <div class="info-item"><div class="il">Category</div><div class="iv">${esc(pr.category)}</div></div>
+            <div class="info-item"><div class="il">Quantity</div><div class="iv">${pr.quantity}</div></div>
+            <div class="info-item"><div class="il">Approved budget</div><div class="iv">${fmtMoney(pr.budget)}</div></div>
+            <div class="info-item"><div class="il">Required by</div><div class="iv">${fmtDate(pr.requiredByDate)}</div></div>
+            <div class="info-item"><div class="il">Urgency</div><div class="iv">${pr.urgency}</div></div>
+            <div class="info-item"><div class="il">Requested by</div><div class="iv">${esc(pr.requestedBy)}</div></div>
+            <div class="info-item"><div class="il">Authority level</div><div class="iv">${pr.requestorLevel||'—'}</div></div>
+          </div>
+          ${pr.justification? `<div style="margin-top:14px;"><div class="il" style="font-size:11px; text-transform:uppercase; color:var(--faint); font-weight:700; margin-bottom:4px;">Justification</div><div style="font-size:13.5px;">${esc(pr.justification)}</div></div>`:''}
+        </div>
+
+        <div class="card pad" style="margin-bottom:18px;">
+          <div class="section-h"><i class="fa-solid fa-store" style="color:var(--primary);"></i>Vendor quotations</div>
+          <div class="scroll-x"><table><thead><tr><th>Vendor</th><th>Unit price</th><th>Total</th><th>Delivery</th><th>Est. arrival</th></tr></thead><tbody>${quoteRows}</tbody></table></div>
+        </div>
+
+        <div class="card pad">
+          <div class="section-h"><i class="fa-solid fa-robot" style="color:var(--primary);"></i>Zathura.AI — 25-point validation result</div>
+          <div style="font-size:13px; color:var(--muted); margin-bottom:12px;">${esc(pr.reasoning)}</div>
+          <div class="checklist-static">${checklistHtml}</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card pad" style="margin-bottom:18px;">
+          <div class="section-h"><i class="fa-solid fa-handshake" style="color:var(--primary);"></i>Recommended vendor</div>
+          <div style="font-weight:800; font-family:'Sora'; font-size:16px;">${esc(vendor.name)}</div>
+          <div class="cell-muted" style="margin-top:2px;">${esc(vendor.category)} · ${vendor.region}</div>
+          <div style="margin-top:12px; display:flex; flex-direction:column; gap:8px; font-size:12.5px;">
+            <div style="display:flex; justify-content:space-between;"><span class="cell-muted">Compliance status</span><span class="badge ${vendor.complianceStatus==='Active'?'b-success':'b-warning'}">${vendor.complianceStatus}</span></div>
+            <div style="display:flex; justify-content:space-between;"><span class="cell-muted">ESG score</span><b>${vendor.esgScore}/100</b></div>
+            <div style="display:flex; justify-content:space-between;"><span class="cell-muted">On-time delivery</span><b>${vendor.onTimeDelivery}%</b></div>
+            <div style="display:flex; justify-content:space-between;"><span class="cell-muted">Quality reject rate</span><b>${vendor.qualityReject}%</b></div>
+            <div style="display:flex; justify-content:space-between;"><span class="cell-muted">Payment terms</span><b>Net ${vendor.paymentTermsDays}</b></div>
+            <div style="display:flex; justify-content:space-between;"><span class="cell-muted">Contract on file</span><b>${vendor.contractOnFile?'Yes':'No'}</b></div>
+          </div>
+        </div>
+        ${reviewActions}
+        <div class="card pad" style="margin-top:18px;">
+          <div class="section-h"><i class="fa-solid fa-clock-rotate-left" style="color:var(--primary);"></i>Audit trail</div>
+          <div class="timeline">${timeline}</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function bindDetailEvents(){
+  const back = document.getElementById('backToRequests'); if(back) back.addEventListener('click', ()=>{ STATE.view='requests'; render(); });
+  const a = document.getElementById('detailApprove'); if(a) a.addEventListener('click', ()=>{ const c=document.getElementById('reviewComment').value; resolveManual(STATE.selectedPrId,'approved', c); });
+  const r = document.getElementById('detailReject'); if(r) r.addEventListener('click', ()=>{ const c=document.getElementById('reviewComment').value; resolveManual(STATE.selectedPrId,'rejected', c); });
+}
+
+/* --------------------------------- Vendor master -------------------------------- */
+
+function viewVendors(){
+  const cats = [...new Set(STATE.vendors.map(v=>v.category))];
+  const sections = cats.map(cat=>{
+    const rows = STATE.vendors.filter(v=>v.category===cat).map(v=>`
+      <tr>
+        <td class="cell-strong">${esc(v.name)}</td>
+        <td><span class="badge ${v.complianceStatus==='Active'?'b-success':'b-warning'} b-dot">${v.complianceStatus}</span></td>
+        <td class="cell-muted">${fmtDate(v.certExpiry)}</td>
+        <td>${v.esgScore}/100</td>
+        <td>${v.onTimeDelivery}%</td>
+        <td>${v.region}</td>
+        <td>${v.contractOnFile? '<i class="fa-solid fa-check" style="color:var(--success);"></i>' : '<i class="fa-solid fa-xmark" style="color:var(--danger);"></i>'}</td>
+      </tr>`).join('');
+    return `
+      <div class="vendor-cat-head"><h3 style="font-size:14.5px;">${esc(cat)}</h3><span class="cell-muted">${STATE.vendors.filter(v=>v.category===cat).length} pre-approved vendors</span></div>
+      <div class="card table-card"><table><thead><tr><th>Vendor</th><th>Compliance</th><th>Cert expiry</th><th>ESG</th><th>On-time</th><th>Region</th><th>Contract</th></tr></thead><tbody>${rows}</tbody></table></div>
+    `;
+  }).join('');
+  return `
+    <div class="page-head"><div><div class="eyebrow"><i class="fa-solid fa-store"></i> Pre-Approved Suppliers</div><h1>Vendor master list</h1><p>The organization-approved vendor pool Zathura.AI sources quotations from for every procurement category.</p></div></div>
+    ${sections}
+  `;
+}
+
+/* --------------------------------- init -------------------------------- */
+
+(async function init(){
+  document.getElementById('app').innerHTML = `<div style="display:flex; align-items:center; justify-content:center; height:100vh; width:100%; color:var(--muted); font-size:14px;"><i class="fa-solid fa-spinner fa-spin" style="margin-right:10px;"></i>Loading Zathura.AI procurement workspace...</div>`;
+  await loadDB();
+  render();
+})();
+</script>
+</body>
+</html>
