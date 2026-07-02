@@ -1269,6 +1269,56 @@
       .slot-day { font-size: 13px; }
     }
 
+
+    /* ── USER REQUEST UPDATES: CALENDAR PALETTE + REMOVE STATIC TEAM CARD ── */
+    .featured-presenter-card { display: none !important; }
+    .partner-track { padding-left: 0 !important; }
+
+    .demo-calendar-panel {
+      background: linear-gradient(135deg, #172554 0%, #2637d9 54%, #3f5cff 100%) !important;
+      box-shadow: 0 30px 80px rgba(63,92,255,.20) !important;
+    }
+    .slot-booking-widget {
+      background: linear-gradient(135deg, #eef4ff 0%, #f8fbff 100%) !important;
+      border: 1px solid rgba(255,255,255,.36) !important;
+      box-shadow: 0 22px 60px rgba(17,24,39,.16) !important;
+    }
+    .slot-info-panel {
+      background: linear-gradient(160deg, #172554 0%, #2436c9 55%, #3f5cff 100%) !important;
+    }
+    .slot-info-list i { color: #aebcff !important; }
+    .slot-picker-panel {
+      background:
+        radial-gradient(circle at 20% 10%, rgba(63,92,255,.12), transparent 30%),
+        linear-gradient(180deg, #fbfcff 0%, #eef4ff 100%) !important;
+      color: #111827 !important;
+    }
+    .slot-month-row button { color: var(--primary-dark) !important; }
+    .slot-month-row button:hover { background: rgba(63,92,255,.10) !important; }
+    .slot-day {
+      background: #e8eeff !important;
+      color: var(--primary-dark) !important;
+    }
+    .slot-day:hover, .slot-day.active {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+      color: #fff !important;
+      box-shadow: 0 10px 22px rgba(63,92,255,.25) !important;
+    }
+    .slot-day.muted {
+      background: transparent !important;
+      color: #94a3b8 !important;
+    }
+    .slot-time {
+      border-color: #d7e1ff !important;
+      color: var(--primary-dark) !important;
+    }
+    .slot-time:hover, .slot-time.active,
+    .slot-confirm-row .btn {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+      color: #fff !important;
+      border-color: var(--primary-dark) !important;
+    }
+
 </style>
 <link href="assets/favicon.png" rel="icon" type="image/png"/>
 </head>
@@ -1413,7 +1463,6 @@
 <p>A cross-functional team presenting the AI employee vision for modern enterprise operations.</p>
 </div>
 <div aria-label="Presented by team members scrolling right to left" class="partner-marquee">
-<div class="featured-presenter-card" aria-label="Featured presenter"><div class="presented-photo abhishek-photo"></div><strong>Abhishek Soni</strong><span class="presented-roll">2501162</span></div>
 <div class="partner-track"><div class="presented-card"><div class="presented-photo abhishek-photo"></div><strong>Abhishek Soni</strong><span class="presented-roll">2501162</span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Saikat Das</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Vibha Sharma</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Vedant Rane</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Shubham Singh</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Harsh</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Ajay Singh</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Nishad</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Shreya Obulu</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo abhishek-photo"></div><strong>Abhishek Soni</strong><span class="presented-roll">2501162</span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Saikat Das</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Vibha Sharma</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Vedant Rane</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Shubham Singh</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Harsh</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Ajay Singh</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Nishad</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Shreya Obulu</strong><span class="presented-roll empty"> </span></div></div>
 </div>
 </div>
