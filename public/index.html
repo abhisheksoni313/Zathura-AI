@@ -1161,6 +1161,114 @@
         font-size: 16px;
       }
     }
+
+
+    /* ── 1-HOUR DEMO BOOKING WIDGET + FEATURED PRESENTER ── */
+    .partner-marquee { position: relative; padding: 22px 0; }
+    .featured-presenter-card {
+      position: absolute;
+      left: 50%; top: 50%; transform: translate(-50%, -50%);
+      z-index: 4;
+      width: min(310px, 78vw);
+      min-height: 184px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 8px;
+      background: linear-gradient(180deg, #ffffff, #f8fbff);
+      border: 2px solid rgba(63,92,255,.36);
+      border-radius: 24px;
+      box-shadow: 0 28px 70px rgba(63,92,255,.22), 0 8px 20px rgba(15,23,42,.08);
+      text-align: center;
+    }
+    .featured-presenter-card strong { font-family:'Sora',sans-serif; font-size: 20px; line-height: 1.15; font-weight: 900; letter-spacing: -.03em; }
+    .featured-presenter-card .presented-photo { width: 78px; height: 78px; }
+    .featured-presenter-card .presented-roll { font-size: 14px; }
+    .partner-track { padding-left: 350px; }
+    .demo-calendar-panel {
+      background: linear-gradient(135deg, #245c22 0%, #123f18 100%) !important;
+      color: #fff;
+      border: 0 !important;
+      box-shadow: 0 30px 80px rgba(18,63,24,.22) !important;
+    }
+    .demo-calendar-copy h3, .demo-calendar-copy p { color: #fff !important; }
+    .demo-calendar-copy .eyebrow {
+      background: rgba(255,255,255,.12);
+      border-color: rgba(255,255,255,.24);
+      color: #fff;
+    }
+    .demo-calendar-actions p { color: rgba(255,255,255,.86) !important; }
+    .slot-booking-widget {
+      display: grid;
+      grid-template-columns: .95fr 1.05fr;
+      gap: 0;
+      background: #fff;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.28);
+      box-shadow: 0 20px 56px rgba(0,0,0,.18);
+      min-height: 650px;
+    }
+    .slot-info-panel {
+      background: #245c22;
+      color: #fff;
+      padding: clamp(24px, 4vw, 46px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .slot-info-panel h4 { font-size: clamp(24px, 3vw, 36px); margin: 0 0 18px; font-weight: 900; letter-spacing: -.04em; }
+    .slot-info-panel p { color: rgba(255,255,255,.86); font-size: 16px; line-height: 1.7; margin: 0 0 28px; }
+    .slot-info-list { display: grid; gap: 18px; margin: 0; padding: 0; list-style: none; }
+    .slot-info-list li { display: flex; align-items: flex-start; gap: 12px; color: rgba(255,255,255,.92); font-size: 15px; line-height: 1.45; }
+    .slot-info-list i { color: #39d353; margin-top: 3px; font-size: 18px; }
+    .slot-picker-panel { padding: clamp(24px, 4vw, 46px); color: #0f172a; }
+    .slot-picker-panel h4 { font-size: clamp(22px, 2.4vw, 30px); font-weight: 900; letter-spacing: -.03em; margin: 0 0 8px; text-align: center; }
+    .slot-month-row { display: flex; align-items: center; justify-content: center; gap: 22px; margin: 24px 0 18px; font-family:'Sora',sans-serif; font-weight: 800; }
+    .slot-month-row button { border: 0; background: transparent; font-size: 20px; color: #0f3d1b; cursor: pointer; padding: 8px; border-radius: 10px; }
+    .slot-month-row button:hover { background: #eef7ee; }
+    .slot-weekdays, .slot-days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+    .slot-weekdays span { text-align: center; font-size: 12px; color: #46627f; font-weight: 800; }
+    .slot-day {
+      aspect-ratio: 1;
+      border: 0;
+      border-radius: 999px;
+      background: #f0f4ff;
+      color: #0b63ce;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform .18s, background .18s, color .18s, box-shadow .18s;
+    }
+    .slot-day:hover, .slot-day.active { transform: translateY(-1px); background: #0f3d1b; color: #fff; box-shadow: 0 10px 22px rgba(15,61,27,.22); }
+    .slot-day.muted { background: transparent; color: #94a3b8; cursor: default; box-shadow: none; transform: none; }
+    .slot-time-title { margin: 28px 0 12px; font-weight: 900; font-family:'Sora',sans-serif; }
+    .slot-times { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+    .slot-time {
+      border: 1.5px solid #dbe5f3;
+      background: #fff;
+      color: #0f3d1b;
+      border-radius: 12px;
+      min-height: 44px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background .18s, color .18s, border-color .18s;
+    }
+    .slot-time:hover, .slot-time.active { background: #0f3d1b; color: #fff; border-color: #0f3d1b; }
+    .slot-confirm-row { margin-top: 22px; display: grid; gap: 10px; }
+    .slot-confirm-row .btn { width: 100%; background: #0f3d1b; color: #fff; border-color: #0f3d1b; }
+    .slot-confirm-row .btn.disabled { opacity: .52; pointer-events: none; }
+    .slot-selected-copy { color: #64748b; font-size: 13px; text-align: center; margin: 0; }
+    .slot-timezone { margin-top: 18px; color: #334155; font-size: 13px; font-weight: 700; text-align: center; }
+    @media (max-width: 991.98px) {
+      .slot-booking-widget { grid-template-columns: 1fr; min-height: auto; }
+      .slot-info-panel { justify-content: flex-start; }
+      .partner-track { padding-left: 0; }
+      .featured-presenter-card { position: relative; left: auto; top: auto; transform: none; margin: 0 auto 20px; }
+    }
+    @media (max-width: 575.98px) {
+      .slot-times { grid-template-columns: 1fr; }
+      .slot-weekdays, .slot-days-grid { gap: 5px; }
+      .slot-day { font-size: 13px; }
+    }
+
 </style>
 <link href="assets/favicon.png" rel="icon" type="image/png"/>
 </head>
@@ -1305,6 +1413,7 @@
 <p>A cross-functional team presenting the AI employee vision for modern enterprise operations.</p>
 </div>
 <div aria-label="Presented by team members scrolling right to left" class="partner-marquee">
+<div class="featured-presenter-card" aria-label="Featured presenter"><div class="presented-photo abhishek-photo"></div><strong>Abhishek Soni</strong><span class="presented-roll">2501162</span></div>
 <div class="partner-track"><div class="presented-card"><div class="presented-photo abhishek-photo"></div><strong>Abhishek Soni</strong><span class="presented-roll">2501162</span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Saikat Das</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Vibha Sharma</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Vedant Rane</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Shubham Singh</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Harsh</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Ajay Singh</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Nishad</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Shreya Obulu</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo abhishek-photo"></div><strong>Abhishek Soni</strong><span class="presented-roll">2501162</span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Saikat Das</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Vibha Sharma</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Vedant Rane</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Shubham Singh</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Harsh</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Ajay Singh</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Nishad</strong><span class="presented-roll empty"> </span></div><div class="presented-card"><div class="presented-photo placeholder"></div><strong>Shreya Obulu</strong><span class="presented-roll empty"> </span></div></div>
 </div>
 </div>
@@ -1460,15 +1569,39 @@
 <div class="demo-calendar-copy">
 <div>
 <div class="eyebrow"><i class="fa-solid fa-calendar-days"></i> Book a Demo</div>
-<h3>Choose a Demo Slot On Google Calendar.</h3>
+<h3>Choose a 1-Hour Demo Slot.</h3>
 </div>
 <div class="demo-calendar-actions">
-<p>Use the calendar linked to <strong>info.zathura.ai@gmail.com</strong> to view availability and plan your Zathura.AI demo.</p>
-<a class="btn btn-secondary" href="https://calendar.google.com/calendar/u/6?cid=aW5mby56YXRodXJhLmFpQGdtYWlsLmNvbQ" rel="noopener noreferrer" target="_blank">Open Google Calendar <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+<p>Select a day and a 60-minute IST slot. The confirmation button opens a pre-filled booking email to <strong>info.zathura.ai@gmail.com</strong>.</p>
 </div>
 </div>
-<div aria-label="Zathura.AI Google Calendar" class="demo-calendar-frame">
-<iframe allowfullscreen="" frameborder="0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" scrolling="no" src="https://calendar.google.com/calendar/embed?height=640&amp;wkst=1&amp;ctz=Asia%2FKolkata&amp;src=info.zathura.ai%40gmail.com" style="border:0" title="Zathura.AI Google Calendar"></iframe>
+<div aria-label="Zathura.AI 1-hour slot booking calendar" class="slot-booking-widget">
+<div class="slot-info-panel">
+<h4>Book Your Zathura.AI Demo</h4>
+<p>A focused 1-hour walkthrough for enterprise AI employees, procurement validation, invoice review, and dashboard workflows.</p>
+<ul class="slot-info-list">
+<li><i class="fa-regular fa-clock"></i><span><strong>Duration:</strong> 60 minutes</span></li>
+<li><i class="fa-solid fa-video"></i><span><strong>Format:</strong> Google Meet / online demo</span></li>
+<li><i class="fa-solid fa-check-circle"></i><span><strong>Outcome:</strong> clear next steps for your workflow pilot</span></li>
+</ul>
+</div>
+<div class="slot-picker-panel">
+<h4>Select a Day</h4>
+<div class="slot-month-row">
+<button aria-label="Previous month" id="slot-prev-month" type="button"><i class="fa-solid fa-chevron-left"></i></button>
+<span id="slot-month-label">July 2026</span>
+<button aria-label="Next month" id="slot-next-month" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+</div>
+<div class="slot-weekdays"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+<div class="slot-days-grid" id="slot-days-grid"></div>
+<div class="slot-time-title" id="slot-time-title">Available 1-hour slots</div>
+<div class="slot-times" id="slot-times"></div>
+<div class="slot-confirm-row">
+<p class="slot-selected-copy" id="slot-selected-copy">Select a date and time to continue.</p>
+<a class="btn disabled" href="#" id="slot-confirm-link" rel="noopener noreferrer" target="_blank">Confirm 1-Hour Slot <i class="fa-solid fa-arrow-right"></i></a>
+</div>
+<div class="slot-timezone"><i class="fa-solid fa-globe"></i> India Standard Time (IST)</div>
+</div>
 </div>
 </div>
 </div>
@@ -1627,6 +1760,85 @@
       }
     });
   }
+
+  /* ── 1-hour demo slot picker ── */
+  (function () {
+    const daysGrid = document.getElementById('slot-days-grid');
+    const timesWrap = document.getElementById('slot-times');
+    const monthLabel = document.getElementById('slot-month-label');
+    const selectedCopy = document.getElementById('slot-selected-copy');
+    const confirmLink = document.getElementById('slot-confirm-link');
+    const prevBtn = document.getElementById('slot-prev-month');
+    const nextBtn = document.getElementById('slot-next-month');
+    if (!daysGrid || !timesWrap || !monthLabel || !selectedCopy || !confirmLink) return;
+
+    const slots = ['10:00 AM', '11:30 AM', '2:00 PM', '3:30 PM', '5:00 PM', '6:30 PM'];
+    const today = new Date();
+    let view = new Date(today.getFullYear(), today.getMonth(), 1);
+    let selectedDate = null;
+    let selectedTime = '';
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+    function fmtDate(d) { return d.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }); }
+    function mailtoLink(date, time) {
+      const subject = encodeURIComponent('Zathura.AI 1-hour demo booking request');
+      const body = encodeURIComponent(`Hi Zathura.AI Team,\n\nI would like to book a 1-hour demo slot.\n\nPreferred slot: ${fmtDate(date)} at ${time} IST\nDuration: 60 minutes\n\nPlease confirm the meeting invite.\n\nThanks.`);
+      return `mailto:info.zathura.ai@gmail.com?subject=${subject}&body=${body}`;
+    }
+    function updateConfirm() {
+      if (!selectedDate || !selectedTime) {
+        selectedCopy.textContent = 'Select a date and time to continue.';
+        confirmLink.classList.add('disabled');
+        confirmLink.href = '#';
+        return;
+      }
+      selectedCopy.textContent = `Selected: ${fmtDate(selectedDate)} · ${selectedTime} IST · 60 minutes`;
+      confirmLink.href = mailtoLink(selectedDate, selectedTime);
+      confirmLink.classList.remove('disabled');
+    }
+    function renderTimes() {
+      timesWrap.innerHTML = slots.map(t => `<button type="button" class="slot-time${t === selectedTime ? ' active' : ''}" data-time="${t}">${t}</button>`).join('');
+      timesWrap.querySelectorAll('.slot-time').forEach(btn => {
+        btn.addEventListener('click', () => {
+          selectedTime = btn.dataset.time;
+          renderTimes();
+          updateConfirm();
+        });
+      });
+    }
+    function renderCalendar() {
+      monthLabel.textContent = view.toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
+      const year = view.getFullYear();
+      const month = view.getMonth();
+      const first = new Date(year, month, 1);
+      const last = new Date(year, month + 1, 0);
+      const startOffset = (first.getDay() + 6) % 7;
+      let html = '';
+      for (let i = 0; i < startOffset; i++) html += '<span class="slot-day muted"></span>';
+      for (let day = 1; day <= last.getDate(); day++) {
+        const d = new Date(year, month, day);
+        const isPast = d < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        const isActive = selectedDate && d.toDateString() === selectedDate.toDateString();
+        html += `<button type="button" class="slot-day${isPast ? ' muted' : ''}${isActive ? ' active' : ''}" ${isPast ? 'disabled' : ''} data-date="${year}-${pad(month+1)}-${pad(day)}">${day}</button>`;
+      }
+      daysGrid.innerHTML = html;
+      daysGrid.querySelectorAll('.slot-day:not(.muted)').forEach(btn => {
+        btn.addEventListener('click', () => {
+          selectedDate = new Date(btn.dataset.date + 'T00:00:00');
+          selectedTime = '';
+          renderCalendar();
+          renderTimes();
+          updateConfirm();
+        });
+      });
+    }
+    if (prevBtn) prevBtn.addEventListener('click', () => { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); renderCalendar(); });
+    if (nextBtn) nextBtn.addEventListener('click', () => { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); renderCalendar(); });
+    renderCalendar();
+    renderTimes();
+    updateConfirm();
+  })();
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body></html>
