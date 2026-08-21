@@ -123,13 +123,13 @@
     .trust-logos span:hover { opacity: 1; color: var(--primary); }
 
     /* ════════════════════════════════════════════
-       PRODUCT SUITE  — 4 unique card animations
+       PRODUCT SUITE  — 3 unique card animations
     ════════════════════════════════════════════ */
     #products { background: var(--soft); }
 
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 22px;
       margin-top: 44px;
     }
@@ -1383,7 +1383,7 @@
 <div class="container trust-inner">
 <span class="trust-label">Delegate workflows across enterprise teams</span>
 <div class="trust-logos">
-<span>PROCUREMENT</span><span>GTM</span><span>MARKETING</span><span>CUSTOMER SUCCESS</span><span>FINANCE OPS</span>
+<span>PROCUREMENT</span><span>GTM</span><span>MARKETING</span><span>HR</span><span>FINANCE OPS</span>
 </div>
 </div>
 </div>
@@ -1407,53 +1407,37 @@
 </div>
 <a class="plearn" href="procurement.html?source=product-suite" onclick="event.stopPropagation()">Open Backend Dashboard <i class="fa-solid fa-arrow-right"></i></a>
 </div>
-<div class="pcard">
-<div class="pcard-vis pcard-vis-2">
-<div class="orbit-wrap">
-<div class="orbit-ring or1"><div class="orbit-dot"></div></div>
-<div class="orbit-ring or2"><div class="orbit-dot"></div></div>
-<div class="orbit-ring or3"><div class="orbit-dot"></div></div>
-<div class="orbit-core" style="font-size:0;"><i class="fa-solid fa-chart-line" style="font-size:12px;color:white;position:relative;z-index:2;"></i></div>
-</div>
-</div>
-<div class="pcard-num">02 · Revenue</div>
-<h4>GTM Associate</h4>
-<p>Keeps CRM data clean, researches accounts, tracks pipeline movement, flags stuck deals, and prepares revenue insights for sales reviews.</p>
-<div class="pcard-tags">
-<span class="ptag">CRM Updates</span><span class="ptag">Lead Research</span><span class="ptag">Pipeline</span><span class="ptag">Insights</span>
-</div>
-<a class="plearn" href="#contact-form-section" onclick="setFormType('gtm')">Explore Role <i class="fa-solid fa-arrow-right"></i></a>
-</div>
-<div class="pcard">
+
+<div class="pcard" onclick="window.location.href='marketing-agent.html?source=product-suite-card'" onkeydown="if(event.key==='Enter'){window.location.href='marketing-agent.html?source=product-suite-card'}" role="link" tabindex="0">
 <div class="pcard-vis pcard-vis-3">
 <div class="flow-track ft1"><div class="flow-packet fp1"></div></div>
 <div class="flow-track ft2"><div class="flow-packet fp2"></div></div>
 <div class="flow-track ft3"><div class="flow-packet fp3"></div></div>
 <div class="hw-icon"><i class="fa-solid fa-bullhorn" style="font-size:18px;position:relative;z-index:2;color:white;"></i></div>
 </div>
-<div class="pcard-num">03 · Marketing</div>
+<div class="pcard-num">02 · Marketing</div>
 <h4>Marketing Manager</h4>
 <p>Coordinates campaign planning, content operations, analytics, brand reporting, and performance tracking so marketers can focus on strategy.</p>
 <div class="pcard-tags">
 <span class="ptag">Campaigns</span><span class="ptag">Content Ops</span><span class="ptag">Analytics</span><span class="ptag">Reporting</span>
 </div>
-<a class="plearn" href="#contact-form-section" onclick="setFormType('marketing')">Explore Role <i class="fa-solid fa-arrow-right"></i></a>
+<a class="plearn" href="marketing-agent.html?source=product-suite" onclick="event.stopPropagation()">Open Backend Dashboard <i class="fa-solid fa-arrow-right"></i></a>
 </div>
-<div class="pcard">
+<div class="pcard" onclick="window.location.href='hr-agent.html?source=product-suite-card'" onkeydown="if(event.key==='Enter'){window.location.href='hr-agent.html?source=product-suite-card'}" role="link" tabindex="0">
 <div class="pcard-vis pcard-vis-4">
 <svg class="wave-svg" preserveaspectratio="none" viewbox="0 0 200 100">
 <path class="wave-path" d="M0,50 Q25,20 50,50 T100,50 T150,50 T200,50"></path>
 <path class="wave-path" d="M0,65 Q25,35 50,65 T100,65 T150,65 T200,65" style="animation-delay:.4s;opacity:.5"></path>
 </svg>
-<div class="fpga-icon"><i class="fa-solid fa-headset" style="font-size:20px;position:relative;z-index:2;color:white;"></i></div>
+<div class="fpga-icon"><i class="fa-solid fa-people-group" style="font-size:20px;position:relative;z-index:2;color:white;"></i></div>
 </div>
-<div class="pcard-num">04 · Success</div>
-<h4>Customer Success Manager</h4>
-<p>Monitors customer health, tracks renewals, coordinates support follow-ups, prepares QBRs, and surfaces adoption risks early.</p>
+<div class="pcard-num">03 · HR</div>
+<h4>HR Agent</h4>
+<p>Orchestrates employee service, policy, leave, onboarding, training, workforce readiness, approvals, exceptions, and audit-ready HR operations.</p>
 <div class="pcard-tags">
-<span class="ptag">Health Scores</span><span class="ptag">Renewals</span><span class="ptag">QBRs</span><span class="ptag">Adoption</span>
+<span class="ptag">Employee Service</span><span class="ptag">Readiness</span><span class="ptag">Workflows</span><span class="ptag">Compliance</span>
 </div>
-<a class="plearn" href="#contact-form-section" onclick="setFormType('customer_success')">Explore Role <i class="fa-solid fa-arrow-right"></i></a>
+<a class="plearn" href="hr-agent.html?source=product-suite" onclick="event.stopPropagation()">Open Backend Dashboard <i class="fa-solid fa-arrow-right"></i></a>
 </div>
 </div>
 </div>
@@ -1604,7 +1588,7 @@
 <option value="procurement">Procurement Analyst</option>
 <option value="gtm">GTM Associate</option>
 <option value="marketing">Marketing Manager</option>
-<option value="customer_success">Customer Success Manager</option>
+<option value="hr">HR Agent</option>
 <option value="ai_employee">AI Employee Platform</option>
 <option value="other">Other / General Inquiry</option>
 </select>
@@ -1683,7 +1667,7 @@
 <li><a href="procurement.html?source=footer-products">Procurement Analyst</a></li>
 <li><a href="#products">GTM Associate</a></li>
 <li><a href="#products">Marketing Manager</a></li>
-<li><a href="#products">Customer Success Manager</a></li>
+<li><a href="hr-agent.html?source=footer-products">HR Agent</a></li>
 </ul>
 </div>
 <div>

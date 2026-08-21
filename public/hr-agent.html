@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zathura.AI — HR Agent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <style>
+    :root{--primary:#6d52ff;--primary-dark:#4f35e8;--text:#0f172a;--muted:#64748b;--line:#e5e7eb;--soft:#f8fafc;--bg:#f6f8fc;--card:#fff;--success:#16a34a;--warning:#b45309;--danger:#dc2626;--success-bg:#ecfdf3;--warning-bg:#fffbeb;--danger-bg:#fef2f2;--info-bg:#f1efff;--radius:18px;--shadow:0 16px 44px rgba(15,23,42,.08)}
+    *{box-sizing:border-box;margin:0;padding:0}body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}h1,h2,h3,h4{font-family:'Sora',sans-serif;letter-spacing:-.02em}a{text-decoration:none;color:inherit}.mono{font-family:'JetBrains Mono',monospace}.app{display:grid;grid-template-columns:286px 1fr;min-height:100vh}.side{background:#10172b;color:#e2e8f7;padding:22px 16px;position:sticky;top:0;height:100vh;overflow:auto}.brand{display:flex;gap:10px;align-items:center;padding:0 8px 20px;border-bottom:1px solid rgba(255,255,255,.09)}.brand img{height:34px;width:auto}.brand b{display:block;color:white;font-family:'Sora'}.brand span{font-size:11px;color:#94a3c4;text-transform:uppercase;letter-spacing:.07em}.nav{padding-top:18px;display:grid;gap:6px}.nav a,.nav button{display:flex;align-items:center;gap:10px;border:0;background:transparent;color:#c4d0ec;padding:11px 12px;border-radius:12px;font:inherit;font-size:13.5px;cursor:pointer;text-align:left}.nav a:hover,.nav button:hover,.nav .active{background:rgba(255,255,255,.07);color:white}.nav .active{background:linear-gradient(135deg,var(--primary),var(--primary-dark));box-shadow:0 10px 24px rgba(109,82,255,.30)}.side-note{font-size:11.5px;color:#7383aa;margin-top:24px;padding:0 10px}.main{padding:30px 36px 70px;min-width:0}.top{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:20px}.eyebrow{display:inline-flex;gap:8px;align-items:center;border:1px solid rgba(109,82,255,.22);background:rgba(109,82,255,.07);color:var(--primary-dark);border-radius:999px;padding:6px 12px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}.top h1{font-size:30px}.top p{color:var(--muted);max-width:850px;margin-top:5px}.persona{display:flex;align-items:center;gap:9px;background:white;border:1px solid var(--line);padding:8px 10px;border-radius:14px}.persona span{font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase}.persona select{border:0;background:transparent;font:inherit;font-weight:800;color:var(--text);outline:none}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid transparent;border-radius:12px;min-height:42px;padding:0 16px;font-weight:700;font-size:13px;cursor:pointer;transition:.16s;background:#fff}.btn:hover{transform:translateY(-1px)}.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:white;box-shadow:0 12px 28px rgba(109,82,255,.22)}.btn-secondary{border-color:var(--line);color:var(--text)}.btn-danger{border-color:#fecaca;color:var(--danger);background:white}.btn-success{background:var(--success);color:white}.btn-warning{background:#fff7ed;border-color:#fed7aa;color:#c2410c}.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}.grid{display:grid;gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 1px 2px rgba(15,23,42,.04)}.pad{padding:21px}.kpis{grid-template-columns:repeat(6,minmax(0,1fr));margin-bottom:20px}.kpi{padding:17px;min-width:0}.kpi span{display:flex;gap:7px;align-items:center;color:var(--muted);font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}.kpi b{display:block;font-family:'Sora';font-size:27px;margin-top:7px}.kpi small{display:block;color:var(--muted);font-size:11.5px;margin-top:2px}.section-h{font-family:'Sora';font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px}.split{display:grid;grid-template-columns:1.08fr .92fr;gap:18px;align-items:start}.split-equal{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.four{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.meta{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0}.meta small{display:block;text-transform:uppercase;letter-spacing:.05em;color:#94a3b8;font-size:10px;font-weight:900;margin-bottom:3px}.meta b{font-size:13px;word-break:break-word}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse}th{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:11px 13px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}td{padding:12px 13px;border-bottom:1px solid var(--line);font-size:13px;vertical-align:middle}tr:last-child td{border-bottom:0}tbody tr.clickable{cursor:pointer}tbody tr.clickable:hover{background:var(--soft)}.badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 9px;font-size:10.5px;font-weight:900;white-space:nowrap;border:1px solid}.green,.READY,.APPROVED,.COMPLETED{background:var(--success-bg);color:var(--success);border-color:#bbf7d0}.red,.NOT_READY,.REJECTED,.OVERDUE{background:var(--danger-bg);color:var(--danger);border-color:#fecaca}.amber,.PENDING_APPROVAL,.ASSIGNED,.PROPOSED{background:var(--warning-bg);color:var(--warning);border-color:#fde68a}.neutral,.UNKNOWN{background:#f1f5f9;color:#475569;border-color:#e2e8f0}.banner{background:linear-gradient(135deg,#111a34,#2a235f);color:white;border-radius:20px;padding:18px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:14px}.banner p{color:#cbd5e1;font-size:13.5px;max-width:920px}.banner b{font-family:'Sora'}.hidden{display:none!important}.toast{position:fixed;right:24px;top:24px;background:#0f172a;color:white;padding:13px 16px;border-radius:12px;font-weight:800;font-size:13px;box-shadow:var(--shadow);z-index:99}.muted{color:var(--muted)}.tiny{font-size:11.5px;color:var(--muted)}.tag{font-size:10px;border:1px solid var(--line);border-radius:7px;padding:2px 6px;color:var(--muted);font-weight:800;display:inline-flex}.tags{display:flex;gap:6px;flex-wrap:wrap}.stack{display:grid;gap:10px}.item{border:1px solid var(--line);border-radius:13px;padding:13px;background:white}.item h4{font-size:13.5px}.item p{font-size:12.5px;color:var(--muted);margin-top:3px}.callout{border:1px solid #ddd6fe;background:#f5f3ff;border-radius:15px;padding:15px}.callout strong{font-family:'Sora';font-size:14px}.callout p{font-size:12.8px;color:#4c1d95;margin-top:5px}.danger-callout{border-color:#fecaca;background:#fff1f2}.danger-callout p{color:#9f1239}.success-callout{border-color:#bbf7d0;background:#f0fdf4}.success-callout p{color:#166534}.field label{display:block;font-size:11.5px;font-weight:800;margin-bottom:5px;color:#334155}.field input,.field select,.field textarea{width:100%;border:1.5px solid #cbd5e1;border-radius:9px;padding:9px 10px;font:inherit;font-size:13px;background:#fff}.field textarea{min-height:86px;resize:vertical}.form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.command{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:stretch}.command textarea{width:100%;border:1.5px solid #cbd5e1;border-radius:14px;padding:14px;font:inherit;font-size:14px;min-height:78px;resize:vertical;outline:none;background:white}.command textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(109,82,255,.08)}.prompt-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.prompt-chip{border:1px solid var(--line);background:white;border-radius:999px;padding:7px 11px;font-size:11.5px;font-weight:700;cursor:pointer;color:#475569}.prompt-chip:hover{border-color:#c4b5fd;color:var(--primary-dark)}.answer{border:1px solid var(--line);background:white;border-radius:16px;padding:18px;margin-top:16px}.answer-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.answer p{font-size:14px;color:#334155}.answer-meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.sourcebox{background:var(--soft);border:1px solid var(--line);border-radius:11px;padding:10px;font-size:11.5px;color:#475569}.sourcebox b{display:block;text-transform:uppercase;font-size:9.5px;color:#94a3b8;letter-spacing:.05em;margin-bottom:3px}.checks{display:grid;gap:8px}.check{display:grid;grid-template-columns:25px 1fr;gap:10px;border:1px solid var(--line);border-radius:12px;padding:10px;background:white}.check .dot{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:10px}.check.PASS .dot{background:var(--success-bg);color:var(--success)}.check.FAIL .dot{background:var(--danger-bg);color:var(--danger)}.check b{font-size:12.5px}.check small{display:block;color:var(--muted);font-size:11.5px}.heatmap{display:grid;grid-template-columns:160px repeat(4,1fr);border:1px solid var(--line);border-radius:12px;overflow:hidden}.heatmap div{padding:11px 12px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);font-size:12px}.heatmap div:nth-child(5n){border-right:0}.heatmap .head{background:#111827;color:white;font-weight:800}.heatmap .g{background:#ecfdf3;color:#166534;font-weight:800}.heatmap .a{background:#fffbeb;color:#92400e;font-weight:800}.heatmap .r{background:#fef2f2;color:#991b1b;font-weight:800}.passport{border:1px solid var(--line);border-radius:16px;overflow:hidden}.passport-head{background:#111827;color:white;padding:14px 16px}.passport-head p{color:#cbd5e1;font-size:12px;margin-top:3px}.passport-body{padding:14px}.permission-line{padding:11px 12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;color:#166534;font-weight:800;font-size:12.5px;margin-top:12px}.timeline{display:grid;gap:9px}.step{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}.step i{width:25px;height:25px;border-radius:50%;background:#ede9fe;color:#5b21b6;display:grid;place-items:center;font-size:10px}.step b{font-size:12.5px}.step p{font-size:11.5px;color:var(--muted)}.audit-row{display:grid;grid-template-columns:150px 150px 1fr 140px;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:12px}.audit-row:last-child{border-bottom:0}.architecture{font-family:'JetBrains Mono',monospace;font-size:12px;background:#0f172a;color:#dbeafe;border-radius:14px;padding:16px;overflow:auto}.empty{padding:24px;text-align:center;color:var(--muted);font-size:13px;border:1px dashed #cbd5e1;border-radius:14px;background:white}.actions{display:flex;gap:9px;flex-wrap:wrap}.status-dot{width:8px;height:8px;border-radius:50%;display:inline-block;background:currentColor}.spacer{height:16px}
+    @media(max-width:1240px){.app{grid-template-columns:1fr}.side{position:relative;height:auto}.nav{grid-template-columns:repeat(4,1fr)}.kpis{grid-template-columns:repeat(3,1fr)}.split,.split-equal{grid-template-columns:1fr}.main{padding:24px}.four{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:760px){.nav{grid-template-columns:1fr 1fr}.kpis,.three,.four,.meta-grid,.form-grid{grid-template-columns:1fr}.main{padding:18px}.command{grid-template-columns:1fr}.command .btn{min-height:46px}.banner{align-items:flex-start;flex-direction:column}.heatmap{grid-template-columns:110px repeat(4,95px);overflow:auto}.audit-row{grid-template-columns:1fr}.persona{width:100%}.persona select{flex:1}.top{display:block}.top .persona{margin-top:14px}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><img src="assets/favicon.png" alt=""><div><b>Zathura.AI</b><span>HR Agent</span></div></div>
+    <nav class="nav">
+      <a href="index.html"><i class="fa-solid fa-arrow-left"></i> Back to Website</a>
+      <button class="active" data-tab="ask"><i class="fa-solid fa-wand-magic-sparkles"></i> Ask Zathura</button>
+      <button data-tab="myhr"><i class="fa-solid fa-id-card"></i> My HR</button>
+      <button data-tab="team"><i class="fa-solid fa-people-group"></i> My Team</button>
+      <button data-tab="readiness"><i class="fa-solid fa-shield-halved"></i> Workforce Readiness</button>
+      <button data-tab="tower"><i class="fa-solid fa-tower-observation"></i> HR Control Tower</button>
+      <button data-tab="audit"><i class="fa-solid fa-clipboard-check"></i> Audit & Governance</button>
+      <button id="resetBtn"><i class="fa-solid fa-rotate-left"></i> Reset HR Demo</button>
+    </nav>
+    <div class="side-note">Controlled HR operating layer: language intelligence around deterministic policy, qualification, workflow, approval and audit controls.</div>
+  </aside>
+  <main class="main">
+    <div class="top">
+      <div>
+        <div class="eyebrow"><i class="fa-solid fa-user-shield"></i> Regulated Workforce Orchestration</div>
+        <h1 id="pageTitle">Ask Zathura</h1>
+        <p id="pageCopy">One conversational front door for employee service, policy intelligence, workflows, workforce readiness and proactive HR operations.</p>
+      </div>
+      <div class="persona"><span>Demo persona</span><select id="personaSelect"></select></div>
+    </div>
+    <div class="banner">
+      <div><b>HR Autopilot, not an HR chatbot.</b><p>Tell Zathura the outcome you want. The prototype authenticates the persona, retrieves controlled data, evaluates deterministic rules, routes approvals, performs permitted actions and retains an audit trail.</p></div>
+      <span class="badge neutral" id="personaBadge">Loading</span>
+    </div>
+
+    <section id="askTab" class="tab"></section>
+    <section id="myhrTab" class="tab hidden"></section>
+    <section id="teamTab" class="tab hidden"></section>
+    <section id="readinessTab" class="tab hidden"></section>
+    <section id="towerTab" class="tab hidden"></section>
+    <section id="auditTab" class="tab hidden"></section>
+  </main>
+</div>
+<div id="toast" class="toast hidden"></div>
+<script>
+const $=id=>document.getElementById(id);
+const state={persona:'manager',config:null,currentTab:'ask',lastAnswer:null,lastProposal:null,readinessEmployee:null};
+const titles={
+  ask:['Ask Zathura','Natural-language intent with grounded answers, controlled policy sources, deterministic rules and permitted actions.'],
+  myhr:['My HR','Employee self-service for profile, leave, payroll explanations, documents and training.'],
+  team:['My Team','Manager copilot for approvals, team readiness, attendance and qualified shift replacement.'],
+  readiness:['Workforce Readiness','Qualification passports and deterministic READY / NOT READY gates for regulated work.'],
+  tower:['HR Control Tower','Exception-led operations across staffing, compliance, onboarding, recruitment, payroll and employee cases.'],
+  audit:['Audit & Governance','Traceable sources, rules, approvals, actions, model boundaries and stop conditions.']
+};
+function withPersona(path){const u=new URL(path,location.origin);u.searchParams.set('persona',state.persona);return u.pathname+u.search;}
+async function api(path,options={}){const res=await fetch(withPersona(path),{headers:{'Content-Type':'application/json'},...options});const data=await res.json().catch(()=>({}));if(!res.ok){const err=new Error(data.error||data.errors?.join(', ')||'Request failed');err.status=res.status;err.data=data;throw err;}return data;}
+function badge(v){const x=String(v||'UNKNOWN').replaceAll(' ','_');return `<span class="badge ${x}"><span class="status-dot"></span>${String(v||'Unknown').replaceAll('_',' ')}</span>`}
+function fmtDate(v){if(!v)return '—';return new Intl.DateTimeFormat('en-IN',{day:'2-digit',month:'short',year:'numeric'}).format(new Date(v+'T00:00:00Z'))}
+function fmtTime(v){if(!v)return '—';return new Intl.DateTimeFormat('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}).format(new Date(v))}
+function toast(msg){$('toast').textContent=msg;$('toast').classList.remove('hidden');setTimeout(()=>$('toast').classList.add('hidden'),2600)}
+function escapeHtml(s){return String(s??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function errorBlock(err){return `<div class="empty"><i class="fa-solid fa-lock" style="margin-right:6px"></i>${escapeHtml(err.message)}</div>`}
+
+async function boot(){
+  state.config=await api('/api/hr/config');
+  $('personaSelect').innerHTML=state.config.personas.map(p=>`<option value="${p.id}" ${p.id===state.persona?'selected':''}>${p.label} — ${p.name}</option>`).join('');
+  updatePersonaBadge();
+  await renderCurrent();
+}
+function updatePersonaBadge(){const p=state.config.personas.find(x=>x.id===state.persona);$('personaBadge').innerHTML=`<i class="fa-solid fa-user-lock"></i> ${p.label} · ${p.name}`}
+async function renderCurrent(){const [h,c]=titles[state.currentTab];$('pageTitle').textContent=h;$('pageCopy').textContent=c;document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===state.currentTab));document.querySelectorAll('.tab').forEach(x=>x.classList.add('hidden'));$(state.currentTab+'Tab').classList.remove('hidden');
+  const fn={ask:renderAsk,myhr:renderMyHr,team:renderTeam,readiness:renderReadiness,tower:renderTower,audit:renderAudit}[state.currentTab];await fn();
+}
+
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',async()=>{state.currentTab=b.dataset.tab;await renderCurrent()}));
+$('personaSelect').addEventListener('change',async e=>{state.persona=e.target.value;state.lastAnswer=null;state.lastProposal=null;updatePersonaBadge();await renderCurrent();toast('Persona and permission context updated')});
+$('resetBtn').addEventListener('click',async()=>{await api('/api/hr/reset',{method:'POST',body:'{}'});state.lastAnswer=null;state.lastProposal=null;await renderCurrent();toast('HR demo reset to seeded state')});
+
+async function renderAsk(){
+  $('askTab').innerHTML=`
+    <div class="card pad">
+      <div class="section-h"><i class="fa-solid fa-message" style="color:var(--primary)"></i>Universal command bar</div>
+      <div class="command"><textarea id="askInput" placeholder="Ask an HR question or state an outcome…"></textarea><button class="btn btn-primary" id="askBtn"><i class="fa-solid fa-paper-plane"></i> Ask Zathura</button></div>
+      <div class="prompt-chips">
+        ${['How many leaves do I have?','Why is my salary lower this month?','Who can replace Riya on Line 4 tonight?','Who can cover the sterile shift tonight?','Show qualifications expiring this month.','Who is qualified on HPLC-07?','What policy applies to qualification?','Show unresolved payroll exceptions.','Why is onboarding taking so long?','Show the notice period conflict.'].map(q=>`<button class="prompt-chip" data-prompt="${escapeHtml(q)}">${escapeHtml(q)}</button>`).join('')}
+      </div>
+      <div id="answerBox">${state.lastAnswer?answerHtml(state.lastAnswer):''}</div>
+    </div>
+    <div class="spacer"></div>
+    <div class="three">
+      <div class="card pad"><div class="section-h"><i class="fa-solid fa-brain" style="color:var(--primary)"></i>Language Brain</div><p class="muted">Understands requests, retrieves context, explains results and drafts. It does not own workflow state or regulated authorization.</p></div>
+      <div class="card pad"><div class="section-h"><i class="fa-solid fa-scale-balanced" style="color:var(--primary)"></i>Rules Brain</div><p class="muted">Eligibility, approval hierarchy, qualification, leave, shift and compensation rules are deterministic and override model confidence.</p></div>
+      <div class="card pad"><div class="section-h"><i class="fa-solid fa-gears" style="color:var(--primary)"></i>Action Brain</div><p class="muted">Typed actions call HRMS, LMS, QMS, payroll, IAM, attendance and notification adapters only after permission and approval gates.</p></div>
+    </div>`;
+  document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click',()=>{ $('askInput').value=b.dataset.prompt; runAsk(); }));
+  $('askBtn').addEventListener('click',runAsk);
+  $('askInput').addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key==='Enter')runAsk()});
+}
+function answerHtml(a){return `<div class="answer">
+  <div class="answer-head"><div class="tags">${badge(a.state)}<span class="tag">${escapeHtml(a.mode)}</span></div>${a.action?'<span class="tag">Action available</span>':''}</div>
+  <p>${escapeHtml(a.answer)}</p>
+  <div class="answer-meta"><div class="sourcebox"><b>Source</b>${(a.sources||[]).map(escapeHtml).join('<br>')||'No source returned'}</div><div class="sourcebox"><b>Rule</b>${escapeHtml(a.rule||'No deterministic rule required')}</div></div>
+  ${a.action?.type==='SHIFT_REPLACEMENT'?`<div class="actions" style="margin-top:12px"><button class="btn btn-primary" id="answerActionBtn"><i class="fa-solid fa-right-left"></i>Prepare compliant replacement proposal</button></div>`:''}
+  </div>`}
+async function runAsk(){const q=$('askInput').value.trim();if(!q)return;const btn=$('askBtn');btn.disabled=true;btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Checking sources & rules';try{state.lastAnswer=await api('/api/hr/ask',{method:'POST',body:JSON.stringify({query:q})});$('answerBox').innerHTML=answerHtml(state.lastAnswer);if(state.lastAnswer.action?.type==='SHIFT_REPLACEMENT')$('answerActionBtn')?.addEventListener('click',async()=>{state.currentTab='team';await renderCurrent();setTimeout(()=>document.getElementById('replacementBtn')?.click(),0)});}catch(e){$('answerBox').innerHTML=errorBlock(e)}finally{btn.disabled=false;btn.innerHTML='<i class="fa-solid fa-paper-plane"></i> Ask Zathura'}}
+
+async function renderMyHr(){
+  try{const s=await api('/api/hr/summary');if(!s.self){$('myhrTab').innerHTML=`<div class="empty">This demo persona does not expose a personal employee profile on this screen. Switch to <b>Employee</b> to test self-service, leave, payroll and training.</div>`;return}const e=s.self;
+    $('myhrTab').innerHTML=`
+      <div class="split">
+        <div class="card pad">
+          <div class="section-h"><i class="fa-solid fa-address-card" style="color:var(--primary)"></i>${escapeHtml(e.name)}</div>
+          <div class="meta-grid">
+            <div class="meta"><small>Employee ID</small><b class="mono">${e.id}</b></div><div class="meta"><small>Role</small><b>${escapeHtml(e.role)}</b></div><div class="meta"><small>Site</small><b>${escapeHtml(e.site)}</b></div>
+            <div class="meta"><small>Manager</small><b>${escapeHtml(e.managerName)}</b></div><div class="meta"><small>HRBP</small><b>${escapeHtml(e.hrbp)}</b></div><div class="meta"><small>Probation end</small><b>${fmtDate(e.probationEnd)}</b></div>
+          </div>
+          <div class="spacer"></div>
+          <div class="section-h"><i class="fa-solid fa-umbrella-beach" style="color:var(--primary)"></i>Leave balance</div>
+          <div class="three"><div class="meta"><small>Annual</small><b>${e.leave.annual} days</b></div><div class="meta"><small>Sick</small><b>${e.leave.sick} days</b></div><div class="meta"><small>Casual</small><b>${e.leave.casual} days</b></div></div>
+          <div class="spacer"></div>
+          <div class="section-h"><i class="fa-solid fa-file-arrow-down" style="color:var(--primary)"></i>Employee documents</div>
+          <div class="actions"><button class="btn btn-secondary" onclick="toast('Payslip retrieved from payroll system in demo')"><i class="fa-solid fa-file-pdf"></i>Payslip</button><button class="btn btn-secondary" onclick="toast('Salary certificate assembled from approved template + verified HRMS data')"><i class="fa-solid fa-file-lines"></i>Salary Certificate</button><button class="btn btn-secondary" onclick="toast('Form 16 retrieval simulated')"><i class="fa-solid fa-receipt"></i>Form 16</button></div>
+        </div>
+        <div class="card pad">
+          <div class="section-h"><i class="fa-solid fa-calendar-plus" style="color:var(--primary)"></i>Apply leave end-to-end</div>
+          <div class="form-grid" style="grid-template-columns:1fr 1fr"><div class="field"><label>Leave type</label><select id="leaveType"><option value="annual">Annual</option><option value="sick">Sick</option><option value="casual">Casual</option></select></div><div></div><div class="field"><label>Start date</label><input id="leaveStart" type="date" value="2026-08-31"></div><div class="field"><label>End date</label><input id="leaveEnd" type="date" value="2026-09-01"></div></div>
+          <div class="actions" style="margin-top:12px"><button class="btn btn-secondary" id="validateLeaveBtn"><i class="fa-solid fa-list-check"></i>Validate</button><button class="btn btn-primary" id="submitLeaveBtn"><i class="fa-solid fa-paper-plane"></i>Submit for approval</button></div>
+          <div id="leaveResult" style="margin-top:12px"></div>
+          <div class="spacer"></div>
+          <div class="section-h"><i class="fa-solid fa-money-bill-wave" style="color:var(--primary)"></i>Payroll explanation</div>
+          <div class="callout"><strong>Net pay: ₹${Number(e.payroll.net).toLocaleString('en-IN')}</strong><p>Previous month: ₹${Number(e.payroll.lastMonthNet).toLocaleString('en-IN')}. Verified driver: ${escapeHtml(e.payroll.drivers.join('; '))}</p></div>
+        </div>
+      </div>
+      <div class="spacer"></div>
+      <div class="card pad"><div class="section-h"><i class="fa-solid fa-graduation-cap" style="color:var(--primary)"></i>Training & qualification</div><div class="table-wrap"><table><thead><tr><th>Record</th><th>Version</th><th>Status</th><th>Valid until</th></tr></thead><tbody>${e.training.map(t=>`<tr><td><b>${escapeHtml(t.name)}</b><br><span class="tiny mono">${t.id}</span></td><td>${escapeHtml(t.version)}</td><td>${badge(t.status)}</td><td>${fmtDate(t.validUntil)}</td></tr>`).join('')}${e.qualifications.map(q=>`<tr><td><b>${escapeHtml(q.name)}</b><br><span class="tiny mono">${q.id}</span></td><td>Qualification</td><td>${badge(q.status)}</td><td>${fmtDate(q.validUntil)}</td></tr>`).join('')}</tbody></table></div></div>`;
+    $('validateLeaveBtn').addEventListener('click',()=>leaveAction(false));$('submitLeaveBtn').addEventListener('click',()=>leaveAction(true));
+  }catch(e){$('myhrTab').innerHTML=errorBlock(e)}
+}
+async function leaveAction(submit){const body={leaveType:$('leaveType').value,startDate:$('leaveStart').value,endDate:$('leaveEnd').value};try{const r=await api(submit?'/api/hr/leave':'/api/hr/leave/validate',{method:'POST',body:JSON.stringify(body)});$('leaveResult').innerHTML=`<div class="callout success-callout"><strong>${submit?'Submitted '+r.id:'Validated'}</strong><p>${r.days||r.validation?.days} day(s) · Approver: ${escapeHtml(r.approver||r.validation?.approver)} · ${submit?'State '+r.state:`Balance after approval: ${r.balanceAfter}`}</p></div>`;if(submit)await renderMyHr()}catch(e){$('leaveResult').innerHTML=`<div class="callout danger-callout"><strong>Stop condition</strong><p>${escapeHtml(e.data?.errors?.join('; ')||e.message)}</p></div>`}}
+
+async function renderTeam(){
+  try{const s=await api('/api/hr/summary');if(!s.team){const employees=await api('/api/hr/employees');$('teamTab').innerHTML=`<div class="card pad"><div class="section-h"><i class="fa-solid fa-users-viewfinder" style="color:var(--primary)"></i>Authorized workforce view</div><p class="muted" style="margin-bottom:12px">This persona is not a line manager. Showing the workforce fields permitted for this role.</p>${employeeTable(employees)}</div>`;return}
+    const pending=s.leaveRequests.filter(x=>x.state==='PENDING_APPROVAL');
+    $('teamTab').innerHTML=`
+      <div class="four" style="margin-bottom:18px"><div class="card kpi"><span>Team</span><b>${s.dailyBrief.teamEmployees}</b><small>Employees in daily manager brief</small></div><div class="card kpi"><span>Expiring ≤7d</span><b>${s.dailyBrief.qualificationsExpiring7d}</b><small>Qualification risks</small></div><div class="card kpi"><span>Leave approvals</span><b>${s.dailyBrief.leaveAwaiting}</b><small>Pending manager action</small></div><div class="card kpi"><span>Joiner Monday</span><b>${s.dailyBrief.joinerMonday}</b><small>${escapeHtml(s.dailyBrief.joinerBlocker)}</small></div></div>
+      <div class="split">
+        <div class="card pad"><div class="section-h"><i class="fa-solid fa-people-group" style="color:var(--primary)"></i>Team readiness</div>${employeeTable(s.team)}</div>
+        <div class="card pad">
+          <div class="section-h"><i class="fa-solid fa-user-clock" style="color:var(--primary)"></i>Qualified shift replacement</div>
+          <div class="callout danger-callout"><strong>Riya called in sick — Line 4 tonight</strong><p>Find only replacements who pass role, site, qualification, SOP, equipment, access, availability and hours rules.</p></div>
+          <div class="actions" style="margin-top:12px"><button class="btn btn-primary" id="replacementBtn"><i class="fa-solid fa-magnifying-glass"></i>Find compliant replacements</button><button class="btn btn-secondary" id="sterileBtn"><i class="fa-solid fa-flask"></i>Check sterile Shift B</button></div>
+          <div id="replacementResult" style="margin-top:12px">${state.lastProposal?proposalHtml(state.lastProposal):''}</div>
+        </div>
+      </div>
+      <div class="spacer"></div>
+      <div class="card pad"><div class="section-h"><i class="fa-solid fa-check-to-slot" style="color:var(--primary)"></i>Pending leave approvals</div>${pending.length?`<div class="table-wrap"><table><thead><tr><th>Employee</th><th>Dates</th><th>Type</th><th>State</th><th>Action</th></tr></thead><tbody>${pending.map(r=>`<tr><td><b>${escapeHtml(r.employeeName)}</b><br><span class="tiny mono">${r.id}</span></td><td>${fmtDate(r.startDate)} → ${fmtDate(r.endDate)}</td><td>${escapeHtml(r.leaveType)}</td><td>${badge(r.state)}</td><td><div class="actions"><button class="btn btn-success" data-leave-approve="${r.id}">Approve</button><button class="btn btn-danger" data-leave-reject="${r.id}">Reject</button></div></td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">No leave requests awaiting approval.</div>'}</div>`;
+    $('replacementBtn').addEventListener('click',()=>findReplacement('QA_LINE4_CLEARANCE','EMP11001'));$('sterileBtn').addEventListener('click',()=>findReplacement('ASEPTIC_SHIFT_B','EMP12002'));
+    document.querySelectorAll('[data-leave-approve]').forEach(b=>b.addEventListener('click',()=>leaveDecision(b.dataset.leaveApprove,'APPROVE')));document.querySelectorAll('[data-leave-reject]').forEach(b=>b.addEventListener('click',()=>leaveDecision(b.dataset.leaveReject,'REJECT')));
+    wireProposalButtons();
+  }catch(e){$('teamTab').innerHTML=errorBlock(e)}
+}
+function employeeTable(rows){return `<div class="table-wrap"><table><thead><tr><th>Employee</th><th>Role</th><th>Shift</th><th>Hours</th><th>Availability</th><th>Readiness</th></tr></thead><tbody>${rows.map(e=>`<tr><td><b>${escapeHtml(e.name)}</b><br><span class="tiny mono">${e.id}</span></td><td>${escapeHtml(e.role)}</td><td>${escapeHtml(e.shift||'—')}</td><td>${e.weeklyHours??'—'}</td><td>${e.available===false?badge('NOT READY'):badge('READY')}</td><td>${e.readiness?badge(e.readiness):'<span class="tiny">View in Readiness</span>'}</td></tr>`).join('')}</tbody></table></div>`}
+async function leaveDecision(id,decision){try{await api(`/api/hr/leave/${id}/decision`,{method:'POST',body:JSON.stringify({decision})});toast(`Leave ${decision==='APPROVE'?'approved':'rejected'}`);await renderTeam()}catch(e){toast(e.message)}}
+async function findReplacement(taskId,unavailableEmployeeId){const box=$('replacementResult');box.innerHTML='<div class="empty"><i class="fa-solid fa-spinner fa-spin"></i> Running deterministic readiness filters…</div>';try{state.lastProposal=await api('/api/hr/shift-replacement',{method:'POST',body:JSON.stringify({taskId,unavailableEmployeeId,shiftDate:'2026-08-21'})});box.innerHTML=proposalHtml(state.lastProposal);wireProposalButtons()}catch(e){box.innerHTML=errorBlock(e)}}
+function proposalHtml(p){return `<div class="callout ${p.candidates.length?'success-callout':'danger-callout'}"><strong>${p.candidates.length} compliant candidate(s)</strong><p>${escapeHtml(p.taskLabel)} · unavailable: ${escapeHtml(p.unavailableEmployeeName)} · proposal ${p.id}</p></div><div class="stack" style="margin-top:10px">${p.candidates.map(c=>`<div class="item"><div style="display:flex;justify-content:space-between;gap:10px;align-items:start"><div><h4>${escapeHtml(c.name)} ${badge(c.status)}</h4><p>${c.why.map(escapeHtml).join(' · ')}</p></div><button class="btn btn-primary" data-approve-candidate="${c.employeeId}"><i class="fa-solid fa-check"></i>Approve + update roster</button></div></div>`).join('')||'<div class="empty">No candidate passed every readiness requirement. Escalation required.</div>'}</div>`}
+function wireProposalButtons(){document.querySelectorAll('[data-approve-candidate]').forEach(b=>b.addEventListener('click',async()=>{try{const p=await api(`/api/hr/shift-replacement/${state.lastProposal.id}/approve`,{method:'POST',body:JSON.stringify({employeeId:b.dataset.approveCandidate})});state.lastProposal=p;toast(`${p.selectedEmployeeName} assigned; roster and notifications updated`);await renderTeam()}catch(e){toast(e.message)}}))}
+
+async function renderReadiness(){
+  try{const employees=await api('/api/hr/employees');const candidates=employees.filter(e=>['QA Executive','Production Technician'].includes(e.role));const checks=await Promise.all(candidates.map(async e=>{const task=e.role==='QA Executive'?'QA_LINE4_CLEARANCE':'ASEPTIC_SHIFT_B';try{return {...e,gate:await api(`/api/hr/readiness?employeeId=${encodeURIComponent(e.id)}&taskId=${task}`),task}}catch{return {...e,gate:{status:'UNKNOWN'},task}}}));
+    if(!state.readinessEmployee&&checks[0])state.readinessEmployee=checks[0].id;
+    const selected=checks.find(x=>x.id===state.readinessEmployee)||checks[0];
+    $('readinessTab').innerHTML=`
+      <div class="four" style="margin-bottom:18px"><div class="card kpi"><span>Hyderabad readiness</span><b>96.7%</b><small>Overall seeded plant view</small></div><div class="card kpi"><span>Production</span><b>98.2%</b><small>Role-qualified coverage</small></div><div class="card kpi"><span>Quality Control</span><b>96.4%</b><small>Current operational permission</small></div><div class="card kpi"><span>Packaging</span><b>92.8%</b><small>3 expiries within 14 days</small></div></div>
+      <div class="split">
+        <div class="card pad"><div class="section-h"><i class="fa-solid fa-passport" style="color:var(--primary)"></i>Qualification Passports</div><div class="table-wrap"><table><thead><tr><th>Employee</th><th>Task</th><th>Hours</th><th>Gate</th></tr></thead><tbody>${checks.map(x=>`<tr class="clickable" data-passport="${x.id}"><td><b>${escapeHtml(x.name)}</b><br><span class="tiny mono">${x.id}</span></td><td>${escapeHtml(x.gate.taskLabel||x.task)}</td><td>${x.weeklyHours}</td><td>${badge(x.gate.status)}</td></tr>`).join('')}</tbody></table></div></div>
+        <div id="passportPanel">${selected?passportHtml(selected.gate):'<div class="empty">Select an employee.</div>'}</div>
+      </div>
+      <div class="spacer"></div>
+      <div class="split-equal">
+        <div class="card pad"><div class="section-h"><i class="fa-solid fa-border-all" style="color:var(--primary)"></i>Compliance heatmap</div><div class="heatmap"><div class="head">Site</div><div class="head">Sterile Ops</div><div class="head">QC</div><div class="head">QA</div><div class="head">Maintenance</div><div>Goa</div><div class="g">Green</div><div class="g">Green</div><div class="a">Amber</div><div class="g">Green</div><div>Hyderabad</div><div class="r">Red</div><div class="g">Green</div><div class="g">Green</div><div class="a">Amber</div><div>Indore</div><div class="g">Green</div><div class="a">Amber</div><div class="g">Green</div><div class="g">Green</div></div></div>
+        <div class="card pad"><div class="section-h"><i class="fa-solid fa-key" style="color:var(--primary)"></i>Deepest differentiator: Employee → Operational Permission</div><div class="callout success-callout"><strong>Abhishek Soni is currently authorized to independently operate HPLC-07 in QC Laboratory B until 16 November 2026.</strong><p>The authorization is supported by role, site, HPLC qualification, current SOP training, required access and controlled qualification records.</p></div><div class="permission-line">LLM explains the result. Deterministic rules own READY / NOT READY.</div></div>
+      </div>`;
+    document.querySelectorAll('[data-passport]').forEach(r=>r.addEventListener('click',()=>{state.readinessEmployee=r.dataset.passport;const x=checks.find(y=>y.id===state.readinessEmployee);$('passportPanel').innerHTML=passportHtml(x.gate)}));
+  }catch(e){$('readinessTab').innerHTML=errorBlock(e)}
+}
+function passportHtml(g){return `<div class="passport"><div class="passport-head"><b>${escapeHtml(g.employeeName||'Qualification Passport')}</b><p>${escapeHtml(g.taskLabel||'Regulated task')} · as of ${fmtDate(g.asOf)}</p></div><div class="passport-body"><div style="margin-bottom:12px">${badge(g.status)}</div><div class="checks">${(g.checks||[]).map(c=>`<div class="check ${c.status}"><div class="dot"><i class="fa-solid ${c.status==='PASS'?'fa-check':'fa-xmark'}"></i></div><div><b>${escapeHtml(c.label)}</b><small>${escapeHtml(c.detail)}</small></div></div>`).join('')}</div><div class="answer-meta"><div class="sourcebox"><b>Sources</b>${(g.sources||[]).map(escapeHtml).join('<br>')}</div><div class="sourcebox"><b>Rule</b>${escapeHtml(g.rule||'—')}</div></div></div></div>`}
+
+async function renderTower(){
+  try{const t=await api('/api/hr/control-tower');$('towerTab').innerHTML=`
+    <div class="kpis grid"><div class="card kpi"><span>Pending approvals</span><b>${t.kpis.pendingApprovals}</b><small>Across HR workflows</small></div><div class="card kpi"><span>Payroll exceptions</span><b>${t.kpis.payrollExceptions}</b><small>Pre-close queue</small></div><div class="card kpi"><span>Overdue trainings</span><b>${t.kpis.overdueTrainings}</b><small>Including critical items</small></div><div class="card kpi"><span>Joining this week</span><b>${t.kpis.joiningThisWeek}</b><small>Onboarding dependencies</small></div><div class="card kpi"><span>Staffing risks</span><b>${t.kpis.staffingRisks}</b><small>Forward-looking exposure</small></div><div class="card kpi"><span>HR cases</span><b>${t.kpis.hrCases}</b><small>SLA / exception tracking</small></div></div>
+    <div class="split">
+      <div class="card pad"><div class="section-h"><i class="fa-solid fa-triangle-exclamation" style="color:var(--danger)"></i>Workforce risk</div><div class="stack">${t.staffingRisks.map(r=>`<div class="item"><div class="tags">${badge(r.severity==='RED'?'NOT READY':'PENDING APPROVAL')}<span class="tag">${escapeHtml(r.site)}</span></div><h4 style="margin-top:7px">${escapeHtml(r.area)}</h4><p>${escapeHtml(r.detail)}</p></div>`).join('')}</div></div>
+      <div class="card pad"><div class="section-h"><i class="fa-solid fa-money-check-dollar" style="color:var(--warning)"></i>Exception Inbox</div><div class="stack">${t.payrollExceptions.map(x=>`<div class="item"><div class="tags"><span class="tag mono">${x.id}</span><span class="tag">${x.severity}</span></div><h4 style="margin-top:7px">${escapeHtml(x.type)}</h4><p>Impact: ${escapeHtml(x.impact)} · Owner: ${escapeHtml(x.owner)} · Next: ${escapeHtml(x.nextStep)}</p></div>`).join('')}</div></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="split-equal">
+      <div class="card pad"><div class="section-h"><i class="fa-solid fa-user-plus" style="color:var(--primary)"></i>Recruitment orchestration</div><div class="stack">${t.requisitions.map(r=>`<div class="item"><h4>${escapeHtml(r.role)} · ${escapeHtml(r.site)}</h4><p>${r.openings} opening(s) · ${escapeHtml(r.status)} · ${r.candidates} candidate(s) · Band ${escapeHtml(r.salaryBand)}</p><div class="tags" style="margin-top:7px">${r.mandatory.map(x=>`<span class="tag">${escapeHtml(x)}</span>`).join('')}</div></div>`).join('')}</div><div class="actions" style="margin-top:12px">${['hr','chro'].includes(state.persona)?'<button class="btn btn-primary" id="reqBtn"><i class="fa-solid fa-circle-plus"></i>Create controlled QC Analyst requisition</button>':'<span class="tiny"><i class="fa-solid fa-lock"></i> Switch to HR / CHRO persona to create requisitions.</span>'}</div></div>
+      <div class="card pad"><div class="section-h"><i class="fa-solid fa-route" style="color:var(--primary)"></i>Onboarding → readiness</div><div class="stack">${t.onboarding.map(o=>`<div class="item"><div style="display:flex;justify-content:space-between;gap:10px"><div><h4>${escapeHtml(o.employee)} · ${escapeHtml(o.role)}</h4><p>Joins ${fmtDate(o.joiningDate)} · ${escapeHtml(o.site)} · Blocker: ${escapeHtml(o.blocker)}</p></div><b style="font-family:Sora">${o.readiness}%</b></div></div>`).join('')}</div></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="split-equal">
+      <div class="card pad"><div class="section-h"><i class="fa-solid fa-book-medical" style="color:var(--primary)"></i>SOP-change orchestration</div><div class="timeline"><div class="step"><i class="fa-solid fa-1"></i><div><b>New SOP version</b><p>Identify affected roles and employees.</p></div></div><div class="step"><i class="fa-solid fa-2"></i><div><b>Assign controlled training</b><p>Notify, monitor completion and reassessment.</p></div></div><div class="step"><i class="fa-solid fa-3"></i><div><b>Recalculate readiness</b><p>Qualification gate reflects the new required version.</p></div></div><div class="step"><i class="fa-solid fa-4"></i><div><b>Escalate exceptions + retain evidence</b><p>Operational impact becomes visible before a staffing failure.</p></div></div></div><div class="actions" style="margin-top:12px">${['qa','hr','chro'].includes(state.persona)?'<button class="btn btn-warning" id="sopBtn"><i class="fa-solid fa-arrows-rotate"></i>Revise SOP-412 to v8</button>':'<span class="tiny"><i class="fa-solid fa-lock"></i> Switch to QA / HR / CHRO persona to orchestrate an SOP revision.</span>'}</div><div id="sopResult" style="margin-top:10px"></div></div>
+      <div class="card pad"><div class="section-h"><i class="fa-solid fa-folder-open" style="color:var(--primary)"></i>Employee cases</div><div class="stack">${t.cases.map(c=>`<div class="item"><div class="tags"><span class="tag mono">${c.id}</span><span class="tag">${c.state}</span><span class="tag">SLA ${c.sla}</span></div><h4 style="margin-top:7px">${escapeHtml(c.subject)}</h4><p>${escapeHtml(c.detail)}</p></div>`).join('')}</div></div>
+    </div>`;
+    $('reqBtn')?.addEventListener('click',async()=>{try{const r=await api('/api/hr/requisitions',{method:'POST',body:JSON.stringify({role:'QC Analyst',site:'Hyderabad',openings:2})});toast(`${r.id} drafted and routed for HR approval`);await renderTower()}catch(e){toast(e.message)}});
+    $('sopBtn')?.addEventListener('click',async()=>{try{const r=await api('/api/hr/sop-revision',{method:'POST',body:JSON.stringify({sopId:'SOP-412',newVersion:'8'})});$('sopResult').innerHTML=`<div class="callout success-callout"><strong>SOP-412 v${r.newVersion} orchestration triggered</strong><p>${r.impactedEmployees} affected employees assigned retraining. Readiness rules now require the new version.</p></div>`;toast('SOP change propagated to LMS and readiness rules')}catch(e){$('sopResult').innerHTML=errorBlock(e)}});
+  }catch(e){$('towerTab').innerHTML=errorBlock(e)}
+}
+
+async function renderAudit(){
+  try{const a=await api('/api/hr/audit');$('auditTab').innerHTML=`
+    <div class="card pad"><div class="section-h"><i class="fa-solid fa-diagram-project" style="color:var(--primary)"></i>Reference control architecture</div><div class="architecture">${escapeHtml(a.governance.architecture)}</div><div class="three" style="margin-top:14px"><div class="callout"><strong>AI</strong><p>Language understanding, extraction, summarization, retrieval, drafting, explanation and missing-information detection.</p></div><div class="callout success-callout"><strong>Deterministic systems</strong><p>Permissions, eligibility, qualification, approvals, payroll logic, access rules and transaction state.</p></div><div class="callout danger-callout"><strong>Humans</strong><p>Hiring, firing, discipline, medical fitness, compensation exceptions, employee relations and other consequential judgment.</p></div></div></div>
+    <div class="spacer"></div>
+    <div class="split-equal"><div class="card pad"><div class="section-h"><i class="fa-solid fa-octagon-exclamation" style="color:var(--warning)"></i>Stop conditions</div><div class="tags">${a.governance.stopConditions.map(x=>`<span class="tag">${escapeHtml(x)}</span>`).join('')}</div></div><div class="card pad"><div class="section-h"><i class="fa-solid fa-circle-question" style="color:var(--primary)"></i>Hallucination controls</div><div class="stack"><div class="item"><h4>CONFIRMED</h4><p>Approved source explicitly establishes the answer.</p></div><div class="item"><h4>INFERRED</h4><p>Related provisions suggest an interpretation; it must be labelled.</p></div><div class="item"><h4>UNKNOWN</h4><p>Approved sources do not establish the answer; escalate or request evidence.</p></div></div></div></div>
+    <div class="spacer"></div>
+    <div class="card pad"><div class="section-h"><i class="fa-solid fa-clock-rotate-left" style="color:var(--primary)"></i>Comprehensive audit trail</div><div style="overflow:auto"><div class="audit-row" style="font-weight:900;color:var(--muted);text-transform:uppercase;font-size:10px"><div>Time / Actor</div><div>Action</div><div>Target → Result</div><div>Rule / Level</div></div>${a.events.map(x=>`<div class="audit-row"><div>${fmtTime(x.at)}<br><b>${escapeHtml(x.actor)}</b></div><div class="mono">${escapeHtml(x.action)}</div><div><b>${escapeHtml(x.target)}</b><br><span class="muted">${escapeHtml(x.result)}</span><br><span class="tiny">Source: ${escapeHtml(x.source)}</span></div><div><span class="tag mono">${escapeHtml(x.rule)}</span><br><span class="tag" style="margin-top:5px">${escapeHtml(x.autonomy)}</span></div></div>`).join('')}</div></div>`;
+  }catch(e){$('auditTab').innerHTML=errorBlock(e)}
+}
+
+boot().catch(err=>{console.error(err);document.body.innerHTML='<pre style="padding:24px;color:#b91c1c">Failed to load HR Agent backend API. Run: npm start\n\n'+escapeHtml(err.message)+'</pre>'});
+</script>
+</body>
+</html>

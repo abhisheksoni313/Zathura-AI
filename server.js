@@ -6,6 +6,8 @@ import seedInvoices from './data/sampleInvoices.json' with { type: 'json' };
 import aribaQueueSeed from './data/aribaQueue.json' with { type: 'json' };
 import { validateInvoice, createInvoiceFromPayload, sop, vendors, departments } from './src/validationEngine.js';
 import { getZathuraAdvisory } from './src/zathuraReasoner.js';
+import { createHrAgent } from './src/hrAgent.js';
+import { createMarketingAgent } from './src/marketingAgent.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,6 +20,8 @@ let aribaQueue = aribaQueueSeed.map(markPending);
 let demoRequests = [];
 let lastAribaScan = null;
 let nextAribaScanAt = new Date(Date.now() + TEN_MINUTES).toISOString();
+const hrAgent = createHrAgent();
+const marketingAgent = createMarketingAgent();
 
 const mimeTypes = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8',
@@ -30,6 +34,16 @@ const server = http.createServer(async (req, res) => {
     const url = new URL(req.url, `http://${req.headers.host}`);
     addCommonHeaders(res);
     if (req.method === 'OPTIONS') return send(res, 204, '');
+
+    if (url.pathname.startsWith('/api/hr')) {
+      const hrResponse = await hrAgent.handle(req, url);
+      return json(res, hrResponse.status, hrResponse.payload);
+    }
+
+    if (url.pathname.startsWith('/api/marketing')) {
+      const marketingResponse = await marketingAgent.handle(req, url);
+      return json(res, marketingResponse.status, marketingResponse.payload);
+    }
 
     if (url.pathname === '/health' && req.method === 'GET') {
       return json(res, 200, {
@@ -206,6 +220,8 @@ function aribaStatus() {
 function normalizePath(urlPath) {
   if (urlPath === '/' || urlPath === '') return '/index.html';
   if (urlPath === '/procurement') return '/procurement.html';
+  if (urlPath === '/hr-agent') return '/hr-agent.html';
+  if (urlPath === '/marketing-agent') return '/marketing-agent.html';
   return urlPath;
 }
 
